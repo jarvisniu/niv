@@ -67,27 +67,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="win\MainWindow.xaml">
+    <Page Include="win\Niv.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="prop\Resources.zh-TW.Designer.cs">
-      <DependentUpon>Resources.zh-TW.resx</DependentUpon>
+    <Compile Include="res\Languages.zh-TW.Designer.cs">
+      <DependentUpon>Languages.zh-TW.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="prop\Resources.zh-CN.Designer.cs">
+    <Compile Include="res\Languages.zh-CN.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.zh-CN.resx</DependentUpon>
+      <DependentUpon>Languages.zh-CN.resx</DependentUpon>
     </Compile>
     <Compile Include="src\I18N.cs" />
     <Compile Include="win\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="win\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="win\Niv.xaml.cs">
+      <DependentUpon>Niv.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -95,27 +95,27 @@
     <Compile Include="prop\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="prop\Resources.en-US.Designer.cs">
+    <Compile Include="res\Languages.en-US.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.en-US.resx</DependentUpon>
+      <DependentUpon>Languages.en-US.resx</DependentUpon>
     </Compile>
     <Compile Include="prop\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="prop\Resources.zh-TW.resx">
+    <EmbeddedResource Include="res\Languages.zh-TW.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.zh-TW.Designer.cs</LastGenOutput>
+      <LastGenOutput>Languages.zh-TW.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="prop\Resources.zh-CN.resx">
+    <EmbeddedResource Include="res\Languages.zh-CN.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.zh-CN.Designer.cs</LastGenOutput>
+      <LastGenOutput>Languages.zh-CN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="prop\Resources.en-US.resx">
+    <EmbeddedResource Include="res\Languages.en-US.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.en-US.Designer.cs</LastGenOutput>
+      <LastGenOutput>Languages.en-US.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="prop\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -130,8 +130,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="res\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

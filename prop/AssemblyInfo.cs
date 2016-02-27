@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 using System.Windows;
 
 [assembly: AssemblyTitle("Niv")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A fast compact image viewer on Windows")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Jarvis Niu")]
 [assembly: AssemblyProduct("Niv")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
@@ -21,4 +21,4 @@ using System.Windows;
 )]
 
 [assembly: AssemblyVersion("0.0.1.0")]
-[assembly: AssemblyFileVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("0.0.1.0")]

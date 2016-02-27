@@ -24,7 +24,7 @@ namespace Niv
             // currLang = "zh-TW";
 
             cultureInfo = new CultureInfo(currLang, true);
-            resManager = new ResourceManager("Niv.prop.Resources", Assembly.GetExecutingAssembly());
+            resManager = new ResourceManager("Niv.res.Languages", Assembly.GetExecutingAssembly());
         }
 
         public static string _(string key)
