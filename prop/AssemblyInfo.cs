@@ -8,9 +8,9 @@ using System.Windows;
 [assembly: AssemblyDescription("A fast compact image viewer on Windows")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jarvis Niu")]
-[assembly: AssemblyProduct("Niv")]
+[assembly: AssemblyProduct("Niv - Niu Image Viewer")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Niv")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]

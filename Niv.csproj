@@ -51,6 +51,9 @@
   <PropertyGroup>
     <StartupObject>Niv.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>res\Niv.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -101,10 +104,10 @@
     <Compile Include="prop\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="resx\Languages.en-US.Designer.cs">
+    <Compile Include="resx\Languages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Languages.en-US.resx</DependentUpon>
+      <DependentUpon>Languages.resx</DependentUpon>
     </Compile>
     <Compile Include="prop\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -123,9 +126,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Languages.zh-CN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="resx\Languages.en-US.resx">
+    <EmbeddedResource Include="resx\Languages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Languages.en-US.Designer.cs</LastGenOutput>
+      <LastGenOutput>Languages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="prop\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -142,7 +145,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="res\Niv.png" />
+    <Resource Include="res\Niv.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

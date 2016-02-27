@@ -22,8 +22,15 @@ namespace Niv
             currLang = Thread.CurrentThread.CurrentCulture.Name;
             if (currLang != "zh-CN" && currLang != "zh-TW") currLang = "en-US";
             // currLang = "zh-TW";
-
-            cultureInfo = new CultureInfo(currLang, true);
+            try
+            {
+                cultureInfo = new CultureInfo(currLang, true);
+            }
+            catch (Exception ex)
+            {
+                currLang = "en-US";
+                cultureInfo = new CultureInfo(currLang, true);
+            }
             resManager = new ResourceManager("Niv.resx.Languages", Assembly.GetExecutingAssembly());
         }
 
