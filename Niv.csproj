@@ -54,6 +54,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -71,15 +72,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="res\Languages.zh-TW.Designer.cs">
+    <Compile Include="resx\Languages.zh-TW.Designer.cs">
       <DependentUpon>Languages.zh-TW.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="res\Languages.zh-CN.Designer.cs">
+    <Compile Include="resx\Languages.zh-CN.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Languages.zh-CN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="resx\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="src\I18N.cs" />
     <Compile Include="win\App.xaml.cs">
@@ -95,7 +101,7 @@
     <Compile Include="prop\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="res\Languages.en-US.Designer.cs">
+    <Compile Include="resx\Languages.en-US.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Languages.en-US.resx</DependentUpon>
@@ -105,15 +111,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="res\Languages.zh-TW.resx">
+    <EmbeddedResource Include="resx\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resx\Languages.zh-TW.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Languages.zh-TW.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="res\Languages.zh-CN.resx">
+    <EmbeddedResource Include="resx\Languages.zh-CN.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Languages.zh-CN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="res\Languages.en-US.resx">
+    <EmbeddedResource Include="resx\Languages.en-US.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Languages.en-US.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -131,5 +141,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="res\Niv.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
