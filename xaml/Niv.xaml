@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Niv"
         mc:Ignorable="d"
-        Title="&lt;Niv&gt;" Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/Niv;component/res/Niv.ico" Loaded="window_Loaded">
+        Title="&lt;Niv&gt;" Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/Niv;component/res/Niv.ico" Loaded="window_Loaded" Closing="window_Closing">
     <Grid x:Name="niv" Background="#FF404040">
 
         <Grid x:Name="container" Background="#FF202020" AllowDrop="True">
@@ -63,13 +63,13 @@
         <Border x:Name="menu" BorderBrush="#FF404040" BorderThickness="2,2,2,0" Margin="0,0,10,57" HorizontalAlignment="Right" Width="196" Height="154" VerticalAlignment="Bottom" Background="Black">
             <StackPanel x:Name="menuStack">
                 <Rectangle Fill="White" Stroke="#FF404040" Height="0" Margin="0,0,0,8"/>
-                <Border x:Name="btnHelp" BorderBrush="Black" BorderThickness="0" Height="40">
+                <Border x:Name="menuHelp" BorderBrush="Black" BorderThickness="0" Height="40">
                     <Grid Margin="0">
                         <Image HorizontalAlignment="Left" Margin="15,11,0,11" Width="18" Source="/Niv;component/res/icon-about.png"/>
                         <Label x:Name="iHelp" Content="&lt;Help&gt;" Margin="40,6,10,6" VerticalContentAlignment="Center" Foreground="#FFC1C1C1" FontSize="15"/>
                     </Grid>
                 </Border>
-                <Border x:Name="btnAbout" BorderBrush="Black" BorderThickness="0" Height="40">
+                <Border x:Name="menuAbout" BorderBrush="Black" BorderThickness="0" Height="40" MouseUp="menuAbout_MouseUp">
                     <Grid Margin="0">
                         <Image HorizontalAlignment="Left" Margin="15,11,0,11" Width="18" Source="/Niv;component/res/icon-about.png"/>
                         <Label x:Name="iAbout" Content="&lt;About&gt;" Margin="40,6,10,6" VerticalContentAlignment="Center" Foreground="#FFC1C1C1" FontSize="15"/>
@@ -85,7 +85,7 @@
                 <Rectangle Fill="White" Stroke="#FF404040" Height="0" Margin="0,0,0,8"/>
             </StackPanel>
         </Border>
-        <Border x:Name="exit" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48" Margin="0">
+        <Border x:Name="exitButton" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48" Margin="0">
             <Image Margin="15" Source="/Niv;component/res/icon-close.png"/>
         </Border>
     </Grid>

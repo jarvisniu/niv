@@ -22,6 +22,7 @@ namespace Niv
             cultureCode = Thread.CurrentThread.CurrentCulture.Name;
             if (!langData.ContainsKey(cultureCode)) cultureCode = "en-US";
 
+            // cultureCode = "en-US";  // test default
             // cultureCode = "zh-TW";  // test none-english
             // cultureCode = "zh-TW2";  // test not exist
 
@@ -77,6 +78,26 @@ namespace Niv
             langData["en-US"]["help"] = "Help";
             langData["zh-CN"]["help"] = "帮助";
             langData["zh-TW"]["help"] = "説明";
+
+            langData["en-US"]["version"] = "Version";
+            langData["zh-CN"]["version"] = "版本";
+            langData["zh-TW"]["version"] = "版本";
+
+            langData["en-US"]["author"] = "Author";
+            langData["zh-CN"]["author"] = "作者";
+            langData["zh-TW"]["author"] = "作者";
+
+            langData["en-US"]["jarvisNiu"] = "Jarvis Niu";
+            langData["zh-CN"]["jarvisNiu"] = "牛俊为";
+            langData["zh-TW"]["jarvisNiu"] = "牛俊為";
+
+            langData["en-US"]["description"] = "A compact fast image viewer";
+            langData["zh-CN"]["description"] = "一个简约快速的看图软件";
+            langData["zh-TW"]["description"] = "一個簡約快速的看圖軟體";
+
+            langData["en-US"]["officialWebsite"] = "Official Website";
+            langData["zh-CN"]["officialWebsite"] = "官方网站";
+            langData["zh-TW"]["officialWebsite"] = "官方網站";
         }
 
         public static string _(string key)
@@ -85,8 +106,9 @@ namespace Niv
             {
                 return langData[cultureCode][key];
             }
-            catch (MissingManifestResourceException ex)
+            catch (Exception ex)
             {
+                MessageBox.Show("I18N: langData[" + key + "] not exists");
                 return _("_missing");
             }
         }

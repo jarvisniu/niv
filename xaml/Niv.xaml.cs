@@ -11,12 +11,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Reflection;
 
 namespace Niv
 {
     public partial class NivWindow : Window
     {
-        
+        private About aboutWindow = new About();
+
         public NivWindow()
         {
             InitializeComponent();
@@ -26,6 +28,24 @@ namespace Niv
         {
             loadLanguage();
         }
+
+        private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            exit();
+        }
+
+        #region event hadnler
+
+
+        private void menuAbout_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            showWindowAbout();
+            //hideMainMenu();
+        }
+
+        #endregion
+
+        #region life cycle
 
         public void loadLanguage()
         {
@@ -38,7 +58,37 @@ namespace Niv
             iHelp.Content = I18N._("help");
             iAbout.Content = I18N._("about");
             iImageInfoMenu.Content = I18N._("imageInfo");
+            // aboutWindow
+            aboutWindow.Title = I18N._("about");
+            aboutWindow.iAppName.Content = I18N._("appName");
+            aboutWindow.iDescription.Content = I18N._("description");
+            Version version = Assembly.GetEntryAssembly().GetName().Version;
+            string versionString = version.Major + "." + version.Minor + "." + version.Build;
+            aboutWindow.iVersion.Content = I18N._("version") + ": " + versionString;
+            aboutWindow.iAuthor.Content = I18N._("author") + ": " + I18N._("jarvisNiu");
+            aboutWindow.iOfficialWebsite.Text = I18N._("officialWebsite") + ": ";
         }
+
+        private void exit()
+        {
+            //restoreRotation();
+            //recycleBin.clean();
+            aboutWindow.exit();
+            Application.Current.Shutdown();
+        }
+
+        #endregion
+
+        #region toogle
+        
+        // window About
+        private void showWindowAbout()
+        {
+            aboutWindow.Show();
+        }
+
+        #endregion
+
         // end of class
     }
 }

@@ -1,0 +1,25 @@
+﻿<Window x:Name="window" x:Class="Niv.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Niv"
+        mc:Ignorable="d"
+        Title="&lt;about&gt;" Height="218" Width="386" ShowInTaskbar="False" Topmost="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="window_Loaded" Closing="window_Closing" Icon="/Niv;component/res/Niv.ico">
+    <Grid Background="#FFA8A8A8">
+        <Grid Background="#FFF0F0F0" Height="140" VerticalAlignment="Top">
+            <Label x:Name="iAppName" Content="&lt;appName&gt;" Margin="100,10,10,0" VerticalAlignment="Top" Foreground="#FF1F1F1F" FontSize="32" Height="50" VerticalContentAlignment="Center"/>
+            <Image Height="80" Margin="10,10,0,-10" VerticalAlignment="Top" Source="/Niv;component/res/Niv.ico" HorizontalAlignment="Left" Width="80"/>
+            <Label x:Name="iDescription" Content="&lt;description&gt;" Margin="100,60,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.3,4.28" Foreground="#FF292929" FontSize="15" Height="30" VerticalContentAlignment="Center"/>
+            <Label x:Name="iVersion" Content="&lt;version&gt;" RenderTransformOrigin="0.3,4.28" Foreground="#FF292929" FontSize="15" VerticalContentAlignment="Center" Height="30" VerticalAlignment="Top" Margin="10,100,0,0" HorizontalAlignment="Left" Width="160"/>
+            <Label x:Name="iAuthor" Content="&lt;author&gt;" RenderTransformOrigin="0.3,4.28" Foreground="#FF292929" FontSize="15" VerticalContentAlignment="Center" Height="30" VerticalAlignment="Top" Margin="0,100,10,0" HorizontalAlignment="Right" Width="200"/>
+        </Grid>
+        <Grid Background="#FFC8C8C8" Height="48" VerticalAlignment="Bottom">
+            <StackPanel Height="48" VerticalAlignment="Top" Orientation="Horizontal">
+                <TextBlock x:Name="iOfficialWebsite" Text="&lt;officialWebsite&gt;" Foreground="#FF292929" FontSize="15" Height="30" VerticalAlignment="Top" Margin="10,10,5,0" HorizontalAlignment="Left" Padding="0,5,0,0"/>
+                <TextBlock x:Name="linkAddress" Margin="0,10,0,0" TextWrapping="Wrap" Text="http://jarvisniu.com/niv" TextDecorations="Underline" Foreground="#FF0064C8" FontSize="16" Height="30" VerticalAlignment="Top" Padding="0,5,0,0" MouseUp="linkAddress_MouseUp" HorizontalAlignment="Left" Cursor="Hand"/>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>
