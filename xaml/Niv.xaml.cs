@@ -13,12 +13,16 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reflection;
 
+using com.jarvisniu;
+
 namespace Niv
 {
     public partial class NivWindow : Window
     {
         // components
         private About aboutWindow = new About();
+        private AnimatorJar animationjar = new AnimatorJar();
+        private ButtonAnimation buttonAnimation = new ButtonAnimation(false);
 
         // layout config
         static double WINDOW_MIN_WIDTH = 480;
@@ -77,6 +81,11 @@ namespace Niv
             page.Opacity = 0;
             menu.Margin = new Thickness(0, 0, 0, MARGIN_SIZE);
             menu.Height = 0;
+
+            // add animation effects to buttons
+            buttonAnimation.apply(btnZoom).apply(btnPrev).apply(btnNext).apply(btnAA).apply(btnMenu).apply(exitButton)
+                .apply(btnDelete).apply(btnRotateL).apply(btnRotateR).apply(menuAbout)
+                .apply(menuHelp).apply(menuInfo).apply(btnCloseInfo);
         }
 
         private void setThemeLight()
