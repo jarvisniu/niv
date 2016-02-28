@@ -22,12 +22,11 @@ namespace Niv
         // components
         private About aboutWindow = new About();
         private AnimatorJar animationjar = new AnimatorJar();
-        private ButtonAnimator buttonAnimator = new ButtonAnimator(false);
+        private ButtonAnimator buttonAnimator = new ButtonAnimator();
 
         // layout config
         static double WINDOW_MIN_WIDTH = 480;
         static double WINDOW_MIN_HEIGHT = 320;
-
         public static int SEPARATOR_HEIGHT = 2;
         //public static int MESSAGE_BOX_HEIGHT = 48;
         public static int MARGIN_SIZE = 50;
@@ -37,73 +36,25 @@ namespace Niv
         //static double PROGRESS_CAP = 2;
         static double INFO_WIDTH = 260;
 
+        private string theme = "light";
+
+        #region init and exit
+
         public NivWindow()
         {
             InitializeComponent();
+            loadLanguage();
+            setTheme(theme);
+            initLayout();
         }
 
         private void window_Loaded(object sender, RoutedEventArgs e)
         {
-            loadLanguage();
-            initLayout();
-            setTheme("light");
         }
 
         private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             exit();
-        }
-
-        #region event hadnler
-        
-        private void menuAbout_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            showWindowAbout();
-            //hideMainMenu();
-        }
-
-        #endregion
-
-        #region life cycle
-
-        private void initLayout()
-        {
-            window.MinWidth = WINDOW_MIN_WIDTH;
-            window.MinHeight = WINDOW_MIN_HEIGHT;
-            exitButton.Visibility = System.Windows.Visibility.Hidden;
-            container.Margin = new Thickness(-MARGIN_SIZE, -MARGIN_SIZE, -MARGIN_SIZE, 0);
-            separator.Margin = new Thickness(0, 0, 0, MARGIN_SIZE - SEPARATOR_HEIGHT);
-            progress.Margin = new Thickness(0, 0, 0, separator.Margin.Bottom - 1);
-            toolbar.Margin = new Thickness(0, 0, 0, 0);
-            info.Margin = new Thickness(-INFO_WIDTH, 0, 0, 0);
-            info.Width = INFO_WIDTH;
-            page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE + 8);
-            page.Opacity = 0;
-            menu.Margin = new Thickness(0, 0, 0, MARGIN_SIZE);
-            menu.Height = 0;
-
-            // add animation effects to buttons
-            buttonAnimator.apply(btnZoom).apply(btnPrev).apply(btnNext).apply(btnAA).apply(btnMenu).apply(exitButton)
-                .apply(btnDelete).apply(btnRotateLeft).apply(btnRotateRight).apply(menuAbout)
-                .apply(menuHelp).apply(menuInfo).apply(btnCloseInfo);
-        }
-
-        private void setTheme(string theme)
-        {
-            // niv.Background = new SolidColorBrush(Color.FromArgb(255, 250, 250, 250));
-            container.Background = new SolidColorBrush(Color.FromArgb(255, 250, 250, 250));
-            toolbar.Background = new SolidColorBrush(Color.FromArgb(255, 220, 220, 220));
-            separator.Background = progress.Stroke = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
-            progress.Fill = new SolidColorBrush(Color.FromArgb(255, 222, 222, 222));
-            
-            imageRotateLeft.Source = loadResourceBitmap("icon-rotate-left.png", theme);
-            imageRotateRight.Source = loadResourceBitmap("icon-rotate-right.png", theme);
-            imageDelete.Source = loadResourceBitmap("icon-delete.png", theme);
-            imagePrev.Source = loadResourceBitmap("icon-prev.png", theme);
-            imageNext.Source = loadResourceBitmap("icon-next.png", theme);
-            imageSmooth.Source = loadResourceBitmap("icon-smooth-off.png", theme);
-            imageZoom.Source = loadResourceBitmap("icon-zoom-fit.png", theme);
-            imageMenu.Source = loadResourceBitmap("icon-menu.png", theme);
         }
 
         private void loadLanguage()
@@ -128,12 +79,126 @@ namespace Niv
             aboutWindow.iOfficialWebsite.Text = I18N._("officialWebsite") + ": ";
         }
 
+        private void initLayout()
+        {
+            window.MinWidth = WINDOW_MIN_WIDTH;
+            window.MinHeight = WINDOW_MIN_HEIGHT;
+            exitButton.Visibility = System.Windows.Visibility.Hidden;
+            container.Margin = new Thickness(-MARGIN_SIZE, -MARGIN_SIZE, -MARGIN_SIZE, 0);
+            separator.Margin = new Thickness(0, 0, 0, MARGIN_SIZE - SEPARATOR_HEIGHT);
+            progress.Margin = new Thickness(0, 0, 0, separator.Margin.Bottom - 1);
+            toolbar.Margin = new Thickness(0, 0, 0, 0);
+            info.Margin = new Thickness(-INFO_WIDTH, 0, 0, 0);
+            info.Width = INFO_WIDTH;
+            page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE + 8);
+            page.Opacity = 0;
+            menu.Margin = new Thickness(0, 0, 0, MARGIN_SIZE);
+            menu.Height = 0;
+
+            // add animation effects to buttons
+            buttonAnimator.apply(btnZoom).apply(btnPrev).apply(btnNext).apply(btnAA).apply(btnMenu).apply(exitButton)
+                .apply(btnDelete).apply(btnRotateLeft).apply(btnRotateRight).apply(menuAbout)
+                .apply(menuHelp).apply(menuInfo).apply(btnCloseInfo);
+        }
+
         private void exit()
         {
             //restoreRotation();
             //recycleBin.clean();
             aboutWindow.exit();
             Application.Current.Shutdown();
+        }
+
+        #endregion
+
+        #region event handlers
+
+        #region toolbar buttons
+
+        private void btnRotateLeft_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void btnRotateRight_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void btnDelete_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private void btnPrev_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void btnNext_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void btnAA_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void btnZoom_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void btnMenu_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            theme = theme == "dark" ? "light" : "dark";
+            setTheme(theme);
+        }
+
+        #endregion
+
+        #region menu
+        private void menuAbout_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            showWindowAbout();
+            //hideMainMenu();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region life cycle
+        
+        private void setTheme(string theme)
+        {
+            buttonAnimator.setTheme(theme);
+
+            if (theme == "light")
+            {
+                container.Background = new SolidColorBrush(Color.FromArgb(255, 250, 250, 250));
+                toolbar.Background = new SolidColorBrush(Color.FromArgb(255, 220, 220, 220));
+                info.Background = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
+                separator.Background = progress.Stroke = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
+                progress.Fill = new SolidColorBrush(Color.FromArgb(255, 222, 222, 222));
+            }
+            else
+            {
+                container.Background = new SolidColorBrush(Color.FromArgb(255, 64, 64, 64));
+                toolbar.Background = new SolidColorBrush(Color.FromArgb(192, 32, 32, 32));
+                info.Background = new SolidColorBrush(Color.FromArgb(255, 64, 64, 64));
+                separator.Background = progress.Stroke = new SolidColorBrush(Color.FromArgb(192, 64, 64, 64));
+                progress.Fill = new SolidColorBrush(Color.FromArgb(75, 255, 255, 255));
+            }
+
+            imageRotateLeft.Source = loadResourceBitmap("icon-rotate-left.png", theme);
+            imageRotateRight.Source = loadResourceBitmap("icon-rotate-right.png", theme);
+            imageDelete.Source = loadResourceBitmap("icon-delete.png", theme);
+            imagePrev.Source = loadResourceBitmap("icon-prev.png", theme);
+            imageNext.Source = loadResourceBitmap("icon-next.png", theme);
+            imageSmooth.Source = loadResourceBitmap("icon-smooth-off.png", theme);
+            imageZoom.Source = loadResourceBitmap("icon-zoom-fit.png", theme);
+            imageMenu.Source = loadResourceBitmap("icon-menu.png", theme);
         }
 
         #endregion
@@ -147,7 +212,7 @@ namespace Niv
 
         #endregion
 
-        #region toogle
+        #region ui toogle
 
         // window About
         private void showWindowAbout()
