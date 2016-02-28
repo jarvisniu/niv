@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Niv"
         mc:Ignorable="d"
-        Title="Niv" Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/Niv;component/res/Niv.ico" Loaded="window_Loaded">
+        Title="&lt;Niv&gt;" Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/Niv;component/res/Niv.ico" Loaded="window_Loaded">
     <Grid x:Name="niv" Background="#FF404040">
 
         <Grid x:Name="container" Background="#FF202020" AllowDrop="True">
@@ -46,18 +46,18 @@
             </Border>
         </Grid>
         <Grid x:Name="info" HorizontalAlignment="Left" Width="200" Background="#FF404040" Margin="10,10,0,57">
-            <Label Content="Image Info" Foreground="#FFDEDEDE" FontSize="18" VerticalContentAlignment="Center" Margin="0,0,58,0" Height="48" VerticalAlignment="Top" Padding="14,5,5,5"/>
+            <Label x:Name="iImageInfo" Content="&lt;Image Info&gt;" Foreground="#FFDEDEDE" FontSize="18" VerticalContentAlignment="Center" Margin="0,0,58,0" Height="48" VerticalAlignment="Top" Padding="14,5,5,5"/>
             <Border x:Name="btnCloseInfo" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48">
                 <Image Margin="15" Source="/Niv;component/res/icon-close.png"/>
             </Border>
             <Rectangle Fill="#FFF4F4F5" Height="2" Margin="0,48,0,0" Stroke="Gray" VerticalAlignment="Top"/>
-            <Label Content="Filename" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Foreground="Silver" FontSize="14" VerticalContentAlignment="Center" Height="28"/>
+            <Label x:Name="iFilename" Content="&lt;Filename&gt;" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Foreground="Silver" FontSize="14" VerticalContentAlignment="Center" Height="28"/>
             <Label x:Name="labelInfoFilename" Content="-" Margin="10,84,10,0" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
-            <Label Content="Size" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" Foreground="Silver" FontSize="14" VerticalContentAlignment="Center" Height="28"/>
+            <Label x:Name="iSize" Content="&lt;Size&gt;" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" Foreground="Silver" FontSize="14" VerticalContentAlignment="Center" Height="28"/>
             <Label x:Name="labelInfoSize" Content="-" Margin="10,144,10,0" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
-            <Label Content="Resolution" HorizontalAlignment="Left" Margin="10,180,0,0" VerticalAlignment="Top" Foreground="Silver" FontSize="14" VerticalContentAlignment="Center" Height="28"/>
+            <Label x:Name="iResolution" Content="&lt;Rolution&gt;" HorizontalAlignment="Left" Margin="10,180,0,0" VerticalAlignment="Top" Foreground="Silver" FontSize="14" VerticalContentAlignment="Center" Height="28"/>
             <Label x:Name="labelInfoResolution" Content="-" Margin="10,204,10,0" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
-            <Label Content="Date" HorizontalAlignment="Left" Margin="10,240,0,0" VerticalAlignment="Top" Foreground="Silver" FontSize="14" VerticalContentAlignment="Center" Height="28"/>
+            <Label x:Name="iDate" Content="&lt;Date&gt;" HorizontalAlignment="Left" Margin="10,240,0,0" VerticalAlignment="Top" Foreground="Silver" FontSize="14" VerticalContentAlignment="Center" Height="28"/>
             <Label x:Name="labelInfoDate" Content="-" Margin="10,264,10,0" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
         </Grid>
         <Border x:Name="menu" BorderBrush="#FF404040" BorderThickness="2,2,2,0" Margin="0,0,10,57" HorizontalAlignment="Right" Width="196" Height="154" VerticalAlignment="Bottom" Background="Black">
@@ -66,20 +66,20 @@
                 <Border x:Name="btnHelp" BorderBrush="Black" BorderThickness="0" Height="40">
                     <Grid Margin="0">
                         <Image HorizontalAlignment="Left" Margin="15,11,0,11" Width="18" Source="/Niv;component/res/icon-about.png"/>
-                        <Label Content="Help" Margin="40,6,10,6" VerticalContentAlignment="Center" Foreground="#FFC1C1C1" FontSize="15"/>
+                        <Label x:Name="iHelp" Content="&lt;Help&gt;" Margin="40,6,10,6" VerticalContentAlignment="Center" Foreground="#FFC1C1C1" FontSize="15"/>
                     </Grid>
                 </Border>
                 <Border x:Name="btnAbout" BorderBrush="Black" BorderThickness="0" Height="40">
                     <Grid Margin="0">
                         <Image HorizontalAlignment="Left" Margin="15,11,0,11" Width="18" Source="/Niv;component/res/icon-about.png"/>
-                        <Label Content="About" Margin="40,6,10,6" VerticalContentAlignment="Center" Foreground="#FFC1C1C1" FontSize="15"/>
+                        <Label x:Name="iAbout" Content="&lt;About&gt;" Margin="40,6,10,6" VerticalContentAlignment="Center" Foreground="#FFC1C1C1" FontSize="15"/>
                     </Grid>
                 </Border>
                 <Rectangle Fill="White" Stroke="#FF404040" Height="1" Margin="0,8"/>
                 <Border x:Name="menuInfo" BorderBrush="Black" BorderThickness="0" Height="40">
                     <Grid Margin="0">
                         <Image HorizontalAlignment="Left" Margin="15,11,0,11" Width="18" Source="/Niv;component/res/icon-list.png"/>
-                        <Label Content="Image Info" Margin="40,6,10,6" VerticalContentAlignment="Center" Foreground="#FFC1C1C1" FontSize="15"/>
+                        <Label x:Name="iImageInfoMenu" Content="&lt;Image Info&gt;" Margin="40,6,10,6" VerticalContentAlignment="Center" Foreground="#FFC1C1C1" FontSize="15"/>
                     </Grid>
                 </Border>
                 <Rectangle Fill="White" Stroke="#FF404040" Height="0" Margin="0,0,0,8"/>

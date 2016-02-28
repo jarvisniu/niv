@@ -30,6 +30,14 @@ namespace Niv
         public void loadLanguage()
         {
             window.Title = I18N._("appName");
+            iImageInfo.Content = I18N._("imageInfo");
+            iFilename.Content = I18N._("filename");
+            iSize.Content = I18N._("size");
+            iResolution.Content = I18N._("resolution");
+            iDate.Content = I18N._("date");
+            iHelp.Content = I18N._("help");
+            iAbout.Content = I18N._("about");
+            iImageInfoMenu.Content = I18N._("imageInfo");
         }
         // end of class
     }
