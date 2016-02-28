@@ -17,7 +17,21 @@ namespace Niv
 {
     public partial class NivWindow : Window
     {
+        // components
         private About aboutWindow = new About();
+
+        // layout config
+        static double WINDOW_MIN_WIDTH = 480;
+        static double WINDOW_MIN_HEIGHT = 320;
+
+        public static int SEPARATOR_HEIGHT = 2;
+        //public static int MESSAGE_BOX_HEIGHT = 48;
+        public static int MARGIN_SIZE = 50;
+        //static int DB_CLICK_THRESH = 300;
+        //static int AA_SIZE_THRESHHOLD = 257;
+        //static int AA_SCALE_THRESHHOLD = 2;
+        //static double PROGRESS_CAP = 2;
+        static double INFO_WIDTH = 260;
 
         public NivWindow()
         {
@@ -27,6 +41,8 @@ namespace Niv
         private void window_Loaded(object sender, RoutedEventArgs e)
         {
             loadLanguage();
+            initLayout();
+            setThemeLight();
         }
 
         private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -35,8 +51,7 @@ namespace Niv
         }
 
         #region event hadnler
-
-
+        
         private void menuAbout_MouseUp(object sender, MouseButtonEventArgs e)
         {
             showWindowAbout();
@@ -47,7 +62,29 @@ namespace Niv
 
         #region life cycle
 
-        public void loadLanguage()
+        private void initLayout()
+        {
+            window.MinWidth = WINDOW_MIN_WIDTH;
+            window.MinHeight = WINDOW_MIN_HEIGHT;
+            exitButton.Visibility = System.Windows.Visibility.Hidden;
+            container.Margin = new Thickness(-MARGIN_SIZE, -MARGIN_SIZE, -MARGIN_SIZE, 0);
+            separator.Margin = new Thickness(0, 0, 0, MARGIN_SIZE - SEPARATOR_HEIGHT);
+            progress.Margin = new Thickness(0, 0, 0, separator.Margin.Bottom - 1);
+            toolbar.Margin = new Thickness(0, 0, 0, 0);
+            info.Margin = new Thickness(-INFO_WIDTH, 0, 0, 0);
+            info.Width = INFO_WIDTH;
+            page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE + 8);
+            page.Opacity = 0;
+            menu.Margin = new Thickness(0, 0, 0, MARGIN_SIZE);
+            menu.Height = 0;
+        }
+
+        private void setThemeLight()
+        {
+
+        }
+
+        private void loadLanguage()
         {
             window.Title = I18N._("appName");
             iImageInfo.Content = I18N._("imageInfo");

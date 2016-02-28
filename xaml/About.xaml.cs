@@ -24,7 +24,6 @@ namespace Niv
 
         private void window_Loaded(object sender, RoutedEventArgs e)
         {
-            //labelWebsite.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
