@@ -15,17 +15,15 @@
             </Border>
 
         </Grid>
-        <Grid x:Name="separator" Height="2" Margin="0,0,0,48" VerticalAlignment="Bottom" Background="#BF404040"/>
-        <Rectangle x:Name="progress" Fill="#BFFFFFFF" Margin="0,0,0,47" Height="4" VerticalAlignment="Bottom" Stroke="#7F000000" HorizontalAlignment="Left" Width="236"/>
         <Grid x:Name="toolbar" Margin="0" Background="#BF202020" Height="48" VerticalAlignment="Bottom">
             <Border x:Name="btnDelete" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="96,0,0,0">
-                <Image Margin="15" Source="/Niv;component/res/icon-delete.png"/>
+                <Image x:Name="imageDelete" Margin="15" Source="/Niv;component/res/icon-delete.png"/>
             </Border>
-            <Border x:Name="btnRotateL" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="0">
-                <Image Margin="15" Source="/Niv;component/res/icon-rotate-left.png"/>
+            <Border x:Name="btnRotateLeft" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="0">
+                <Image x:Name="imageRotateLeft" Margin="15" Source="/Niv;component/res/icon-rotate-left.png"/>
             </Border>
-            <Border x:Name="btnRotateR" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="48,0,0,0">
-                <Image Margin="15" Source="/Niv;component/res/icon-rotate-right.png"/>
+            <Border x:Name="btnRotateRight" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="48,0,0,0">
+                <Image x:Name="imageRotateRight" Margin="15" Source="/Niv;component/res/icon-rotate-right.png"/>
             </Border>
             <Grid Height="48" Margin="150,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="172">
                 <Border x:Name="btnPrev" BorderBrush="#FF484848" BorderThickness="0" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Margin="38,0,0,0">
@@ -85,6 +83,8 @@
                 <Rectangle Fill="White" Stroke="#FF404040" Height="0" Margin="0,0,0,8"/>
             </StackPanel>
         </Border>
+        <Grid x:Name="separator" Height="2" Margin="0,0,0,48" VerticalAlignment="Bottom" Background="#BF404040"/>
+        <Rectangle x:Name="progress" Fill="#BFFFFFFF" Margin="0,0,0,47" Height="4" VerticalAlignment="Bottom" Stroke="#7F000000" HorizontalAlignment="Left" Width="236"/>
         <Border x:Name="exitButton" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48" Margin="0">
             <Image Margin="15" Source="/Niv;component/res/icon-close.png"/>
         </Border>

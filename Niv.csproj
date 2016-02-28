@@ -120,23 +120,41 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\icon-about.png" />
-    <Resource Include="res\icon-close.png" />
-    <Resource Include="res\icon-delete.png" />
-    <Resource Include="res\icon-list.png" />
-    <Resource Include="res\icon-menu.png" />
-    <Resource Include="res\icon-next.png" />
-    <Resource Include="res\icon-prev.png" />
-    <Resource Include="res\icon-rotate-left.png" />
-    <Resource Include="res\icon-rotate-right.png" />
-    <Resource Include="res\icon-setting.png" />
-    <Resource Include="res\icon-smooth-off.png" />
-    <Resource Include="res\icon-smooth-on.png" />
-    <Resource Include="res\icon-zoom-121.png" />
-    <Resource Include="res\icon-zoom-fit.png" />
+    <Resource Include="res\theme-dark\icon-about.png" />
+    <Resource Include="res\theme-dark\icon-close.png" />
+    <Resource Include="res\theme-dark\icon-delete.png" />
+    <Resource Include="res\theme-dark\icon-list.png" />
+    <Resource Include="res\theme-dark\icon-menu.png" />
+    <Resource Include="res\theme-dark\icon-next.png" />
+    <Resource Include="res\theme-dark\icon-prev.png" />
+    <Resource Include="res\theme-dark\icon-rotate-left.png" />
+    <Resource Include="res\theme-dark\icon-rotate-right.png" />
+    <Resource Include="res\theme-dark\icon-setting.png" />
+    <Resource Include="res\theme-dark\icon-smooth-off.png" />
+    <Resource Include="res\theme-dark\icon-smooth-on.png" />
+    <Resource Include="res\theme-dark\icon-zoom-121.png" />
+    <Resource Include="res\theme-dark\icon-zoom-fit.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="res\Niv.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\theme-light\icon-rotate-left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\theme-light\icon-about.png" />
+    <Resource Include="res\theme-light\icon-close.png" />
+    <Resource Include="res\theme-light\icon-delete.png" />
+    <Resource Include="res\theme-light\icon-list.png" />
+    <Resource Include="res\theme-light\icon-menu.png" />
+    <Resource Include="res\theme-light\icon-next.png" />
+    <Resource Include="res\theme-light\icon-prev.png" />
+    <Resource Include="res\theme-light\icon-rotate-right.png" />
+    <Resource Include="res\theme-light\icon-setting.png" />
+    <Resource Include="res\theme-light\icon-smooth-off.png" />
+    <Resource Include="res\theme-light\icon-smooth-on.png" />
+    <Resource Include="res\theme-light\icon-zoom-121.png" />
+    <Resource Include="res\theme-light\icon-zoom-fit.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

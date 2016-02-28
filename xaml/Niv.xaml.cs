@@ -22,7 +22,7 @@ namespace Niv
         // components
         private About aboutWindow = new About();
         private AnimatorJar animationjar = new AnimatorJar();
-        private ButtonAnimation buttonAnimation = new ButtonAnimation(false);
+        private ButtonAnimator buttonAnimator = new ButtonAnimator(false);
 
         // layout config
         static double WINDOW_MIN_WIDTH = 480;
@@ -46,7 +46,7 @@ namespace Niv
         {
             loadLanguage();
             initLayout();
-            setThemeLight();
+            setTheme("light");
         }
 
         private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -83,14 +83,27 @@ namespace Niv
             menu.Height = 0;
 
             // add animation effects to buttons
-            buttonAnimation.apply(btnZoom).apply(btnPrev).apply(btnNext).apply(btnAA).apply(btnMenu).apply(exitButton)
-                .apply(btnDelete).apply(btnRotateL).apply(btnRotateR).apply(menuAbout)
+            buttonAnimator.apply(btnZoom).apply(btnPrev).apply(btnNext).apply(btnAA).apply(btnMenu).apply(exitButton)
+                .apply(btnDelete).apply(btnRotateLeft).apply(btnRotateRight).apply(menuAbout)
                 .apply(menuHelp).apply(menuInfo).apply(btnCloseInfo);
         }
 
-        private void setThemeLight()
+        private void setTheme(string theme)
         {
-
+            // niv.Background = new SolidColorBrush(Color.FromArgb(255, 250, 250, 250));
+            container.Background = new SolidColorBrush(Color.FromArgb(255, 250, 250, 250));
+            toolbar.Background = new SolidColorBrush(Color.FromArgb(255, 220, 220, 220));
+            separator.Background = progress.Stroke = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
+            progress.Fill = new SolidColorBrush(Color.FromArgb(255, 222, 222, 222));
+            
+            imageRotateLeft.Source = loadResourceBitmap("icon-rotate-left.png", theme);
+            imageRotateRight.Source = loadResourceBitmap("icon-rotate-right.png", theme);
+            imageDelete.Source = loadResourceBitmap("icon-delete.png", theme);
+            imagePrev.Source = loadResourceBitmap("icon-prev.png", theme);
+            imageNext.Source = loadResourceBitmap("icon-next.png", theme);
+            imageSmooth.Source = loadResourceBitmap("icon-smooth-off.png", theme);
+            imageZoom.Source = loadResourceBitmap("icon-zoom-fit.png", theme);
+            imageMenu.Source = loadResourceBitmap("icon-menu.png", theme);
         }
 
         private void loadLanguage()
@@ -125,8 +138,17 @@ namespace Niv
 
         #endregion
 
+        #region utils
+        private BitmapImage loadResourceBitmap(string filename, string theme)
+        {
+            string namespaceName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
+            return new BitmapImage(new Uri("pack://application:,,,/" + namespaceName + ";component/res/theme-" + theme + "/" + filename));
+        }
+
+        #endregion
+
         #region toogle
-        
+
         // window About
         private void showWindowAbout()
         {

@@ -12,7 +12,7 @@ using System.Windows.Media.Animation;
 
 namespace com.jarvisniu
 {
-    class ButtonAnimation
+    class ButtonAnimator
     {
         private Color BG_COLOR_DEFAULT = Color.FromArgb(0, 0, 0, 0);
         private Color BG_COLOR_HOVER = Color.FromArgb(128, 192, 192, 192);
@@ -43,7 +43,7 @@ namespace com.jarvisniu
         private Storyboard storyboardMouseDown = new Storyboard();
         private Storyboard storyboardMouseUp = new Storyboard();
 
-        public ButtonAnimation(bool _on)
+        public ButtonAnimator(bool _on)
         {
             on = _on;
 
@@ -75,7 +75,7 @@ namespace com.jarvisniu
 
         }
 
-        public ButtonAnimation apply(Border border)
+        public ButtonAnimator apply(Border border)
         {
             if (border.Background == null) border.Background = new SolidColorBrush(BG_COLOR_DEFAULT);
 
@@ -89,7 +89,7 @@ namespace com.jarvisniu
             return this;
         }
 
-        public ButtonAnimation init(Border border)
+        public ButtonAnimator init(Border border)
         {
             border.Background.SetCurrentValue(
                 SolidColorBrush.ColorProperty,
@@ -99,7 +99,7 @@ namespace com.jarvisniu
             return this;
         }
 
-        public ButtonAnimation cancel(Border border)
+        public ButtonAnimator cancel(Border border)
         {
             border.MouseEnter -= borderGradient1_MouseEnter;
             border.MouseLeave -= borderGradient1_MouseLeave;
