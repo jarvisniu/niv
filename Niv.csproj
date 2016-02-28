@@ -143,7 +143,22 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="res\icon-about.png" />
+    <Resource Include="res\icon-close.png" />
+    <Resource Include="res\icon-delete.png" />
+    <Resource Include="res\icon-list.png" />
+    <Resource Include="res\icon-menu.png" />
+    <Resource Include="res\icon-next.png" />
+    <Resource Include="res\icon-prev.png" />
+    <Resource Include="res\icon-rotate-left.png" />
+    <Resource Include="res\icon-rotate-right.png" />
+    <Resource Include="res\icon-setting.png" />
+    <Resource Include="res\icon-smooth-off.png" />
+    <Resource Include="res\icon-smooth-on.png" />
+    <Resource Include="res\icon-zoom-121.png" />
+    <Resource Include="res\icon-zoom-fit.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="res\Niv.ico" />
   </ItemGroup>

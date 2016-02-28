@@ -14,10 +14,10 @@ using System.Windows.Shapes;
 
 namespace Niv
 {
-    public partial class MainWindow : Window
+    public partial class NivWindow : Window
     {
         
-        public MainWindow()
+        public NivWindow()
         {
             InitializeComponent();
         }
