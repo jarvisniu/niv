@@ -83,7 +83,7 @@
     </Page>
     <Compile Include="src\AnimationJar.cs" />
     <Compile Include="src\ButtonAnimation.cs" />
-    <Compile Include="src\I18N.cs" />
+    <Compile Include="src\I18n.cs" />
     <Compile Include="xaml\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>

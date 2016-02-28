@@ -10,12 +10,12 @@ using System.Windows;
 
 namespace Niv
 {
-    public class I18N
+    public class I18n
     {
         private static string cultureCode;
         private static Dictionary<string, Dictionary<string, string>> langData = new Dictionary<string, Dictionary<string, string>>();
 
-        static I18N()
+        static I18n()
         {
             loadLangData();
 
@@ -24,7 +24,7 @@ namespace Niv
 
             // cultureCode = "en-US";  // test default
             // cultureCode = "zh-TW";  // test none-english
-            // cultureCode = "zh-TW2";  // test not exist
+            // cultureCode = "zh-HK";  // test not exist
 
             try
             {

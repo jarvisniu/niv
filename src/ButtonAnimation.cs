@@ -26,10 +26,10 @@ namespace com.jarvisniu
         private string theme;
         private List<Border> appliedBorders = new List<Border>();
 
-        private double TIME_HOVER = 0.01;
+        private double TIME_HOVER = 0.1;
         private double TIME_DOWN = 0.01;
-        private double TIME_UP = 0.3;
-        private double TIME_LEAVE = 0.4;
+        private double TIME_UP = 0.2;
+        private double TIME_LEAVE = 0.3;
 
         private SolidColorBrush brush = new SolidColorBrush();
 
