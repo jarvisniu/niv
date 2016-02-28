@@ -6,39 +6,56 @@ using System.Globalization;
 using System.Threading;
 using System.Resources;
 using System.Reflection;
+using System.Windows;
 
 namespace Niv
 {
     public class I18N
     {
-        private static ResourceManager resManager;
-
-        // Supported languages: "zh-CN", "zh-TW" and "en-US", default is "en-US"
-        private static string currLang;
-        private static CultureInfo cultureInfo;
+        private static string cultureCode;
+        private static Dictionary<string, Dictionary<string, string>> langData = new Dictionary<string, Dictionary<string, string>>();
 
         static I18N()
         {
-            currLang = Thread.CurrentThread.CurrentCulture.Name;
-            if (currLang != "zh-CN" && currLang != "zh-TW") currLang = "en-US";
-            // currLang = "zh-TW";
+            loadLangData();
+
+            cultureCode = Thread.CurrentThread.CurrentCulture.Name;
+            if (!langData.ContainsKey(cultureCode)) cultureCode = "en-US";
+
+            // cultureCode = "zh-TW";  // test none-english
+            // cultureCode = "zh-TW2";  // test not exist
+
             try
             {
-                cultureInfo = new CultureInfo(currLang, true);
+                new CultureInfo(cultureCode, true);
             }
             catch (Exception ex)
             {
-                currLang = "en-US";
-                cultureInfo = new CultureInfo(currLang, true);
+                cultureCode = "en-US";
             }
-            resManager = new ResourceManager("Niv.resx.Languages", Assembly.GetExecutingAssembly());
+        }
+
+        private static void loadLangData()
+        {
+            // Add your language here
+            langData.Add("en-US", new Dictionary<string, string>());
+            langData.Add("zh-CN", new Dictionary<string, string>());
+            langData.Add("zh-TW", new Dictionary<string, string>());
+
+            langData["en-US"]["appName"] = "Niv";
+            langData["zh-CN"]["appName"] = "小牛看图";
+            langData["zh-TW"]["appName"] = "小牛看圖";
+
+            langData["en-US"]["_missing"] = "[DATA MISSING]";
+            langData["zh-CN"]["_missing"] = "【数据丢失】";
+            langData["zh-TW"]["_missing"] = "【數據丟失】";
         }
 
         public static string _(string key)
         {
             try
             {
-                return resManager.GetString(key, cultureInfo);
+                return langData[cultureCode][key];
             }
             catch (MissingManifestResourceException ex)
             {
