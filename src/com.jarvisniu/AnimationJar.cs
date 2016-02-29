@@ -1,11 +1,19 @@
 ﻿/**
- * AnimationJar 0.3.0 - transition animation manager
- * 牛俊为(Jarvis Niu) - jarvisniu.com
- * Licence MIT
- * Log:
- *   v0.3.0 - 20150919
- *     - rotateTo()
+ * AnimationJar - Transition animation manager
+ * Jarvis Niu(牛俊为) - jarvisniu.com
+ * MIT Licence
+ *
+ * Usage
+ * =====
+ * AnimatorJar animator = new AnimatorJar();
+ * animator.fadeIn(borderHome);
+ * animator.fadeOut(borderHome);
+ * animator.translateLeftTo(borderHome);
+ * animator.translateLeftBy(borderHome);
+ * animator.translateTopTo(borderHome);
+ * animator.translateTopBy(borderHome);
  */
+
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,17 +22,6 @@ using System.Windows.Media.Animation;
 
 namespace com.jarvisniu
 {
-    /**
-     * AnimationJar动画瓶
-     * AnimatorJar animator = new AnimatorJar();
-     * animator.fadeIn(borderHome);
-     * animator.fadeOut(borderHome);
-     * animator.translateLeftTo(borderHome);
-     * animator.translateLeftBy(borderHome);
-     * animator.translateTopTo(borderHome);
-     * animator.translateTopBy(borderHome);
-     * 
-     */
 
     public class AnimatorJar
     {

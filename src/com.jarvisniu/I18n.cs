@@ -1,4 +1,11 @@
-﻿using System;
+﻿/**
+ * I18n - Multi-language support component
+ * Jarvis Niu(牛俊为) - jarvisniu.com
+ * MIT Licence
+ * 
+ * TODO add usage
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +15,7 @@ using System.Resources;
 using System.Reflection;
 using System.Windows;
 
-namespace Niv
+namespace com.jarvisniu
 {
     public class I18n
     {

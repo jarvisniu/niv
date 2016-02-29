@@ -81,9 +81,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="src\AnimationJar.cs" />
-    <Compile Include="src\ButtonAnimation.cs" />
-    <Compile Include="src\I18n.cs" />
+    <Compile Include="src\com.jarvisniu\AnimationJar.cs" />
+    <Compile Include="src\com.jarvisniu\ButtonAnimation.cs" />
+    <Compile Include="src\com.jarvisniu\I18n.cs" />
     <Compile Include="xaml\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>

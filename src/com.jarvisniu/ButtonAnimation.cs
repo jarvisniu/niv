@@ -1,7 +1,9 @@
 ﻿/**
- * BgColorAnimator 0.1.0 - WPF背景色渐变动画
- * 牛俊为 | Jarvis Niu - www.jarvisniu.com
- * Licence MIT
+ * ButtonAnimation - Easily add background easing transform effect to you buttons
+ * Jarvis Niu(牛俊为) - jarvisniu.com
+ * MIT Licence
+ * 
+ * TODO add usage
  */
 using System;
 using System.Collections.Generic;
