@@ -13,11 +13,11 @@ using System.Windows.Shapes;
 
 namespace Niv
 {
-    public partial class About : Window
+    public partial class AboutWindow : Window
     {
         private bool allowClose = false;
 
-        public About()
+        public AboutWindow()
         {
             InitializeComponent();
         }

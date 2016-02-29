@@ -185,6 +185,7 @@ namespace com.jarvisniu
             Storyboard.SetTarget(colorAnimationMouseLeave, (FrameworkElement)sender);
             storyboardMouseLeave.Begin();
         }
-        //  end of class
+        
+        // EOC
     }
 }

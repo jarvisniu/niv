@@ -73,26 +73,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="xaml\About.xaml">
+    <Page Include="xaml\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="xaml\Niv.xaml">
+    <Page Include="xaml\NivWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="src\com.jarvisniu\AnimationJar.cs" />
     <Compile Include="src\com.jarvisniu\ButtonAnimation.cs" />
+    <Compile Include="src\com.jarvisniu\FPS.cs" />
     <Compile Include="src\com.jarvisniu\I18n.cs" />
-    <Compile Include="xaml\About.xaml.cs">
-      <DependentUpon>About.xaml</DependentUpon>
+    <Compile Include="src\FolderWalker.cs" />
+    <Compile Include="src\ImageInfo.cs" />
+    <Compile Include="src\InputController.cs" />
+    <Compile Include="src\MarginManager.cs" />
+    <Compile Include="xaml\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="xaml\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="xaml\Niv.xaml.cs">
-      <DependentUpon>Niv.xaml</DependentUpon>
+    <Compile Include="xaml\NivWindow.xaml.cs">
+      <DependentUpon>NivWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

@@ -119,6 +119,7 @@ namespace com.jarvisniu
                 return _("_missing");
             }
         }
-        // end of class
+        
+        // EOC
     }
 }

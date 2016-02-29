@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Niv"
         mc:Ignorable="d"
-        Title="&lt;Niv&gt;" Height="350" Width="520" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/Niv;component/res/Niv.ico" Loaded="window_Loaded" Closing="window_Closing">
+        Title="&lt;Niv&gt;" Height="350" Width="520" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/Niv;component/res/Niv.ico">
     <Grid x:Name="niv" Background="#FF404040">
 
-        <Grid x:Name="container" Background="#FF202020" AllowDrop="True" SizeChanged="container_SizeChanged" MouseMove="container_MouseMove">
+        <Grid x:Name="container" Background="#FF202020" AllowDrop="True">
             <Image x:Name="image" Margin="168,34,214.6,93.4" Stretch="Fill" RenderTransformOrigin="0.5,0.5" />
             <Border x:Name="page" BorderBrush="Gray" BorderThickness="2" Margin="0,0,10,218" CornerRadius="0" Background="#FF404040" HorizontalAlignment="Right" Width="50" Height="32" VerticalAlignment="Bottom">
                 <Label x:Name="iPage" Content="0/0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" Foreground="#FFDEDEDE"/>
@@ -16,66 +16,64 @@
 
         </Grid>
         <Grid x:Name="toolbar" Margin="0" Background="#BF202020" Height="48" VerticalAlignment="Bottom">
-            <Border x:Name="btnDelete" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="96,0,0,0" MouseUp="btnDelete_MouseUp">
+            <Border x:Name="btnDeleteImage" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="96,0,0,0">
                 <Image x:Name="imageDelete" Margin="15" Source="/Niv;component/res/theme-dark/icon-delete.png"/>
             </Border>
-            <Border x:Name="btnRotateLeft" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="0" MouseUp="btnRotateLeft_MouseUp">
+            <Border x:Name="btnRotateLeft" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="0">
                 <Image x:Name="imageRotateLeft" Margin="15" Source="/Niv;component/res/theme-dark/icon-rotate-left.png"/>
             </Border>
-            <Border x:Name="btnRotateRight" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="48,0,0,0" MouseUp="btnRotateRight_MouseUp">
+            <Border x:Name="btnRotateRight" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="48,0,0,0">
                 <Image x:Name="imageRotateRight" Margin="15" Source="/Niv;component/res/theme-dark/icon-rotate-right.png"/>
             </Border>
             <Grid Height="48" Margin="150,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="172">
-                <Border x:Name="btnPrev" BorderBrush="#FF484848" BorderThickness="0" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Margin="38,0,0,0" MouseUp="btnPrev_MouseUp">
+                <Border x:Name="btnPrevImage" BorderBrush="#FF484848" BorderThickness="0" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Margin="38,0,0,0">
                     <Image x:Name="imagePrev" Margin="15" Source="/Niv;component/res/theme-dark/icon-prev.png"/>
                 </Border>
-                <Border x:Name="btnNext" BorderBrush="#FF484848" BorderThickness="0" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Margin="86,0,0,0" MouseUp="btnNext_MouseUp">
+                <Border x:Name="btnNextImage" BorderBrush="#FF484848" BorderThickness="0" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Margin="86,0,0,0">
                     <Image x:Name="imageNext" Margin="15" Source="/Niv;component/res/theme-dark/icon-next.png"/>
                 </Border>
             </Grid>
-            <Border x:Name="btnSmooth" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" Margin="0,0,96,0" HorizontalAlignment="Right" Width="48" MouseUp="btnSmooth_MouseUp">
+            <Border x:Name="btnSmooth" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" Margin="0,0,96,0" HorizontalAlignment="Right" Width="48">
                 <Image x:Name="imageSmooth" Margin="15" Source="/Niv;component/res/theme-dark/icon-smooth-off.png"/>
             </Border>
-            <Border x:Name="btnZoom" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" Margin="0,0,48,0" HorizontalAlignment="Right" Width="48" MouseUp="btnZoom_MouseUp">
+            <Border x:Name="btnZoom" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" Margin="0,0,48,0" HorizontalAlignment="Right" Width="48">
                 <Image x:Name="imageZoom" Margin="15" Source="/Niv;component/res/theme-dark/icon-zoom-fit.png"/>
             </Border>
-            <Border x:Name="btnMenu" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" Margin="0" HorizontalAlignment="Right" Width="48" MouseUp="btnMenu_MouseUp">
+            <Border x:Name="btnMenu" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" Margin="0" HorizontalAlignment="Right" Width="48">
                 <Image x:Name="imageMenu" Margin="15" Source="/Niv;component/res/theme-dark/icon-menu.png"/>
             </Border>
         </Grid>
-        <Border x:Name="menu" BorderBrush="#BF404040" BorderThickness="2,2,2,0" Margin="0,0,10,57" HorizontalAlignment="Right" Width="196" Height="154" VerticalAlignment="Bottom" Background="Black">
+        <Border x:Name="menu" BorderBrush="#BF404040" BorderThickness="2,2,2,0" Margin="0,0,10,57" HorizontalAlignment="Right" Width="196" Height="140" VerticalAlignment="Bottom" Background="Black">
             <StackPanel x:Name="menuStack">
-                <Rectangle Fill="White" Stroke="#FF404040" Height="0" Margin="0,0,0,8"/>
-                <Border x:Name="menuHelp" BorderBrush="Black" BorderThickness="0" Height="40">
+                <Border x:Name="menuHelp" BorderBrush="Black" BorderThickness="0" Height="40" Margin="0,6,0,0">
                     <Grid Margin="0">
                         <Image x:Name="imageHelp" HorizontalAlignment="Left" Margin="15,11,0,11" Width="18" Source="/Niv;component/res/theme-dark/icon-about.png"/>
                         <Label x:Name="iHelp" Content="&lt;Help&gt;" Margin="40,4,10,4" VerticalContentAlignment="Center" Foreground="Silver" FontSize="15"/>
                     </Grid>
                 </Border>
-                <Border x:Name="menuAbout" BorderBrush="Black" BorderThickness="0" Height="40" MouseUp="menuAbout_MouseUp">
+                <Border x:Name="menuAbout" BorderBrush="Black" BorderThickness="0" Height="40">
                     <Grid Margin="0">
                         <Image x:Name="imageAbout" HorizontalAlignment="Left" Margin="15,11,0,11" Width="18" Source="/Niv;component/res/theme-dark/icon-about.png"/>
                         <Label x:Name="iAbout" Content="&lt;About&gt;" Margin="40,4,10,4" VerticalContentAlignment="Center" Foreground="Silver" FontSize="15"/>
                     </Grid>
                 </Border>
-                <Rectangle x:Name="menuLine" Fill="White" Stroke="#FF404040" Height="1" Margin="0,8"/>
-                <Border x:Name="menuInfo" BorderBrush="Black" BorderThickness="0" Height="40" MouseUp="menuInfo_MouseUp">
+                <Rectangle x:Name="menuLine" Fill="White" Stroke="#FF404040" Height="1" Margin="0,6"/>
+                <Border x:Name="menuImageInfo" BorderBrush="Black" BorderThickness="0" Height="40">
                     <Grid Margin="0">
                         <Image x:Name="imageInfo" HorizontalAlignment="Left" Margin="15,11,0,11" Width="18" Source="/Niv;component/res/theme-dark/icon-list.png"/>
                         <Label x:Name="iImageInfo" Content="&lt;Image Info&gt;" Margin="40,4,10,4" VerticalContentAlignment="Center" Foreground="Silver" FontSize="15"/>
                     </Grid>
                 </Border>
-                <Rectangle Fill="White" Stroke="#FF404040" Height="0" Margin="0,0,0,8"/>
             </StackPanel>
         </Border>
         <Grid x:Name="separator" Height="2" Margin="0,0,0,48" VerticalAlignment="Bottom" Background="#BF404040"/>
         <Rectangle x:Name="progress" Fill="#BFFFFFFF" Margin="0,0,0,47" Height="4" VerticalAlignment="Bottom" Stroke="#7F000000" HorizontalAlignment="Left" Width="236"/>
-        <Border x:Name="exitButton" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48" Margin="0">
+        <Border x:Name="btnExit" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48" Margin="0">
             <Image Margin="15" Source="/Niv;component/res/theme-dark/icon-close.png"/>
         </Border>
         <Grid x:Name="info" HorizontalAlignment="Left" Width="200" Background="#FF404040" Margin="10,10,0,57">
             <Label x:Name="iImageInfoTitle" Content="&lt;Image Info&gt;" Foreground="#FFDEDEDE" FontSize="18" VerticalContentAlignment="Center" Margin="0,0,48,0" Height="48" VerticalAlignment="Top" Padding="14,5,5,5"/>
-            <Border x:Name="btnCloseInfo" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48" MouseUp="btnCloseInfo_MouseUp">
+            <Border x:Name="btnCloseInfo" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48">
                 <Image x:Name="imageCloseInfo" Margin="15" Source="/Niv;component/res/theme-dark/icon-close.png"/>
             </Border>
             <Rectangle Fill="#FFF4F4F5" Height="2" Margin="0,48,0,0" Stroke="Gray" VerticalAlignment="Top"/>

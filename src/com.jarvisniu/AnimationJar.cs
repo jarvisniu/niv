@@ -243,6 +243,6 @@ namespace com.jarvisniu
             return this;
         }
 
-        //  end of class
+        // EOC
     }
 }
