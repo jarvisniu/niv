@@ -33,8 +33,8 @@ namespace Niv
         Timer timerClosePage;
 
         // layout config
-        static double WINDOW_MIN_WIDTH = 480;
-        static double WINDOW_MIN_HEIGHT = 360;
+        static double WINDOW_MIN_WIDTH = 680;
+        static double WINDOW_MIN_HEIGHT = 470;
         public static int SEPARATOR_HEIGHT = 2;
         //public static int MESSAGE_BOX_HEIGHT = 48;
         public static int MARGIN_SIZE = 50;
@@ -323,8 +323,14 @@ namespace Niv
                     marginManager.fullwindow().setMarginDesByKeys().apply();
                 else
                     marginManager.setMarginDesByKeys().apply();
-                refreshProgressI();
                 gridHeight = e.NewSize.Height;
+                Console.WriteLine(window.Width + ", " + window.Height);
+            };
+
+            // Size-changed envent
+            separator.SizeChanged += (object sender, SizeChangedEventArgs e) =>
+            {
+                refreshProgressI();
             };
 
             container.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
@@ -730,7 +736,7 @@ namespace Niv
         private double getProgressLeft()
         {
             double percent = (double)folderWalker.currentIndex / folderWalker.count;
-            return separator.RenderSize.Width * percent - PROGRESS_CAP;
+            return separator.RenderSize.Width * percent + separator.Margin.Left - PROGRESS_CAP;
         }
 
         private void toggleZoomIn121AndFit()
@@ -896,14 +902,16 @@ namespace Niv
             visibleStates[info] = !visibleStates[info];
             if (visibleStates[info])
             {
-                this.MinWidth = WINDOW_MIN_WIDTH + INFO_WIDTH;
                 animatorJar.translateLeftTo(container, INFO_WIDTH - MARGIN_SIZE);
+                animatorJar.translateLeftTo(toolbar, INFO_WIDTH);
+                animatorJar.translateLeftTo(separator, INFO_WIDTH);
                 animatorJar.translateLeftTo(info, 0);
             }
             else
             {
-                this.MinWidth = WINDOW_MIN_WIDTH;
                 animatorJar.translateLeftTo(container, -MARGIN_SIZE);
+                animatorJar.translateLeftTo(toolbar, 0);
+                animatorJar.translateLeftTo(separator, 0);
                 animatorJar.translateLeftTo(info, -INFO_WIDTH);
             }
         }
