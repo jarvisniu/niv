@@ -24,8 +24,8 @@ namespace Niv
         private AboutWindow aboutWindow = new AboutWindow();
         private AnimatorJar animatorJar = new AnimatorJar();
         private ButtonAnimator buttonAnimator = new ButtonAnimator();
-        MarginManager marginManager;
-        InputController inputController;
+        Transformer marginManager;
+        Controller inputController;
         FolderWalker folderWalker = new FolderWalker();
         // RecycleBin recycleBin = new RecycleBin(AppDomain.CurrentDomain.BaseDirectory);
 
@@ -138,11 +138,11 @@ namespace Niv
         private void initComponents()
         {
             // Margin manager
-            marginManager = new MarginManager(container, image, null, folderWalker);
+            marginManager = new Transformer(container, image, null, folderWalker);
             marginManager.onScaleChanged = setButtonSmoothVisibility;
 
             // Input-controller
-            inputController = new InputController(marginManager);
+            inputController = new Controller(marginManager);
 
             // Timer
             timerClosePage = new Timer(3000);

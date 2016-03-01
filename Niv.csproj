@@ -82,13 +82,13 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="src\com.jarvisniu\AnimationJar.cs" />
-    <Compile Include="src\com.jarvisniu\ButtonAnimation.cs" />
+    <Compile Include="src\com.jarvisniu\ButtonAnimator.cs" />
     <Compile Include="src\com.jarvisniu\FPS.cs" />
     <Compile Include="src\com.jarvisniu\I18n.cs" />
-    <Compile Include="src\FolderWalker.cs" />
+    <Compile Include="src\Walker.cs" />
     <Compile Include="src\ImageInfo.cs" />
-    <Compile Include="src\InputController.cs" />
-    <Compile Include="src\MarginManager.cs" />
+    <Compile Include="src\Controller.cs" />
+    <Compile Include="src\Transformer.cs" />
     <Compile Include="xaml\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>

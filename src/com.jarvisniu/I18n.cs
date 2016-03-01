@@ -1,9 +1,16 @@
 ﻿/**
  * I18n - Multi-language support component
- * Jarvis Niu(牛俊为) - jarvisniu.com
+ * Jarvis Niu(牛俊为) - http://jarvisniu.com/
  * MIT Licence
  * 
- * TODO add usage
+ * ## Usage
+ *    1. Set the language data in `loadLanguageData()`.
+ *    2. Get the translated string of string key:
+ *        window.Title = I18n._("key");
+ *    
+ *    This library will automaticly detect the user's language
+ *    and fall back to the default if the user's is not supported.
+ *
  */
 using System;
 using System.Collections.Generic;
@@ -19,31 +26,48 @@ namespace com.jarvisniu
 {
     public class I18n
     {
+        // The default code of this program
+        private static string DEFAULT_CULTURE_CODE = "en-US";
+
+        // The culture-code of current language
         private static string cultureCode;
+
+        // Language data: keys and each translations
         private static Dictionary<string, Dictionary<string, string>> langData = new Dictionary<string, Dictionary<string, string>>();
 
+        // Constructor
         static I18n()
         {
-            loadLangData();
+            // Load the language data
+            loadLanguageData();
 
+            // Detect the user's default culture code
             cultureCode = Thread.CurrentThread.CurrentCulture.Name;
-            if (!langData.ContainsKey(cultureCode)) cultureCode = "en-US";
 
-            // cultureCode = "en-US";  // test default
-            // cultureCode = "zh-TW";  // test none-english
-            // cultureCode = "zh-HK";  // test not exist
+            // cultureCode = "en-US";  // test default code
+            // cultureCode = "zh-TW";  // test avialable non-default code
+            // cultureCode = "zh-HK";  // test not avialable code
 
+            // If the user's culture code is not supported, use the default.
+            if (!langData.ContainsKey(cultureCode)) cultureCode = DEFAULT_CULTURE_CODE;
+        }
+
+        // Get the string to the key
+        public static string _(string key)
+        {
             try
             {
-                new CultureInfo(cultureCode, true);
+                return langData[cultureCode][key];
             }
             catch (Exception ex)
             {
-                cultureCode = "en-US";
+                MessageBox.Show("I18N: langData[" + key + "] not exists");
+                return _("_missing");
             }
         }
 
-        private static void loadLangData()
+        // Load the language data
+        private static void loadLanguageData()
         {
             // Add your language here
             langData.Add("en-US", new Dictionary<string, string>());
@@ -105,19 +129,6 @@ namespace com.jarvisniu
             langData["en-US"]["officialWebsite"] = "Official Website";
             langData["zh-CN"]["officialWebsite"] = "官方网站";
             langData["zh-TW"]["officialWebsite"] = "官方網站";
-        }
-
-        public static string _(string key)
-        {
-            try
-            {
-                return langData[cultureCode][key];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("I18N: langData[" + key + "] not exists");
-                return _("_missing");
-            }
         }
         
         // EOC

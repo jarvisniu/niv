@@ -1,17 +1,23 @@
 ﻿/**
- * AnimationJar - Transition animation manager
- * Jarvis Niu(牛俊为) - jarvisniu.com
+ * AnimationJar - A transition animation effect collection for WPF controls.
+ * Jarvis Niu(牛俊为) - http://jarvisniu.com/
  * MIT Licence
  *
- * Usage
- * =====
- * AnimatorJar animator = new AnimatorJar();
- * animator.fadeIn(borderHome);
- * animator.fadeOut(borderHome);
- * animator.translateLeftTo(borderHome);
- * animator.translateLeftBy(borderHome);
- * animator.translateTopTo(borderHome);
- * animator.translateTopBy(borderHome);
+ * ## API
+ *     AnimatorJar animator = new AnimatorJar();
+ *
+ *     animator.fadeIn(borderHome);
+ *     animator.fadeOut(borderHome);
+ *     animator.translateLeftTo(borderHome);
+ *     animator.translateLeftBy(borderHome);
+ *     animator.translateTopTo(borderHome);
+ *     animator.translateTopBy(borderHome);
+ *     animator.rotateTo(borderHome);
+ *     animator.heightTo(borderHome);
+ * 
+ *     Every effect has a instant version with no transition animation effect.
+ *     Their names are the same but with a additional letter `I` in the end.
+ * 
  */
 
 using System;
@@ -25,37 +31,40 @@ namespace com.jarvisniu
 
     public class AnimatorJar
     {
-        // variables
+        /// Variables ----------------------------------------------------------
 
+        // The destinatoin value of fade-in animation
         private double FADE_IN_VALUE = 1.0;
+
+        // The destinatoin value of fade-out animation
         private double FADE_OUT_VALUE = 0.0;
 
-        // durations
-        Duration DURITION_ZERO = new Duration(TimeSpan.FromSeconds(0));
-        //Duration DURITION_DOT1 = new Duration(TimeSpan.FromSeconds(0.1));
-        //Duration DURITION_DOT15 = new Duration(TimeSpan.FromSeconds(0.15));
-        Duration DURITION_DOT2 = new Duration(TimeSpan.FromSeconds(0.2));
-        //Duration DURITION_DOT25 = new Duration(TimeSpan.FromSeconds(0.25));
+        // The animation duration constant
+        private static Duration DURITION_ZERO = new Duration(TimeSpan.FromSeconds(0));
+        private static Duration DURITION_DOT2 = new Duration(TimeSpan.FromSeconds(0.2));
 
+        // The Animation objects of every effects
         private DoubleAnimation opacityAnimationFadeIn;
         private DoubleAnimation opacityAnimationFadeOut;
         private ThicknessAnimation translateAnimation;
         private DoubleAnimation rotateAnimation;
         private DoubleAnimation heightAnimation;
 
+        // The `PropertyPath` objects of every effects
         private PropertyPath pathBorderOpacity = new PropertyPath(FrameworkElement.OpacityProperty);
         private PropertyPath pathBorderMargin = new PropertyPath(FrameworkElement.MarginProperty);
         private PropertyPath pathRotation = new PropertyPath("RenderTransform.Angle");
         private PropertyPath pathHeight = new PropertyPath(FrameworkElement.HeightProperty);
 
+        // The `Storyboard` objects of every effects
         private Storyboard boardFadeIn = new Storyboard();
         private Storyboard boardFadeOut = new Storyboard();
         private Storyboard boardTranslate = new Storyboard();
         private Storyboard boardRotate = new Storyboard();
         private Storyboard boardHeight = new Storyboard();
 
-        // init
 
+        // Constructor
         public AnimatorJar()
         {
             opacityAnimationFadeIn = new DoubleAnimation();
@@ -90,7 +99,7 @@ namespace com.jarvisniu
             boardHeight.Children.Add(heightAnimation);
         }
 
-        // APIs
+        /// All transition animation effects -----------------------------------
 
         public AnimatorJar fadeIn(FrameworkElement target)
         {

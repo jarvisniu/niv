@@ -1,5 +1,5 @@
 ﻿/**
- * FolderWalker: Walk the folder which containing the image and get the rest images.
+ * Walker: Walk the folder which containing the image and get the rest images.
  */
 
 using System;
@@ -14,8 +14,10 @@ namespace Niv
 {
     class FolderWalker
     {
+        /// Variables ----------------------------------------------------------
+
         // Supported image format, used to recognize the image files.
-        static string SUPPORTED_IMAGE_EXT = ".jpg.jpeg.png.gif.bmp.ico.tif.tiff";
+        static string SUPPORTED_IMAGE_EXT = ".jpg.jpeg.png.bmp.ico.tif.tiff.gif";
 
         // The fullname of current loaded folder
         string currentFolderName;
@@ -26,9 +28,12 @@ namespace Niv
         // The index of last displayed image. Used to see if they are adjacent or at the two ends.
         int lastIndex = -1;
 
-        // The index of current displaying image in the image list
+        /// Properties ---------------------------------------------------------
+
+        // Private values of properties
         int _currentIndex = -1;
-        
+
+        // The index of current displaying image in the image list
         public int currentIndex
         {
             get
@@ -47,11 +52,11 @@ namespace Niv
         {
             get
             {
-                return  imageInfos.Count > 0 ? imageInfos[_currentIndex] : null;
+                return imageInfos.Count > 0 ? imageInfos[_currentIndex] : null;
             }
         }
 
-        // The count of images
+        // The count of images in the folder
         public int count
         {
             get
@@ -59,6 +64,8 @@ namespace Niv
                 return imageInfos.Count;
             }
         }
+
+        /// Methods ------------------------------------------------------------
 
         // Check if a file is a supported format
         public static bool isFormatSupported(string filename)
@@ -73,6 +80,7 @@ namespace Niv
             return this.count > 2 && Math.Abs(currentIndex - lastIndex) > 1;
         }
 
+        // Load all the image files in the specified folder.
         public void loadFolder(string folderName)
         {
             string folderPath = Path.GetDirectoryName(folderName).ToLower();
@@ -108,26 +116,26 @@ namespace Niv
 
         // Switch to the previous image in the list and return if the switch success.
         // Switch will fail if imageList.Count < 2
-        public bool switchBackward()
+        public void switchBackward()
         {
-            if (imageInfos.Count < 2) return false;
-
-            currentIndex--;
-            if (currentIndex == -1) currentIndex = imageInfos.Count - 1;
-            return true;
+            if (imageInfos.Count > 1)
+            {
+                currentIndex--;
+                if (currentIndex == -1) currentIndex = imageInfos.Count - 1;
+            }
         }
 
         // Switch to the next image in the list.
-        public bool switchForward()
+        public void switchForward()
         {
-            if (imageInfos.Count < 2) return false;
-
-            currentIndex++;
-            if (currentIndex == imageInfos.Count) currentIndex = 0;
-            return true;
+            if (imageInfos.Count > 1)
+            {
+                currentIndex++;
+                if (currentIndex == imageInfos.Count) currentIndex = 0;
+            }
         }
-        
-        // Remove current file info from the list
+
+        // Remove current file info from the list.
         public void removeCurrentImageInfo()
         {
             imageInfos.RemoveAt(currentIndex);

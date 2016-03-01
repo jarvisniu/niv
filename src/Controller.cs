@@ -6,17 +6,17 @@ using System.Windows;
 
 namespace Niv
 {
-    class InputController
+    class Controller
     {
-        MarginManager marginManager;  // TODO margin manager => image transformer
-        Point mousePos;
-        Point mouseDownAt;
+        private Transformer transformer;
+        private Point mousePos;
+        private Point mouseDownAt;
 
-        public bool isLeftButtonDown = false;  // todo rename to leftButtonDown
+        public bool isLeftButtonDown = false;
 
-        public InputController(MarginManager manager)
+        public Controller(Transformer transformer)
         {
-            marginManager = manager;
+            this.transformer = transformer;
         }
 
         public void onMouseMove(Point pos)
@@ -37,10 +37,10 @@ namespace Niv
 
         public void onMouseDoubleClick()
         {
-            if (marginManager.isFullwindow)
-                marginManager.zoomTo(1, mousePos).animate();
+            if (transformer.isFullwindow)
+                transformer.zoomTo(1, mousePos).animate();
             else
-                marginManager.fullwindow().animate();
+                transformer.fullwindow().animate();
         }
 
         public void onDragMove()
@@ -48,7 +48,7 @@ namespace Niv
             double dX = mousePos.X - mouseDownAt.X;
             double dY = mousePos.Y - mouseDownAt.Y;
 
-            marginManager.pan(dX, dY).apply().setScaleCenterWithImage();
+            transformer.pan(dX, dY).apply().setScaleCenterWithImage();
 
 
             mouseDownAt.X = mousePos.X;
@@ -58,13 +58,13 @@ namespace Niv
         public void onMouseWheel(bool up)
         {
             double dS = up ? 1.25 : 0.8;
-            marginManager.zoomBy(dS, mousePos).animate();
+            transformer.zoomBy(dS, mousePos).animate();
         }
 
         // TODO delete this?
         private void zoomByAtMousePos(double deltaScale)
         {
-            marginManager.zoomBy(deltaScale, mousePos).animate();
+            transformer.zoomBy(deltaScale, mousePos).animate();
         }
 
         // EOC

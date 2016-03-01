@@ -13,7 +13,7 @@ using System.Timers;
 
 namespace Niv
 {
-    class MarginManager
+    class Transformer
     {
         // TODO remove this
         // In this fullwindow mode:
@@ -60,11 +60,11 @@ namespace Niv
 
         /// Properties ---------------------------------------------------------
 
-        // Proptertie private variables
+        // Private property values
         private Point _center = WINDOW_CENTER_POSITION;
         private double _scale = 1;
 
-        // Normalized[0~1] position on the image where the container center at
+        // Normalized coordinates of the image position at the container center
         public Point center
         {
             get
@@ -105,7 +105,7 @@ namespace Niv
         }
 
         // Constructor
-        public MarginManager(Grid _grid, Image _image, BitmapImage _bitmap, FolderWalker _walker)
+        public Transformer(Grid _grid, Image _image, BitmapImage _bitmap, FolderWalker _walker)
         {
             container = _grid;
             image = _image;
@@ -181,7 +181,7 @@ namespace Niv
         }
 
         // Set to initial state used when the image appears the first time
-        public MarginManager initOne()
+        public Transformer initOne()
         {
             exitFullwindowMode();
 
@@ -194,7 +194,7 @@ namespace Niv
         }
 
         // Enter fullscreen mode when TODO rename to FitWindow, or fullwindow
-        public MarginManager fullwindow()
+        public Transformer fullwindow()
         {
             if (bitmap == null) return this;
 
@@ -209,7 +209,7 @@ namespace Niv
         }
 
         // Set the image to 1:1, but keep the image position
-        public MarginManager fullsize()
+        public Transformer fullsize()
         {
             Size gridSize = container.RenderSize;
             double scaleX = (gridSize.Width - NivWindow.MARGIN_SIZE * 2) / bitmap.Width;
@@ -221,7 +221,7 @@ namespace Niv
         }
 
         // Move the image to the center of window, but not zoom it.
-        public MarginManager screenCenter()
+        public Transformer screenCenter()
         {
             center = WINDOW_CENTER_POSITION;
 
@@ -229,7 +229,7 @@ namespace Niv
         }
 
         // Zoom the image to 1:1 with the image center TODO or window center
-        public MarginManager zoom121AtStand()
+        public Transformer zoom121AtStand()
         {
             zoomTo(1, getImageCenter());
 
@@ -237,7 +237,7 @@ namespace Niv
         }
 
         // Zoom-by the image with the image center TODO or window center
-        public MarginManager zoomAtStand(double deltaScale)
+        public Transformer zoomAtStand(double deltaScale)
         {
             zoomTo(scale * deltaScale, getImageCenter());
 
@@ -245,7 +245,7 @@ namespace Niv
         }
 
         // Zoom-by the image at pivot which is the normalized position in the image.
-        public MarginManager zoomBy(double dS, Point pivot)
+        public Transformer zoomBy(double dS, Point pivot)
         {
             exitFullwindowMode();
 
@@ -270,7 +270,7 @@ namespace Niv
         }
 
         // Zoom-to the image at pivot which is the normalized position in the image.
-        public MarginManager zoomTo(double s, Point pivot)
+        public Transformer zoomTo(double s, Point pivot)
         {
             double dS = s / scale;
             zoomBy(dS, pivot);
@@ -279,13 +279,13 @@ namespace Niv
         }
 
         // Calculate the `marginDestination` or TODO what do about fullscreen?
-        public MarginManager setMarginDesByKeys()
+        public Transformer setMarginDesByKeys()
         {
                 return calcMarginDestination();
         }
 
         // Calculate the `marginDestination` from `center` and `scale`
-        public MarginManager calcMarginDestination()
+        public Transformer calcMarginDestination()
         {
             if (bitmap == null) return this;
 
@@ -314,7 +314,7 @@ namespace Niv
         }
 
         // Pan the `margin-destination` by a distance, in unit "px"
-        public MarginManager pan(double dX, double dY)
+        public Transformer pan(double dX, double dY)
         {
             exitFullwindowMode();
 
@@ -325,7 +325,7 @@ namespace Niv
         }
 
         // Set `scale` and `center` values
-        public MarginManager setScaleCenter(double scale, Point center)
+        public Transformer setScaleCenter(double scale, Point center)
         {
             this.scale = scale;
             this.center = center;
@@ -334,7 +334,7 @@ namespace Niv
         }
         
         // Set the `scale`  value
-        public MarginManager setScale(double scale)
+        public Transformer setScale(double scale)
         {
             this.scale = scale;
 
@@ -342,7 +342,7 @@ namespace Niv
         }
 
         // Set the `center`  value
-        public MarginManager setCenter(Point center)
+        public Transformer setCenter(Point center)
         {
             this.center = center;
 
@@ -350,21 +350,21 @@ namespace Niv
         }
 
         // Apply the `marginDestination` to the `Margin` of `image` instantly
-        public MarginManager apply()
+        public Transformer apply()
         {
             image.Margin = marginDestination;
             return this;
         }
 
         // Apply the `marginDestination` to the `Margin` of  image with animation effect
-        public MarginManager animate()
+        public Transformer animate()
         {
             timerAnimation.Start();
             return this;
         }
 
         // Update scale, center to keep consistent with margin
-        public MarginManager setScaleCenterWithImage()
+        public Transformer setScaleCenterWithImage()
         {
             if (bitmap == null) return this;
 
@@ -383,7 +383,7 @@ namespace Niv
         }
 
         // Exit `fullwindow` mode
-        public MarginManager exitFullwindowMode()
+        public Transformer exitFullwindowMode()
         {
             if (walker.currentImageInfo != null)
                 walker.currentImageInfo.isFullwindow = false;
