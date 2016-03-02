@@ -17,21 +17,21 @@ namespace Niv
         /// Variables ----------------------------------------------------------
 
         // Supported image format, used to recognize the image files.
-        static string SUPPORTED_IMAGE_EXT = ".jpg.jpeg.png.bmp.ico.tif.tiff.gif";
+        private static string SUPPORTED_IMAGE_EXT = ".jpg.jpeg.png.bmp.ico.tif.tiff.gif";
 
         // The fullname of current loaded folder
-        string currentFolderName;
+        private string currentFolderName;
 
         // Image info list
-        List<ImageInfo> imageInfos = new List<ImageInfo>();
+        private List<ImageInfo> imageInfos = new List<ImageInfo>();
 
         // The index of last displayed image. Used to see if they are adjacent or at the two ends.
-        int lastIndex = -1;
+        private int lastIndex = -1;
 
         /// Properties ---------------------------------------------------------
 
         // Private values of properties
-        int _currentIndex = -1;
+        private int _currentIndex = -1;
 
         // The index of current displaying image in the image list
         public int currentIndex
@@ -71,7 +71,7 @@ namespace Niv
         public static bool isFormatSupported(string filename)
         {
             string ext = Path.GetExtension(filename).ToLower();
-            return SUPPORTED_IMAGE_EXT.IndexOf(ext) > -1;
+            return ext.Length > 0 && SUPPORTED_IMAGE_EXT.IndexOf(ext) > -1;
         }
 
         // Check if the last image switch is jumping between the ends of image list.
