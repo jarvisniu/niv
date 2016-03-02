@@ -343,15 +343,9 @@ namespace Niv
             container.MouseMove += (object sender, MouseEventArgs e) =>
             {
                 mousePos = e.GetPosition(niv);
-                // auto show&hide toolbar
-                if (isAutoHideToolbar && e.LeftButton == MouseButtonState.Released)
-                {
-                    if (mousePos.Y > gridHeight - MARGIN_SIZE && !visibleStates[toolbar])
-                        showToolbar();
-                    else if (mousePos.Y < gridHeight - MARGIN_SIZE && visibleStates[toolbar] && visibleStates[menu])
-                        hideToolbar();
-                }
 
+                // auto show&hide toolbar
+                if (e.LeftButton == MouseButtonState.Released) tryHideToolbar();
 
                 inputController.onMouseMove(e.GetPosition(container));
 
@@ -523,7 +517,6 @@ namespace Niv
             {
                 folderWalker.loadFolder(url);
                 onWalkerCountChanged();
-                //marginManager.fullwindow().apply();
                 page.Width = 32 + folderWalker.count.ToString().Length * 16;
                 loadFromWalker();
             }
@@ -928,19 +921,30 @@ namespace Niv
         private void showToolbar()
         {
             visibleStates[toolbar] = true;
-            animatorJar.marginBottomTo(toolbar, MARGIN_SIZE)
-                .marginBottomTo(separator, 48 + MARGIN_SIZE)
-                .marginBottomTo(progress, 48 + MARGIN_SIZE - 1)
+            animatorJar.marginBottomTo(toolbar, 0)
+                .marginBottomTo(separator, 48)
+                .marginBottomTo(progress, 48 - 1)
                 .fadeIn(separator).fadeIn(progress);
         }
         private void hideToolbar()
         {
             visibleStates[toolbar] = false;
 
-            animatorJar.marginBottomTo(toolbar, MARGIN_SIZE - 48)
-                .marginBottomTo(separator, 0 + MARGIN_SIZE)
-                .marginBottomTo(progress, 0 + MARGIN_SIZE - 1)
+            animatorJar.marginBottomTo(toolbar, -48)
+                .marginBottomTo(separator, 0)
+                .marginBottomTo(progress, -1)
                 .fadeOut(separator).fadeOut(progress);
+        }
+
+        private void tryHideToolbar()
+        {
+            if (isAutoHideToolbar)
+            {
+                if (mousePos.Y > gridHeight - MARGIN_SIZE * 3 && !visibleStates[toolbar])
+                    showToolbar();
+                else if (mousePos.Y < gridHeight - MARGIN_SIZE * 3 && visibleStates[toolbar] && !visibleStates[menu])
+                    hideToolbar();
+            }
         }
 
         // margion bottom
@@ -962,7 +966,6 @@ namespace Niv
             animatorJar.marginTo(container, new Thickness(-MARGIN_SIZE + (visibleStates[info] ? INFO_WIDTH : 0), -MARGIN_SIZE, -MARGIN_SIZE, 0));
             animatorJar.marginBottomTo(separator, MARGIN_SIZE - SEPARATOR_HEIGHT);
             animatorJar.marginBottomTo(progress, MARGIN_SIZE - SEPARATOR_HEIGHT - 1);
-            animatorJar.marginBottomTo(toolbar, 0);
 
             page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE + 8);
         }
@@ -972,8 +975,6 @@ namespace Niv
 
             animatorJar.marginTo(container, new Thickness(-MARGIN_SIZE + (visibleStates[info] ? INFO_WIDTH : 0), -MARGIN_SIZE, -MARGIN_SIZE, -MARGIN_SIZE));
             animatorJar.marginBottomTo(separator, MARGIN_SIZE * 2 - SEPARATOR_HEIGHT);
-            //animatorJar.marginBottomTo(progress, MARGIN_SIZE * 2 - SEPARATOR_HEIGHT - 10);
-            animatorJar.marginBottomTo(toolbar, MARGIN_SIZE);
 
             page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE * 2 + 8);
         }
@@ -1057,6 +1058,7 @@ namespace Niv
         {
             if (visibleStates[menu] && e.OriginalSource != imageMenu && e.OriginalSource != btnMenu)
                 hideMainMenu();
+            tryHideToolbar();
         }
 
         private void prevImage()
@@ -1092,8 +1094,9 @@ namespace Niv
             else
                 exit(); // TODO不能退出，因为可能只有一张而删错，应该显示一个打开文件的按钮
         }
-
-        private void debug()  // press key "D"
+        
+        // Press key "D" to show something for debugging.
+        private void debug()
         {
         }
 
