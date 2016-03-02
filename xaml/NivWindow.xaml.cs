@@ -522,10 +522,26 @@ namespace Niv
             }
             else
             {
-                folderWalker.loadFolder(url);
-                onWalkerCountChanged();
-                page.Width = 32 + folderWalker.count.ToString().Length * 16;
-                loadFromWalker();
+                int indexInList = folderWalker.getImageFileIndex(url);
+                if (indexInList > -1)
+                {
+                    if (indexInList != folderWalker.currentIndex)
+                    {
+                        folderWalker.currentIndex = indexInList;
+                        loadFromWalker();
+                    }
+                    else
+                    {
+                        toggleZoomIn121AndFit();
+                    }
+                }
+                else
+                {
+                    folderWalker.loadFolder(url);
+                    onWalkerCountChanged();
+                    page.Width = 32 + folderWalker.count.ToString().Length * 16;
+                    loadFromWalker();
+                }
             }
         }
 

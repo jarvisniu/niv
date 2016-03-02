@@ -74,6 +74,14 @@ namespace Niv
             return ext.Length > 0 && SUPPORTED_IMAGE_EXT.IndexOf(ext) > -1;
         }
 
+        // Get the index of a filename in the list. Return -1 if not exists.
+        public int getImageFileIndex(string filename)
+        {
+            for (int i = 0; i < imageInfos.Count; i++)
+                if (imageInfos[i].filename == filename.ToLower()) return i;
+            return -1;
+        }
+
         // Check if the last image switch is jumping between the ends of image list.
         public bool isJumpBetweenEnds()
         {
@@ -81,9 +89,10 @@ namespace Niv
         }
 
         // Load all the image files in the specified folder.
-        public void loadFolder(string folderName)
+        public void loadFolder(string droppedFileName)
         {
-            string folderPath = Path.GetDirectoryName(folderName).ToLower();
+            droppedFileName = droppedFileName.ToLower();
+            string folderPath = Path.GetDirectoryName(droppedFileName);
             if (folderPath.Equals(currentFolderName)) return;
 
             DirectoryInfo di = new DirectoryInfo(folderPath);
@@ -94,11 +103,11 @@ namespace Niv
                 int i = 0;
                 foreach (FileInfo fi in fis)
                 {
-                    string filename = fi.FullName;
+                    string filename = fi.FullName.ToLower();
                     if (isFormatSupported(filename))
                     {
                         imageInfos.Add(new ImageInfo(filename));
-                        if (folderName.ToLower() == filename.ToLower())
+                        if (droppedFileName == filename)
                             currentIndex = i;
                         i++;
                     }
