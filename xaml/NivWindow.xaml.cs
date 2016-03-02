@@ -988,21 +988,12 @@ namespace Niv
         public void showMarginBottom()
         {
             isMarginBottomExist = true;
-
             animatorJar.marginTo(container, new Thickness(-MARGIN_SIZE + (visibleStates[info] ? INFO_WIDTH : 0), -MARGIN_SIZE, -MARGIN_SIZE, 0));
-            animatorJar.marginBottomTo(separator, MARGIN_SIZE - SEPARATOR_HEIGHT);
-            animatorJar.marginBottomTo(progress, MARGIN_SIZE - SEPARATOR_HEIGHT - 1);
-
-            //page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE + 8);
         }
         public void hideMarginBottom()
         {
             isMarginBottomExist = false;
-
             animatorJar.marginTo(container, new Thickness(-MARGIN_SIZE + (visibleStates[info] ? INFO_WIDTH : 0), -MARGIN_SIZE, -MARGIN_SIZE, -MARGIN_SIZE));
-            animatorJar.marginBottomTo(separator, MARGIN_SIZE * 2 - SEPARATOR_HEIGHT);
-
-            //page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE * 2 + 8);
         }
 
         private void toggleTheme()
