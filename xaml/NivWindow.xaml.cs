@@ -174,7 +174,8 @@ namespace Niv
                 container.Background = grayBrush(250);
                 toolbar.Background = menu.Background = iImageInfoTitle.Background = grayBrush(220);
                 info.Background = grayBrush(235);
-                separator.Background = progress.Stroke = menu.BorderBrush = menuLine.Stroke = grayBrush(170);
+                separator.Background = progress.Stroke = menu.BorderBrush = menuLine.Stroke
+                    = infoTitleLine.Stroke = infoRightLine.Stroke = grayBrush(170);
                 progress.Fill = grayBrush(255);
                 iHelp.Foreground = iAbout.Foreground = iImageInfo.Foreground = iImageInfoTitle.Foreground = iPage.Foreground
                     = iFilename.Foreground = iSize.Foreground = iResolution.Foreground = iDate.Foreground = grayBrush(48);
@@ -189,7 +190,7 @@ namespace Niv
                 container.Background = grayBrush(32);
                 toolbar.Background = grayBrush(32, 0.75);
                 menu.Background = grayBrush(40);
-                menu.BorderBrush = menuLine.Stroke = grayBrush(80, 0.75);
+                menu.BorderBrush = menuLine.Stroke = infoTitleLine.Stroke = infoRightLine.Stroke = grayBrush(80, 0.75);
                 info.Background = iImageInfoTitle.Background = grayBrush(64);
                 separator.Background = progress.Stroke = iFilename.Foreground = iSize.Foreground =
                     iResolution.Foreground = iDate.Foreground = grayBrush(64, 0.75);

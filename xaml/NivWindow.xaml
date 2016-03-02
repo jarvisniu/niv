@@ -76,7 +76,7 @@
             <Border x:Name="btnCloseInfo" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48">
                 <Image x:Name="imageCloseInfo" Margin="15" Source="/Niv;component/res/theme-dark/icon-close.png"/>
             </Border>
-            <Rectangle Fill="#FFF4F4F5" Height="2" Margin="0,48,0,0" Stroke="Gray" VerticalAlignment="Top"/>
+            <Rectangle x:Name="infoTitleLine" Fill="#FFF4F4F5" Height="2" Margin="0,48,0,0" Stroke="#FFAAAAAA" VerticalAlignment="Top"/>
             <Label x:Name="iFilename" Content="&lt;Filename&gt;" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Foreground="Silver" FontSize="14" VerticalContentAlignment="Center" Height="28"/>
             <Label x:Name="labelInfoFilename" Content="-" Margin="10,84,10,0" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
             <Label x:Name="iSize" Content="&lt;Size&gt;" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" Foreground="Silver" FontSize="14" VerticalContentAlignment="Center" Height="28"/>
@@ -85,6 +85,7 @@
             <Label x:Name="labelInfoResolution" Content="-" Margin="10,204,10,0" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
             <Label x:Name="iDate" Content="&lt;Date&gt;" HorizontalAlignment="Left" Margin="10,240,0,0" VerticalAlignment="Top" Foreground="Silver" FontSize="14" VerticalContentAlignment="Center" Height="28"/>
             <Label x:Name="labelInfoDate" Content="-" Margin="10,264,10,0" VerticalAlignment="Top" FontSize="14" Foreground="White"/>
+            <Rectangle x:Name="infoRightLine" Fill="#FFF4F4F5" Stroke="Gray" Margin="0" HorizontalAlignment="Right" Width="2"/>
         </Grid>
     </Grid>
 </Window>
