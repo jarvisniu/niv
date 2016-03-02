@@ -52,6 +52,7 @@ namespace Niv
         private string theme = "light";
         private Dictionary<FrameworkElement, bool> visibleStates = new Dictionary<FrameworkElement, bool>();
         private bool isMarginBottomExist = true;
+        private bool isSmoothButtonVisible = false;
         private bool isFullscreen = false;
         private bool isAutoHideToolbar = false;
         private WindowState lastWindowState = WindowState.Maximized;
@@ -153,9 +154,15 @@ namespace Niv
         {
             double s = folderWalker.currentImageInfo == null ? 1 : folderWalker.currentImageInfo.scale;
             if (s > AA_SCALE_THRESHHOLD && folderWalker.count > 0)
-                btnSmooth.Visibility = Visibility.Visible;
+            {
+                animatorJar.fadeIn(btnSmooth);
+                isSmoothButtonVisible = true;
+            }
             else if (s <= AA_SCALE_THRESHHOLD)
-                btnSmooth.Visibility = Visibility.Collapsed;
+            {
+                animatorJar.fadeOut(btnSmooth);
+                isSmoothButtonVisible = false;
+            }
         }
 
         private void setTheme(string theme)
@@ -256,7 +263,7 @@ namespace Niv
             // Smooth switch button click
             btnSmooth.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
-                setSmoothTo(!isSmoothOn);
+                if (isSmoothButtonVisible) setSmoothTo(!isSmoothOn);
             };
 
             // Zoom button click
