@@ -34,7 +34,7 @@ namespace Niv
 
         // layout config
         static double WINDOW_MIN_WIDTH = 680;
-        static double WINDOW_MIN_HEIGHT = 470;
+        static double WINDOW_MIN_HEIGHT = 462;
         public static int SEPARATOR_HEIGHT = 2;
         //public static int MESSAGE_BOX_HEIGHT = 48;
         public static int MARGIN_SIZE = 50;
@@ -700,7 +700,7 @@ namespace Niv
             setProgressWidth();
 
             double left = getProgressLeft();
-            if (folderWalker.isJumpBetweenEnds())
+            if (folderWalker.isJumpBetweenEnds() || !visibleStates[toolbar])
                 animatorJar.translateLeftToI(progress, left);
             else
                 animatorJar.translateLeftTo(progress, left);
@@ -922,6 +922,7 @@ namespace Niv
         {
             visibleStates[toolbar] = true;
             animatorJar.marginBottomTo(toolbar, 0)
+                .marginBottomTo(page, MARGIN_SIZE * 2 + 8)
                 .marginBottomTo(separator, 48)
                 .marginBottomTo(progress, 48 - 1)
                 .fadeIn(separator).fadeIn(progress);
@@ -931,6 +932,7 @@ namespace Niv
             visibleStates[toolbar] = false;
 
             animatorJar.marginBottomTo(toolbar, -48)
+                .marginBottomTo(page, MARGIN_SIZE + 8)
                 .marginBottomTo(separator, 0)
                 .marginBottomTo(progress, -1)
                 .fadeOut(separator).fadeOut(progress);
@@ -967,7 +969,7 @@ namespace Niv
             animatorJar.marginBottomTo(separator, MARGIN_SIZE - SEPARATOR_HEIGHT);
             animatorJar.marginBottomTo(progress, MARGIN_SIZE - SEPARATOR_HEIGHT - 1);
 
-            page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE + 8);
+            //page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE + 8);
         }
         public void hideMarginBottom()
         {
@@ -976,7 +978,7 @@ namespace Niv
             animatorJar.marginTo(container, new Thickness(-MARGIN_SIZE + (visibleStates[info] ? INFO_WIDTH : 0), -MARGIN_SIZE, -MARGIN_SIZE, -MARGIN_SIZE));
             animatorJar.marginBottomTo(separator, MARGIN_SIZE * 2 - SEPARATOR_HEIGHT);
 
-            page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE * 2 + 8);
+            //page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE * 2 + 8);
         }
 
         private void toggleTheme()
@@ -1094,7 +1096,7 @@ namespace Niv
             else
                 exit(); // TODO不能退出，因为可能只有一张而删错，应该显示一个打开文件的按钮
         }
-        
+
         // Press key "D" to show something for debugging.
         private void debug()
         {
