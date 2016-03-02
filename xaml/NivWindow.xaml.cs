@@ -141,7 +141,7 @@ namespace Niv
             transformer.onScaleChanged = setButtonSmoothVisibility;
 
             // Input-controller
-            inputController = new Controller(transformer);
+            inputController = new Controller(window, transformer);
 
             // Timer
             timerClosePage = new Timer(3000);
@@ -346,7 +346,7 @@ namespace Niv
 
             container.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
             {
-                inputController.onMouseLeftDown();
+                inputController.onMouseLeftDown(e.Timestamp);
             };
 
             // Mouse-move envet
@@ -362,10 +362,15 @@ namespace Niv
                 if (e.LeftButton == MouseButtonState.Pressed)
                 {
                     if (!inputController.isLeftButtonDown)
-                        inputController.onMouseLeftDown();
+                        inputController.onMouseLeftDown(e.Timestamp);
                     inputController.onDragMove();
                 }
                 if (walker.count > 0) refreshZoomButton();
+            };
+
+            container.MouseLeftButtonUp += (object sender, MouseButtonEventArgs e) =>
+            {
+                inputController.onMouseLeftUp(e.Timestamp);
             };
 
             // Mouse-wheel envet
@@ -1002,7 +1007,7 @@ namespace Niv
         }
 
         // fullscreen
-        private void toggleFullscreen()
+        public void toggleFullscreen()
         {
             if (isFullscreen)
                 exitFullscreen();
