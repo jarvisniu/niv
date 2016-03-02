@@ -68,8 +68,8 @@
         </Border>
         <Grid x:Name="separator" Height="2" Margin="0,0,0,48" VerticalAlignment="Bottom" Background="#BF404040"/>
         <Rectangle x:Name="progress" Fill="#BFFFFFFF" Margin="0,0,0,47" Height="4" VerticalAlignment="Bottom" Stroke="#7F000000" HorizontalAlignment="Left" Width="236"/>
-        <Border x:Name="btnExit" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48" Margin="0">
-            <Image Margin="15" Source="/Niv;component/res/theme-dark/icon-close.png"/>
+        <Border x:Name="btnExit" BorderBrush="#7F404040" BorderThickness="2,0,0,2" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Width="50" Margin="0" CornerRadius="0,0,0,10">
+            <Image x:Name="imageExit" Margin="15" Source="/Niv;component/res/theme-dark/icon-close.png"/>
         </Border>
         <Grid x:Name="info" HorizontalAlignment="Left" Width="200" Background="#FF404040" Margin="10,10,0,57">
             <Label x:Name="iImageInfoTitle" Content="&lt;Image Info&gt;" Foreground="#FFDEDEDE" FontSize="18" VerticalContentAlignment="Center" Margin="0,0,48,0" Height="48" VerticalAlignment="Top" Padding="14,5,5,5"/>

@@ -175,6 +175,7 @@ namespace Niv
                     = labelInfoDate.Foreground = grayBrush(0);
                 page.Background = grayBrush(255, 0.75);
                 page.BorderBrush = grayBrush(128, 0.75);
+                btnExit.BorderBrush = grayBrush(170);
             }
             else if (theme == "dark")
             {
@@ -192,6 +193,7 @@ namespace Niv
                     = labelInfoDate.Foreground = grayBrush(255);
                 page.Background = grayBrush(64, 0.75);
                 page.BorderBrush = grayBrush(128, 0.75);
+                btnExit.BorderBrush = grayBrush(0, 0);
             }
             else MessageBox.Show("Not supported theme: " + theme);
 
@@ -204,7 +206,7 @@ namespace Niv
             imageSmooth.Source = loadThemeBitmap(isSmoothOn ? "icon-smooth-off.png" : "icon-smooth-on.png", theme);
             imageZoom.Source = loadThemeBitmap("icon-zoom-fit.png", theme);
             imageMenu.Source = loadThemeBitmap("icon-menu.png", theme);
-            imageCloseInfo.Source = loadThemeBitmap("icon-close.png", theme);
+            imageCloseInfo.Source = imageExit.Source = loadThemeBitmap("icon-close.png", theme);
             // menu images
             imageHelp.Source = loadThemeBitmap("icon-about.png", theme);
             imageAbout.Source = loadThemeBitmap("icon-about.png", theme);
@@ -324,7 +326,6 @@ namespace Niv
                 else
                     marginManager.setMarginDesByKeys().apply();
                 gridHeight = e.NewSize.Height;
-                Console.WriteLine(window.Width + ", " + window.Height);
             };
 
             // Size-changed envent
@@ -377,8 +378,7 @@ namespace Niv
             // Help menu
             menuHelp.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
-                theme = theme == "dark" ? "light" : "dark";
-                setTheme(theme);
+                toggleTheme();
                 hideMainMenu();
             };
 
@@ -417,6 +417,7 @@ namespace Niv
                 else if (keyString == "A") setSmoothTo(!isSmoothOn);
                 else if (keyString == "D") debug();
                 else if (keyString == "I") toggleInfo();
+                else if (keyString == "T") toggleTheme();
                 else if (keyString == "Delete") delete();
                 else if (keyString == "Escape") exit();
                 else if (keyString == "Space") toggleZoomIn121AndFit();
@@ -438,7 +439,7 @@ namespace Niv
             // Exit button
             btnExit.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
-                hideInfo();
+                exit();
             };
         }
 
@@ -975,6 +976,12 @@ namespace Niv
             animatorJar.marginBottomTo(toolbar, MARGIN_SIZE);
 
             page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE * 2 + 8);
+        }
+
+        private void toggleTheme()
+        {
+            theme = theme == "dark" ? "light" : "dark";
+            setTheme(theme);
         }
 
         // fullscreen
