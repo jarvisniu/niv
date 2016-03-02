@@ -132,6 +132,12 @@ namespace Niv
 
             // Hide the toolbar buttons
             onWalkerCountChanged();
+
+            // Set render to high quality of images
+            Image[] images = { imageRotateLeft, imageRotateRight, imageDelete, imagePrev, imageNext,
+                imageSmooth, imageZoom, imageMenu, imageCloseInfo, imageHelp, imageAbout, imageInfo, imageExit };
+            foreach (Image image in images)
+                RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
         }
 
         private void initComponents()
@@ -212,12 +218,12 @@ namespace Niv
             imageSmooth.Source = loadThemeBitmap(
                 walker.currentImageInfo != null && walker.currentImageInfo.smooth
                 ? "icon-smooth-off.png" : "icon-smooth-on.png", theme);
-            imageZoom.Source = loadThemeBitmap("icon-zoom-fit.png", theme);
+            imageZoom.Source = loadThemeBitmap("icon-fit-window.png", theme);
             imageMenu.Source = loadThemeBitmap("icon-menu.png", theme);
             imageCloseInfo.Source = imageExit.Source = loadThemeBitmap("icon-close.png", theme);
             // menu images
-            imageHelp.Source = loadThemeBitmap("icon-about.png", theme);
-            imageAbout.Source = loadThemeBitmap("icon-about.png", theme);
+            imageHelp.Source = loadThemeBitmap("icon-help.png", theme);
+            imageAbout.Source = loadThemeBitmap("icon-info.png", theme);
             imageInfo.Source = loadThemeBitmap("icon-list.png", theme);
         }
 
@@ -803,7 +809,7 @@ namespace Niv
             {
                 if (isZoomButtonInFitMode)
                 {
-                    imageZoom.Source = loadThemeBitmap("icon-zoom-121.png", theme);
+                    imageZoom.Source = loadThemeBitmap("icon-one-to-one.png", theme);
                     isZoomButtonInFitMode = false;
                 }
             }
@@ -811,7 +817,7 @@ namespace Niv
             {
                 if (!isZoomButtonInFitMode)
                 {
-                    imageZoom.Source = loadThemeBitmap("icon-zoom-fit.png", theme);
+                    imageZoom.Source = loadThemeBitmap("icon-fit-window.png", theme);
                     isZoomButtonInFitMode = true;
                 }
             }
