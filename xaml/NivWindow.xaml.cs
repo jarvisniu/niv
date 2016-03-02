@@ -113,7 +113,7 @@ namespace Niv
             toolbar.Margin = new Thickness(0, 0, 0, 0);
             info.Margin = new Thickness(-INFO_WIDTH, 0, 0, 0);
             info.Width = INFO_WIDTH;
-            page.Margin = new Thickness(-1, -1, MARGIN_SIZE + 8, MARGIN_SIZE + 8);
+            page.Margin = new Thickness(-1, -1, 8, MARGIN_SIZE + 8);
             page.Opacity = 0;
             menu.Margin = new Thickness(0, 0, 0, MARGIN_SIZE);
             menu.Height = 0;
@@ -181,8 +181,8 @@ namespace Niv
                 separator.Background = progress.Stroke = menu.BorderBrush = menuLine.Stroke
                     = infoTitleLine.Stroke = infoRightLine.Stroke = grayBrush(170);
                 progress.Fill = grayBrush(255);
-                iHelp.Foreground = iAbout.Foreground = iImageInfo.Foreground = iImageInfoTitle.Foreground = iPage.Foreground
-                    = iFilename.Foreground = iSize.Foreground = iResolution.Foreground = iDate.Foreground = grayBrush(48);
+                iHelp.Foreground = iAbout.Foreground = iImageInfo.Foreground = iImageInfoTitle.Foreground = iPage.Foreground = grayBrush(48);
+                iFilename.Foreground = iSize.Foreground = iResolution.Foreground = iDate.Foreground = grayBrush(84);
                 labelInfoFilename.Foreground = labelInfoSize.Foreground = labelInfoResolution.Foreground
                     = labelInfoDate.Foreground = grayBrush(0);
                 page.Background = grayBrush(255, 0.75);
@@ -198,7 +198,7 @@ namespace Niv
                 info.Background = iImageInfoTitle.Background = grayBrush(64);
                 separator.Background = progress.Stroke = iFilename.Foreground = iSize.Foreground =
                     iResolution.Foreground = iDate.Foreground = grayBrush(64, 0.75);
-                progress.Fill = grayBrush(255, 0.3);
+                progress.Fill = grayBrush(255, 0.75);
                 iHelp.Foreground = iAbout.Foreground = iImageInfo.Foreground = iImageInfoTitle.Foreground = iPage.Foreground
                     = iFilename.Foreground = iSize.Foreground = iResolution.Foreground = iDate.Foreground = grayBrush(192);
                 labelInfoFilename.Foreground = labelInfoSize.Foreground = labelInfoResolution.Foreground
@@ -238,7 +238,6 @@ namespace Niv
             {
                 walker.currentImageInfo.rotationAngle -= 90;
                 walker.currentImageInfo.rotationAngle = simplifyAngle(walker.currentImageInfo.rotationAngle);
-                Console.WriteLine(walker.currentImageInfo.rotationAngle);
                 animatorJar.rotateTo(image, walker.currentImageInfo.rotationAngle);
             };
 
@@ -341,7 +340,6 @@ namespace Niv
                 else
                     transformer.calcMarginDesByKeys().apply();
                 gridHeight = e.NewSize.Height;
-                Console.WriteLine(container.ActualHeight + gridHeight);
             };
 
             // Size-changed envent
@@ -956,7 +954,7 @@ namespace Niv
         {
             visibleStates[toolbar] = true;
             animatorJar.marginBottomTo(toolbar, 0)
-                .marginBottomTo(page, MARGIN_SIZE * 2 + 8)
+                .marginBottomTo(page, MARGIN_SIZE * (isFullscreen ? 1 : 0) + 8)
                 .marginBottomTo(separator, 48)
                 .marginBottomTo(progress, 48 - 1)
                 .fadeIn(separator).fadeIn(progress);
@@ -966,7 +964,7 @@ namespace Niv
             visibleStates[toolbar] = false;
 
             animatorJar.marginBottomTo(toolbar, -48)
-                .marginBottomTo(page, MARGIN_SIZE + 8)
+                .marginBottomTo(page, 8)
                 .marginBottomTo(separator, 0)
                 .marginBottomTo(progress, -1)
                 .fadeOut(separator).fadeOut(progress);
