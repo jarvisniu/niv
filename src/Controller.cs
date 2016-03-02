@@ -40,7 +40,7 @@ namespace Niv
             if (transformer.isFullwindow)
                 transformer.zoomTo(1, mousePos).animate();
             else
-                transformer.fullwindow().animate();
+                transformer.fitWindow().animate();
         }
 
         public void onDragMove()

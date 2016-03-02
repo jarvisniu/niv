@@ -38,7 +38,7 @@ namespace Niv
         private Image image;
 
         // The Bitmap data in Image widget
-        private BitmapImage bitmap;
+        public BitmapImage bitmap;
 
         // The destinatio margin of Image
         Thickness marginDestination = new Thickness(0);
@@ -74,7 +74,7 @@ namespace Niv
             set
             {
                 _center = value;
-                walker.currentImageInfo.center = _center;
+                if (walker.currentImageInfo != null) walker.currentImageInfo.center = _center;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Niv
             set
             {
                 _scale = value;
-                walker.currentImageInfo.scale = _scale;
+                if (walker.currentImageInfo != null) walker.currentImageInfo.scale = _scale;
                 if (onScaleChanged != null) onScaleChanged();
             }
         }
@@ -97,10 +97,10 @@ namespace Niv
         {
             get
             {
-                //if (walker.currentImageInfo != null)
+                if (walker.currentImageInfo != null)
                     return walker.currentImageInfo.isFullwindow;
-                //else
-                //    return true;
+                else
+                    return true;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Niv
 
             timerAnimation.Elapsed += timerAnimation_Elapsed;
         }
-        
+
         // Perform a step of easing animation
         void timerAnimation_Elapsed(object sender, ElapsedEventArgs e)
         {
@@ -171,15 +171,6 @@ namespace Niv
             return mEase;
         }
 
-        // Switch to another image // TODO use setImage not Bitmap
-        public void setImage(BitmapImage bitmap)
-        {
-            this.bitmap = bitmap;
-            // TODO reset
-            //zoom121();
-            //initOne();
-        }
-
         // Set to initial state used when the image appears the first time
         public Transformer initOne()
         {
@@ -188,22 +179,22 @@ namespace Niv
             screenCenter();
             scale = 1;
 
-            setMarginDesByKeys();
+            calcMarginDesByKeys();
 
             return this;
         }
 
-        // Enter fullscreen mode when TODO rename to FitWindow, or fullwindow
-        public Transformer fullwindow()
+        // Enter fitWindow mode
+        public Transformer fitWindow()
         {
             if (bitmap == null) return this;
 
             fullsize();
             screenCenter();
-            
+
             walker.currentImageInfo.isFullwindow = true;
 
-            calcMarginDestination();
+            calcMarginDesByKeys();
 
             return this;
         }
@@ -224,14 +215,6 @@ namespace Niv
         public Transformer screenCenter()
         {
             center = WINDOW_CENTER_POSITION;
-
-            return this;
-        }
-
-        // Zoom the image to 1:1 with the image center TODO or window center
-        public Transformer zoom121AtStand()
-        {
-            zoomTo(1, getImageCenter());
 
             return this;
         }
@@ -278,14 +261,8 @@ namespace Niv
             return this;
         }
 
-        // Calculate the `marginDestination` or TODO what do about fullscreen?
-        public Transformer setMarginDesByKeys()
-        {
-                return calcMarginDestination();
-        }
-
-        // Calculate the `marginDestination` from `center` and `scale`
-        public Transformer calcMarginDestination()
+        // Calculate the `marginDestination` by `center` and `scale` or TODO what do about fullscreen?
+        public Transformer calcMarginDesByKeys()
         {
             if (bitmap == null) return this;
 
@@ -332,7 +309,7 @@ namespace Niv
 
             return this;
         }
-        
+
         // Set the `scale`  value
         public Transformer setScale(double scale)
         {

@@ -24,9 +24,9 @@ namespace Niv
         private AboutWindow aboutWindow = new AboutWindow();
         private AnimatorJar animatorJar = new AnimatorJar();
         private ButtonAnimator buttonAnimator = new ButtonAnimator();
-        Transformer marginManager;
+        Transformer transformer;
         Controller inputController;
-        FolderWalker folderWalker = new FolderWalker();
+        FolderWalker walker = new FolderWalker();
         // RecycleBin recycleBin = new RecycleBin(AppDomain.CurrentDomain.BaseDirectory);
 
         // delayed closing timers
@@ -53,15 +53,13 @@ namespace Niv
         private Dictionary<FrameworkElement, bool> visibleStates = new Dictionary<FrameworkElement, bool>();
         private bool isMarginBottomExist = true;
         private bool isSmoothButtonVisible = false;
+        private bool isZoomButtonInFitMode = true;
         private bool isFullscreen = false;
         private bool isAutoHideToolbar = false;
         private WindowState lastWindowState = WindowState.Maximized;
 
         private double gridHeight = 0;
         private Point mousePos;
-        BitmapImage bitmapImage; //TODO can remove this?
-        private bool isSmoothOn = true; //TODO can remove this?
-        private bool zoomButtonFit = true; //TODO can remove this?
 
         #region Initialize
 
@@ -139,11 +137,11 @@ namespace Niv
         private void initComponents()
         {
             // Margin manager
-            marginManager = new Transformer(container, image, null, folderWalker);
-            marginManager.onScaleChanged = setButtonSmoothVisibility;
+            transformer = new Transformer(container, image, null, walker);
+            transformer.onScaleChanged = setButtonSmoothVisibility;
 
             // Input-controller
-            inputController = new Controller(marginManager);
+            inputController = new Controller(transformer);
 
             // Timer
             timerClosePage = new Timer(3000);
@@ -152,8 +150,8 @@ namespace Niv
 
         private void setButtonSmoothVisibility()
         {
-            double s = folderWalker.currentImageInfo == null ? 1 : folderWalker.currentImageInfo.scale;
-            if (s > AA_SCALE_THRESHHOLD && folderWalker.count > 0)
+            double s = walker.currentImageInfo == null ? 1 : walker.currentImageInfo.scale;
+            if (s > AA_SCALE_THRESHHOLD && walker.count > 0)
             {
                 animatorJar.fadeIn(btnSmooth);
                 isSmoothButtonVisible = true;
@@ -183,7 +181,7 @@ namespace Niv
                     = labelInfoDate.Foreground = grayBrush(0);
                 page.Background = grayBrush(255, 0.75);
                 page.BorderBrush = grayBrush(128, 0.75);
-                btnExit.BorderBrush = grayBrush(170);
+                btnExit.BorderBrush = grayBrush(128);
             }
             else if (theme == "dark")
             {
@@ -211,7 +209,9 @@ namespace Niv
             imageDelete.Source = loadThemeBitmap("icon-delete.png", theme);
             imagePrev.Source = loadThemeBitmap("icon-prev.png", theme);
             imageNext.Source = loadThemeBitmap("icon-next.png", theme);
-            imageSmooth.Source = loadThemeBitmap(isSmoothOn ? "icon-smooth-off.png" : "icon-smooth-on.png", theme);
+            imageSmooth.Source = loadThemeBitmap(
+                walker.currentImageInfo != null && walker.currentImageInfo.smooth
+                ? "icon-smooth-off.png" : "icon-smooth-on.png", theme);
             imageZoom.Source = loadThemeBitmap("icon-zoom-fit.png", theme);
             imageMenu.Source = loadThemeBitmap("icon-menu.png", theme);
             imageCloseInfo.Source = imageExit.Source = loadThemeBitmap("icon-close.png", theme);
@@ -230,17 +230,18 @@ namespace Niv
             // Rotate-left button click
             btnRotateLeft.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
-                folderWalker.currentImageInfo.rotationAngle -= 90;
-                folderWalker.currentImageInfo.rotationAngle = simplifyAngle(folderWalker.currentImageInfo.rotationAngle);
-                animatorJar.rotateTo(image, folderWalker.currentImageInfo.rotationAngle);
+                walker.currentImageInfo.rotationAngle -= 90;
+                walker.currentImageInfo.rotationAngle = simplifyAngle(walker.currentImageInfo.rotationAngle);
+                Console.WriteLine(walker.currentImageInfo.rotationAngle);
+                animatorJar.rotateTo(image, walker.currentImageInfo.rotationAngle);
             };
 
             // Rotate-right button click
             btnRotateRight.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
-                folderWalker.currentImageInfo.rotationAngle += 90;
-                folderWalker.currentImageInfo.rotationAngle = simplifyAngle(folderWalker.currentImageInfo.rotationAngle);
-                animatorJar.rotateTo(image, folderWalker.currentImageInfo.rotationAngle);
+                walker.currentImageInfo.rotationAngle += 90;
+                walker.currentImageInfo.rotationAngle = simplifyAngle(walker.currentImageInfo.rotationAngle);
+                animatorJar.rotateTo(image, walker.currentImageInfo.rotationAngle);
             };
 
             // Delete-image button click
@@ -264,7 +265,7 @@ namespace Niv
             // Smooth switch button click
             btnSmooth.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
-                if (isSmoothButtonVisible) setSmoothTo(!isSmoothOn);
+                if (isSmoothButtonVisible) setSmoothTo(!walker.currentImageInfo.smooth);
             };
 
             // Zoom button click
@@ -329,11 +330,12 @@ namespace Niv
             // Size-changed envent
             container.SizeChanged += (object sender, SizeChangedEventArgs e) =>
             {
-                if (folderWalker.count > 0 && folderWalker.currentImageInfo.isFullwindow)
-                    marginManager.fullwindow().setMarginDesByKeys().apply();
+                if (walker.count > 0 && walker.currentImageInfo.isFullwindow)
+                    transformer.fitWindow().calcMarginDesByKeys().apply();
                 else
-                    marginManager.setMarginDesByKeys().apply();
+                    transformer.calcMarginDesByKeys().apply();
                 gridHeight = e.NewSize.Height;
+                Console.WriteLine(container.ActualHeight + gridHeight);
             };
 
             // Size-changed envent
@@ -363,7 +365,7 @@ namespace Niv
                         inputController.onMouseLeftDown();
                     inputController.onDragMove();
                 }
-                refreshZoomButton();
+                if (walker.count > 0) refreshZoomButton();
             };
 
             // Mouse-wheel envet
@@ -414,9 +416,9 @@ namespace Niv
 
                 if (keyString == "Left") prevImage();
                 else if (keyString == "Right") nextImage();
-                else if (keyString == "Up") marginManager.zoomAtStand(2).animate();
-                else if (keyString == "Down") marginManager.zoomAtStand(0.5).animate();
-                else if (keyString == "A") setSmoothTo(!isSmoothOn);
+                else if (keyString == "Up") transformer.zoomAtStand(2).animate();
+                else if (keyString == "Down") transformer.zoomAtStand(0.5).animate();
+                else if (keyString == "A") setSmoothTo(!walker.currentImageInfo.smooth);
                 else if (keyString == "D") debug();
                 else if (keyString == "I") toggleInfo();
                 else if (keyString == "T") toggleTheme();
@@ -458,16 +460,15 @@ namespace Niv
 
         private void loadFromWalker()
         {
-            ImageInfo info = folderWalker.currentImageInfo;
+            ImageInfo info = walker.currentImageInfo;
             // The image may be broken
-            bitmapImage = tryLoadBitmap(info.filename);
-            marginManager.setImage(bitmapImage);
+            transformer.bitmap = tryLoadBitmap(info.filename);
 
             // infos
             labelInfoFilename.Content = Path.GetFileName(info.filename);
             FileInfo fi = new FileInfo(info.filename);
             labelInfoSize.Content = humanifyNumber(fi.Length) + "B";
-            labelInfoResolution.Content = bitmapImage.PixelWidth + " x " + bitmapImage.PixelHeight;
+            labelInfoResolution.Content = transformer.bitmap.PixelWidth + " x " + transformer.bitmap.PixelHeight;
             labelInfoDate.Content = dateTimeToString(fi.LastWriteTime);
             this.Title = Path.GetFileName(info.filename) + " - " + I18n._("appName");
             refreshProgress();
@@ -476,32 +477,32 @@ namespace Niv
             if (!isFileGif(info.filename))
             {
                 // ImageBehavior.SetAnimatedSource(image, null);
-                image.Source = bitmapImage;
+                image.Source = transformer.bitmap;
             }
             else
             {
-                // ImageBehavior.SetAnimatedSource(image, bitmapImage);
+                // ImageBehavior.SetAnimatedSource(image, transformer.bitmap);
             }
 
             if (info.virgin)
             {
-                marginManager.fullsize().setMarginDesByKeys().apply();
+                transformer.fullsize().calcMarginDesByKeys().apply();
                 setSmoothByImageResolution();
 
-                marginManager.screenCenter().setMarginDesByKeys().animate();
+                transformer.screenCenter().calcMarginDesByKeys().animate();
                 info.virgin = false;
             }
             else
             {
                 if (info.isFullwindow)
                 {
-                    marginManager.fullsize().setMarginDesByKeys().apply();
-                    marginManager.screenCenter().setMarginDesByKeys().animate();
+                    transformer.fullsize().calcMarginDesByKeys().apply();
+                    transformer.screenCenter().calcMarginDesByKeys().animate();
                 }
                 else
                 {
-                    marginManager.exitFullwindowMode().setScale(info.scale).setMarginDesByKeys().apply();
-                    marginManager.setCenter(info.center).setMarginDesByKeys().animate();
+                    transformer.exitFullwindowMode().setScale(info.scale).calcMarginDesByKeys().apply();
+                    transformer.setCenter(info.center).calcMarginDesByKeys().animate();
                 }
                 animatorJar.rotateToI(image, info.rotationAngle);
             }
@@ -523,12 +524,12 @@ namespace Niv
             }
             else
             {
-                int indexInList = folderWalker.getImageFileIndex(url);
+                int indexInList = walker.getImageFileIndex(url);
                 if (indexInList > -1)
                 {
-                    if (indexInList != folderWalker.currentIndex)
+                    if (indexInList != walker.currentIndex)
                     {
-                        folderWalker.currentIndex = indexInList;
+                        walker.currentIndex = indexInList;
                         loadFromWalker();
                     }
                     else
@@ -538,9 +539,9 @@ namespace Niv
                 }
                 else
                 {
-                    folderWalker.loadFolder(url);
+                    walker.loadFolder(url);
                     onWalkerCountChanged();
-                    page.Width = 32 + folderWalker.count.ToString().Length * 16;
+                    page.Width = 32 + walker.count.ToString().Length * 16;
                     loadFromWalker();
                 }
             }
@@ -562,7 +563,6 @@ namespace Niv
                 try
                 {
                     img = loadBitmap(url);
-
                 }
                 catch (NotSupportedException)
                 {
@@ -588,7 +588,7 @@ namespace Niv
 
         private void onWalkerCountChanged()
         {
-            int count = folderWalker.count;
+            int count = walker.count;
 
             // Normal buttons
             if (count == 0)
@@ -679,7 +679,7 @@ namespace Niv
 
         private void setImageRotationBackToZero()
         {
-            if (folderWalker.count == 0) return;
+            if (walker.count == 0) return;
             // 善后
             saveRotationToFile();             // 将旋转保存到文件
             animatorJar.rotateToI(image, 0);    // 恢复旋转变化
@@ -687,9 +687,9 @@ namespace Niv
 
         public void saveRotationToFile()
         {
-            string filename = folderWalker.currentImageInfo.filename;
-            double rotationAngle = folderWalker.currentImageInfo.rotationAngle;
-            double savedAngle = folderWalker.currentImageInfo.savedRotationAngle;
+            string filename = walker.currentImageInfo.filename;
+            double rotationAngle = walker.currentImageInfo.rotationAngle;
+            double savedAngle = walker.currentImageInfo.savedRotationAngle;
             double angle = simplifyAngle(rotationAngle - savedAngle);
             if (angle == 0) return;
 
@@ -716,7 +716,7 @@ namespace Niv
                 showMessage("保存旋转失败，文件被占用或者权限不够。\nMessage: " + ex.Message);
             }
 
-            folderWalker.currentImageInfo.savedRotationAngle = folderWalker.currentImageInfo.rotationAngle;
+            walker.currentImageInfo.savedRotationAngle = walker.currentImageInfo.rotationAngle;
         }
 
         private void refreshProgress()
@@ -724,12 +724,12 @@ namespace Niv
             setProgressWidth();
 
             double left = getProgressLeft();
-            if (folderWalker.isJumpBetweenEnds() || !visibleStates[toolbar])
+            if (walker.isJumpBetweenEnds() || !visibleStates[toolbar])
                 animatorJar.translateLeftToI(progress, left);
             else
                 animatorJar.translateLeftTo(progress, left);
 
-            iPage.Content = (folderWalker.currentIndex + 1) + "/" + folderWalker.count;
+            iPage.Content = (walker.currentIndex + 1) + "/" + walker.count;
         }
 
         private void refreshProgressI()
@@ -740,38 +740,38 @@ namespace Niv
 
         private void setProgressWidth()
         {
-            int count = folderWalker.count;
+            int count = walker.count;
             if (count == 0)
             {
                 progress.Width = 0;
             }
             else
             {
-                progress.Width = separator.RenderSize.Width / folderWalker.count + PROGRESS_CAP * 2;
+                progress.Width = separator.RenderSize.Width / walker.count + PROGRESS_CAP * 2;
             }
         }
 
         private double getProgressLeft()
         {
-            double percent = (double)folderWalker.currentIndex / folderWalker.count;
+            double percent = (double)walker.currentIndex / walker.count;
             return separator.RenderSize.Width * percent + separator.Margin.Left - PROGRESS_CAP;
         }
 
         private void toggleZoomIn121AndFit()
         {
 
-            if (marginManager.isFullwindow)
-                marginManager.initOne().animate();
+            if (transformer.isFullwindow)
+                transformer.initOne().animate();
             else
-                marginManager.fullwindow().animate();
+                transformer.fitWindow().animate();
 
             refreshZoomButton();
         }
 
         private void setSmoothTo(bool on)
         {
-            isSmoothOn = on;
-            if (isSmoothOn)
+            walker.currentImageInfo.smooth = on;
+            if (walker.currentImageInfo.smooth)
             {
                 RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
             }
@@ -779,43 +779,42 @@ namespace Niv
             {
                 RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.NearestNeighbor);
             }
-            folderWalker.currentImageInfo.smooth = isSmoothOn;
         }
 
         private void setSmoothByImageResolution()
         {
-            if (bitmapImage == null) return;
+            if (transformer.bitmap == null) return;
 
-            bool isImageSmall = bitmapImage.PixelWidth < 257 && bitmapImage.PixelHeight < 257;
+            bool isImageSmall = transformer.bitmap.PixelWidth < 257 && transformer.bitmap.PixelHeight < 257;
             setSmoothTo(!isImageSmall);
         }
 
 
         private void refreshZoomButton()
         {
-            if (folderWalker.count == 0) return;
+            if (walker.count == 0) return;
 
-            if (marginManager.isFullwindow)
+            if (transformer.isFullwindow)
             {
-                if (zoomButtonFit)
+                if (isZoomButtonInFitMode)
                 {
                     imageZoom.Source = loadThemeBitmap("icon-zoom-121.png", theme);
-                    zoomButtonFit = false;
+                    isZoomButtonInFitMode = false;
                 }
             }
             else
             {
-                if (!zoomButtonFit)
+                if (!isZoomButtonInFitMode)
                 {
                     imageZoom.Source = loadThemeBitmap("icon-zoom-fit.png", theme);
-                    zoomButtonFit = true;
+                    isZoomButtonInFitMode = true;
                 }
             }
         }
 
         private bool isRotated()
         {
-            double angleDelta = folderWalker.currentImageInfo.rotationAngle - folderWalker.currentImageInfo.savedRotationAngle;
+            double angleDelta = walker.currentImageInfo.rotationAngle - walker.currentImageInfo.savedRotationAngle;
             while (angleDelta < 0) angleDelta += 360;
             while (angleDelta > 360) angleDelta -= 360;
             return angleDelta % 360 != 0;
@@ -1081,22 +1080,22 @@ namespace Niv
         private void prevImage()
         {
             setImageRotationBackToZero();
-            folderWalker.switchBackward();
+            walker.switchBackward();
             loadFromWalker();
         }
 
         private void nextImage()
         {
             setImageRotationBackToZero();
-            folderWalker.switchForward();
+            walker.switchForward();
             loadFromWalker();
         }
 
         private void delete()
         {
-            if (folderWalker.count == 0) return;
+            if (walker.count == 0) return;
 
-            FileInfo fi = new FileInfo(folderWalker.currentImageInfo.filename);
+            FileInfo fi = new FileInfo(walker.currentImageInfo.filename);
             if (fi.Exists)
             {
                 //recycleBin.receive(filename);
@@ -1104,9 +1103,9 @@ namespace Niv
                 showPage();
             }
 
-            folderWalker.removeCurrentImageInfo();
+            walker.removeCurrentImageInfo();
 
-            if (folderWalker.count > 0)
+            if (walker.count > 0)
                 loadFromWalker();
             else
                 exit(); // TODO不能退出，因为可能只有一张而删错，应该显示一个打开文件的按钮
