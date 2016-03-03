@@ -218,7 +218,9 @@ namespace Niv
             imageSmooth.Source = loadThemeBitmap(
                 walker.currentImageInfo != null && walker.currentImageInfo.smooth
                 ? "icon-smooth-off.png" : "icon-smooth-on.png", theme);
-            imageZoom.Source = loadThemeBitmap("icon-fit-window.png", theme);
+            imageZoom.Source = loadThemeBitmap(
+                walker.currentImageInfo != null && walker.currentImageInfo.isFullwindow
+                ? "icon-one-to-one.png" : "icon-fit-window.png", theme);
             imageMenu.Source = loadThemeBitmap("icon-menu.png", theme);
             imageCloseInfo.Source = imageExit.Source = loadThemeBitmap("icon-close.png", theme);
             // menu images
@@ -342,7 +344,7 @@ namespace Niv
                 gridHeight = e.NewSize.Height;
             };
 
-            // Size-changed envent
+            // Size-changed envent. When info panel close/hide refresh the progress position.
             separator.SizeChanged += (object sender, SizeChangedEventArgs e) =>
             {
                 refreshProgressI();
