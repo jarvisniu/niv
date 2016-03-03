@@ -25,7 +25,7 @@ namespace Niv
         // but the distance is within this threshold. Then we also think it's a valid click.
         private static int CLICK_MOVE_THRESHOLD = 16;
 
-        private static int DOUBLE_CLICK_TIME_THRESHOLD = 750;
+        private static int DOUBLE_CLICK_TIME_THRESHOLD = 400;
 
         // The mouse moved distance during the click.
         private double movedDistanceOfClick = 0;

@@ -99,7 +99,11 @@ namespace com.jarvisniu
             boardHeight.Children.Add(heightAnimation);
         }
 
+        /// --------------------------------------------------------------------
         /// All transition animation effects -----------------------------------
+        /// --------------------------------------------------------------------
+
+        /// Fade & Margin ------------------------------------------------------
 
         public AnimatorJar fadeIn(FrameworkElement target)
         {
@@ -126,25 +130,7 @@ namespace com.jarvisniu
             return this;
         }
 
-        public AnimatorJar marginTopTo(FrameworkElement target, double des)
-        {
-            Thickness m = target.Margin;
-            translateAnimation.To = new Thickness(m.Left, des, m.Right, m.Bottom);
-            Storyboard.SetTarget(translateAnimation, target);
-            boardTranslate.Begin();
-
-            return this;
-        }
-
-        public AnimatorJar marginBottomTo(FrameworkElement target, double des)
-        {
-            Thickness m = target.Margin;
-            translateAnimation.To = new Thickness(m.Left, m.Top, m.Right, des);
-            Storyboard.SetTarget(translateAnimation, target);
-            boardTranslate.Begin();
-
-            return this;
-        }
+        /// Translate ----------------------------------------------------------
 
         public AnimatorJar translateTopTo(FrameworkElement target, double desTop)
         {
@@ -222,18 +208,56 @@ namespace com.jarvisniu
             return this;
         }
 
+        public AnimatorJar translateBottomTo(FrameworkElement target, double des)
+        {
+            Thickness m = target.Margin;
+            translateAnimation.To = new Thickness(m.Left, m.Top, m.Right, des);
+            Storyboard.SetTarget(translateAnimation, target);
+            boardTranslate.Begin();
+
+            return this;
+        }
+
+        public AnimatorJar translateBottomToI(FrameworkElement target, double des)
+        {
+            translateAnimation.Duration = DURITION_ZERO;
+            translateBottomTo(target, des);
+            translateAnimation.Duration = DURITION_DOT2;
+
+            return this;
+        }
+
+        public AnimatorJar translateLeftBottomTo(FrameworkElement target, double desLeft, double desBottom)
+        {
+            Thickness m = target.Margin;
+            translateAnimation.To = new Thickness(desLeft, m.Top, m.Right, desBottom);
+            Storyboard.SetTarget(translateAnimation, target);
+            boardTranslate.Begin();
+
+            return this;
+        }
+
+        public AnimatorJar translateLeftBottomToI(FrameworkElement target, double desLeft, double desBottom)
+        {
+            translateAnimation.Duration = DURITION_ZERO;
+            translateLeftBottomTo(target, desLeft, desBottom);
+            translateAnimation.Duration = DURITION_DOT2;
+
+            return this;
+        }
+
+        /// Rotate -------------------------------------------------------------
+
         public AnimatorJar rotateTo(FrameworkElement target, double angle)
         {
             if (!(target.RenderTransform is RotateTransform))
                 target.RenderTransform = new RotateTransform(0);
             double currDegree = (double)target.RenderTransform.GetValue(RotateTransform.AngleProperty);
-            Console.WriteLine(currDegree + " => " + angle);
             while (Math.Abs(angle - currDegree) > 180)
             {
                 if (angle > currDegree) angle -= 360;
                 else angle += 360;
             }
-            Console.WriteLine(currDegree + " -> " + angle);
             rotateAnimation.To = angle;
             Storyboard.SetTarget(rotateAnimation, target);
             boardRotate.Begin();

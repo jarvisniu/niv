@@ -37,9 +37,8 @@ namespace Niv
         static double WINDOW_MIN_WIDTH = 680;
         static double WINDOW_MIN_HEIGHT = 462;
         public static int SEPARATOR_HEIGHT = 2;
-        //public static int MESSAGE_BOX_HEIGHT = 48;
+        public static int TOOLBAR_HEIGHT = 48;
         public static int MARGIN_SIZE = 50;
-        // static int DB_CLICK_THRESH = 300; // TODO double click detect give to InputHandler
         static int AA_SCALE_THRESHHOLD = 2;
         static double PROGRESS_CAP = 2;
         static double INFO_WIDTH = 260;
@@ -50,7 +49,6 @@ namespace Niv
             6 * 4;   // gap
         private BitmapImage ERROR_IMAGE = loadResourceBitmap("res/Niv.ico");
 
-        private string theme = "light";
         private Dictionary<FrameworkElement, bool> visibleStates = new Dictionary<FrameworkElement, bool>();
         private bool isMarginBottomExist = true;
         private bool isSmoothButtonVisible = false;
@@ -66,14 +64,13 @@ namespace Niv
 
         public NivWindow()
         {
-            this.Opacity = 0;
             InitializeComponent();
             loadLanguage();
-            setTheme(theme);
+            setTheme();
             initLayout();
             initComponents();
             loadCommandLineFile();
-            this.Opacity = 1;
+            if (Settings.Default.fullscreen) enterFullscreen();
 
             bindContainerEvents();
             bindMenuEvents();
@@ -183,11 +180,11 @@ namespace Niv
             }
         }
 
-        private void setTheme(string theme)
+        private void setTheme()
         {
-            buttonAnimator.setTheme(theme);
+            buttonAnimator.setTheme(Settings.Default.theme);
 
-            if (theme == "light")
+            if (Settings.Default.theme == "light")
             {
                 container.Background = grayBrush(250);
                 toolbar.Background = menu.Background = iImageInfoTitle.Background = grayBrush(220);
@@ -204,7 +201,7 @@ namespace Niv
                 page.BorderBrush = grayBrush(128, 0.75);
                 btnExit.BorderBrush = grayBrush(128);
             }
-            else if (theme == "dark")
+            else if (Settings.Default.theme == "dark")
             {
                 container.Background = grayBrush(32);
                 toolbar.Background = grayBrush(32, 0.75);
@@ -222,23 +219,23 @@ namespace Niv
                 page.BorderBrush = grayBrush(128, 0.75);
                 btnExit.BorderBrush = grayBrush(0, 0);
             }
-            else MessageBox.Show("Not supported theme: " + theme);
+            else MessageBox.Show("Not supported theme: " + Settings.Default.theme);
 
             // button images
-            imageRotateLeft.Source = loadThemeBitmap("icon-rotate-left.png", theme);
-            imageRotateRight.Source = loadThemeBitmap("icon-rotate-right.png", theme);
-            imageDelete.Source = loadThemeBitmap("icon-delete.png", theme);
-            imagePrev.Source = loadThemeBitmap("icon-prev.png", theme);
-            imageNext.Source = loadThemeBitmap("icon-next.png", theme);
+            imageRotateLeft.Source = loadThemeBitmap("icon-rotate-left.png");
+            imageRotateRight.Source = loadThemeBitmap("icon-rotate-right.png");
+            imageDelete.Source = loadThemeBitmap("icon-delete.png");
+            imagePrev.Source = loadThemeBitmap("icon-prev.png");
+            imageNext.Source = loadThemeBitmap("icon-next.png");
             refreshSmoothButton();
             refreshZoomButton();
-            imageMenu.Source = loadThemeBitmap("icon-menu.png", theme);
-            imageCloseInfo.Source = imageExit.Source = loadThemeBitmap("icon-close.png", theme);
+            imageMenu.Source = loadThemeBitmap("icon-menu.png");
+            imageCloseInfo.Source = imageExit.Source = loadThemeBitmap("icon-close.png");
             // menu images
-            imageHelp.Source = loadThemeBitmap("icon-help.png", theme);
-            imageAbout.Source = loadThemeBitmap("icon-info.png", theme);
-            imageSetting.Source = loadThemeBitmap("icon-setting.png", theme);
-            imageInfo.Source = loadThemeBitmap("icon-list.png", theme);
+            imageHelp.Source = loadThemeBitmap("icon-help.png");
+            imageAbout.Source = loadThemeBitmap("icon-info.png");
+            imageSetting.Source = loadThemeBitmap("icon-setting.png");
+            imageInfo.Source = loadThemeBitmap("icon-list.png");
         }
 
         #endregion
@@ -503,6 +500,7 @@ namespace Niv
             labelInfoDate.Content = dateTimeToString(fi.LastWriteTime);
             this.Title = Path.GetFileName(info.filename) + " - " + I18n._("appName");
             refreshProgress();
+            refreshPageText();
             showPage();
 
             if (!isFileGif(info.filename))
@@ -687,10 +685,10 @@ namespace Niv
             MessageBox.Show(message);
         }
 
-        private static BitmapImage loadThemeBitmap(string filename, string theme)
+        private static BitmapImage loadThemeBitmap(string filename)
         {
             string namespaceName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
-            return new BitmapImage(new Uri("pack://application:,,,/" + namespaceName + ";component/res/theme-" + theme + "/" + filename));
+            return new BitmapImage(new Uri("pack://application:,,,/" + namespaceName + ";component/res/theme-" + Settings.Default.theme + "/" + filename));
         }
 
         private static BitmapImage loadResourceBitmap(string filepath)
@@ -751,23 +749,33 @@ namespace Niv
             walker.currentImageInfo.savedRotationAngle = walker.currentImageInfo.rotationAngle;
         }
 
+        private void refreshPageText()
+        {
+            iPage.Content = (walker.currentIndex + 1) + "/" + walker.count;
+        }
+
         private void refreshProgress()
         {
             setProgressWidth();
 
             double left = getProgressLeft();
-            if (walker.isJumpBetweenEnds() || !visibleStates[toolbar])
-                animatorJar.translateLeftToI(progress, left);
-            else
-                animatorJar.translateLeftTo(progress, left);
+            double bottom = TOOLBAR_HEIGHT - 1;
+            if (isFullscreen && !visibleStates[toolbar]) bottom = -4;
 
-            iPage.Content = (walker.currentIndex + 1) + "/" + walker.count;
+            if (walker.isJumpBetweenEnds() || !visibleStates[toolbar])
+                animatorJar.translateLeftBottomToI(progress, left, bottom);
+            else
+                animatorJar.translateLeftBottomTo(progress, left, bottom);
         }
 
         private void refreshProgressI()
         {
             setProgressWidth();
-            animatorJar.translateLeftToI(progress, getProgressLeft());
+
+            double left = getProgressLeft();
+            double bottom = isFullscreen && !visibleStates[toolbar] ? -4 : TOOLBAR_HEIGHT - 1;
+
+            animatorJar.translateLeftBottomToI(progress, left, bottom);
         }
 
         private void setProgressWidth()
@@ -825,7 +833,7 @@ namespace Niv
         {
             if (walker.currentImageInfo != null)
             {
-                imageSmooth.Source = loadThemeBitmap(walker.currentImageInfo.smooth ? "icon-smooth-off.png" : "icon-smooth-on.png", theme);
+                imageSmooth.Source = loadThemeBitmap(walker.currentImageInfo.smooth ? "icon-smooth-off.png" : "icon-smooth-on.png");
                 btnSmooth.ToolTip = I18n._(walker.currentImageInfo.smooth ? "tooltip.disable-smooth" : "tooltip.enable-smooth");
             }
         }
@@ -834,7 +842,7 @@ namespace Niv
         {
             if (walker.currentImageInfo != null)
             {
-                imageZoom.Source = loadThemeBitmap(walker.currentImageInfo.fitWindow ? "icon-one-to-one.png" : "icon-fit-window.png", theme);
+                imageZoom.Source = loadThemeBitmap(walker.currentImageInfo.fitWindow ? "icon-one-to-one.png" : "icon-fit-window.png");
                 btnZoom.ToolTip = I18n._(walker.currentImageInfo.fitWindow ? "tooltip.one-to-one" : "tooltip.fit-window");
             }
         }
@@ -971,21 +979,21 @@ namespace Niv
         private void showToolbar()
         {
             visibleStates[toolbar] = true;
-            animatorJar.marginBottomTo(toolbar, 0)
-                .marginBottomTo(page, MARGIN_SIZE * (isFullscreen ? 1 : 0) + 8)
-                .marginBottomTo(separator, 48)
-                .marginBottomTo(progress, 48 - 1)
-                .fadeIn(separator).fadeIn(progress);
+            animatorJar.translateBottomTo(toolbar, 0)
+                .translateBottomTo(page, MARGIN_SIZE + 8)
+                .translateBottomTo(separator, TOOLBAR_HEIGHT)
+                .fadeIn(separator);
+            refreshProgress();
         }
         private void hideToolbar()
         {
             visibleStates[toolbar] = false;
 
-            animatorJar.marginBottomTo(toolbar, -48)
-                .marginBottomTo(page, 8)
-                .marginBottomTo(separator, 0)
-                .marginBottomTo(progress, -1)
-                .fadeOut(separator).fadeOut(progress);
+            animatorJar.translateBottomTo(toolbar, -TOOLBAR_HEIGHT)
+                .translateBottomTo(page, 8)
+                .translateBottomTo(separator, 0)
+                .fadeOut(separator);
+            refreshProgress();
         }
 
         private void tryHideToolbar()
@@ -1024,8 +1032,9 @@ namespace Niv
 
         private void toggleTheme()
         {
-            theme = theme == "dark" ? "light" : "dark";
-            setTheme(theme);
+            Settings.Default.theme = Settings.Default.theme == "dark" ? "light" : "dark";
+            Settings.Default.Save();
+            setTheme();
         }
 
         // fullscreen
@@ -1035,17 +1044,18 @@ namespace Niv
                 exitFullscreen();
             else
                 enterFullscreen();
+
+            Settings.Default.fullscreen = isFullscreen;
+            Settings.Default.Save();
         }
         private void enterFullscreen()
         {
             lastWindowState = this.WindowState;
 
-            //this.Opacity = 0;
             this.WindowStyle = System.Windows.WindowStyle.None;
             if (this.WindowState != System.Windows.WindowState.Normal)
                 this.WindowState = System.Windows.WindowState.Normal;
             this.WindowState = System.Windows.WindowState.Maximized;
-            //this.Opacity = 1;
 
             btnExit.Visibility = System.Windows.Visibility.Visible;
 
@@ -1058,16 +1068,16 @@ namespace Niv
         }
         private void exitFullscreen()
         {
-            if (!visibleStates[toolbar]) showToolbar();
-            showMarginBottom();
+            isFullscreen = false;
+            isAutoHideToolbar = false;
 
             this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
             this.WindowState = lastWindowState;
 
             btnExit.Visibility = System.Windows.Visibility.Hidden;
 
-            isFullscreen = false;
-            isAutoHideToolbar = false;
+            showMarginBottom();
+            if (!visibleStates[toolbar]) showToolbar();
         }
 
         // menu
@@ -1091,10 +1101,7 @@ namespace Niv
             animatorJar.heightTo(menu, 0);
             animatorJar.fadeOut(menu);
         }
-
-
-
-
+        
         #endregion
 
         private void closeMenu(object sender, MouseButtonEventArgs e)
@@ -1141,7 +1148,7 @@ namespace Niv
         // Press key "D" to show something for debugging.
         private void debug()
         {
-            MessageBox.Show(toolbar.Margin.Right.ToString());
+            MessageBox.Show(progress.Margin.Bottom.ToString());
         }
 
         private void exit()
