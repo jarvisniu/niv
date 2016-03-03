@@ -81,7 +81,7 @@ namespace Niv
 
         public void onMouseDoubleClick()
         {
-            if (transformer.isFullwindow)
+            if (transformer.isFitWindow)
                 transformer.zoomTo(1, mousePos).animate();
             else
                 transformer.fitWindow().animate();

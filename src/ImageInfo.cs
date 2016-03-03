@@ -11,8 +11,8 @@ namespace Niv
         // The filename of this image
         public string filename;
 
-        // If this image is in fullwindow mode, say, fixed to the window size.
-        public bool isFullwindow = true;
+        // If this image is in Fit-Window mode, say, its size following the window size.
+        public bool fitWindow = true;
 
         // If this image is smooth on rendering (anti-alias)
         public bool smooth = true;

@@ -218,12 +218,8 @@ namespace Niv
             imageDelete.Source = loadThemeBitmap("icon-delete.png", theme);
             imagePrev.Source = loadThemeBitmap("icon-prev.png", theme);
             imageNext.Source = loadThemeBitmap("icon-next.png", theme);
-            imageSmooth.Source = loadThemeBitmap(
-                walker.currentImageInfo != null && walker.currentImageInfo.smooth
-                ? "icon-smooth-off.png" : "icon-smooth-on.png", theme);
-            imageZoom.Source = loadThemeBitmap(
-                walker.currentImageInfo != null && walker.currentImageInfo.isFullwindow
-                ? "icon-one-to-one.png" : "icon-fit-window.png", theme);
+            refreshSmoothButton();
+            refreshZoomButton();
             imageMenu.Source = loadThemeBitmap("icon-menu.png", theme);
             imageCloseInfo.Source = imageExit.Source = loadThemeBitmap("icon-close.png", theme);
             // menu images
@@ -277,6 +273,7 @@ namespace Niv
             btnSmooth.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
                 if (isSmoothButtonVisible) setSmoothTo(!walker.currentImageInfo.smooth);
+                refreshSmoothButton();
             };
 
             // Zoom button click
@@ -341,7 +338,7 @@ namespace Niv
             // Size-changed envent
             container.SizeChanged += (object sender, SizeChangedEventArgs e) =>
             {
-                if (walker.count > 0 && walker.currentImageInfo.isFullwindow)
+                if (walker.count > 0 && walker.currentImageInfo.fitWindow)
                     transformer.fitWindow().calcMarginDesByKeys().apply();
                 else
                     transformer.calcMarginDesByKeys().apply();
@@ -515,19 +512,20 @@ namespace Niv
             }
             else
             {
-                if (info.isFullwindow)
+                if (info.fitWindow)
                 {
                     transformer.fullsize().calcMarginDesByKeys().apply();
                     transformer.screenCenter().calcMarginDesByKeys().animate();
                 }
                 else
                 {
-                    transformer.exitFullwindowMode().setScale(info.scale).calcMarginDesByKeys().apply();
+                    transformer.exitFitWindowMode().setScale(info.scale).calcMarginDesByKeys().apply();
                     transformer.setCenter(info.center).calcMarginDesByKeys().animate();
                 }
                 animatorJar.rotateToI(image, info.rotationAngle);
             }
 
+            refreshSmoothButton();
             refreshZoomButton();
         }
 
@@ -781,7 +779,7 @@ namespace Niv
         private void toggleZoomIn121AndFit()
         {
 
-            if (transformer.isFullwindow)
+            if (transformer.isFitWindow)
                 transformer.initOne().animate();
             else
                 transformer.fitWindow().animate();
@@ -810,27 +808,18 @@ namespace Niv
             setSmoothTo(!isImageSmall);
         }
 
+        private void refreshSmoothButton()
+        {
+            imageSmooth.Source = loadThemeBitmap(
+                walker.currentImageInfo != null && walker.currentImageInfo.smooth
+                ? "icon-smooth-off.png" : "icon-smooth-on.png", theme);
+        }
 
         private void refreshZoomButton()
         {
-            if (walker.count == 0) return;
-
-            if (transformer.isFullwindow)
-            {
-                if (isZoomButtonInFitMode)
-                {
-                    imageZoom.Source = loadThemeBitmap("icon-one-to-one.png", theme);
-                    isZoomButtonInFitMode = false;
-                }
-            }
-            else
-            {
-                if (!isZoomButtonInFitMode)
-                {
-                    imageZoom.Source = loadThemeBitmap("icon-fit-window.png", theme);
-                    isZoomButtonInFitMode = true;
-                }
-            }
+            imageZoom.Source = loadThemeBitmap(
+                walker.currentImageInfo != null && walker.currentImageInfo.fitWindow
+                ? "icon-one-to-one.png" : "icon-fit-window.png", theme);
         }
 
         private bool isRotated()
@@ -1135,11 +1124,12 @@ namespace Niv
         // Press key "D" to show something for debugging.
         private void debug()
         {
+            MessageBox.Show(toolbar.Margin.Right.ToString());
         }
 
         private void exit()
         {
-            //restoreRotation();
+            setImageRotationBackToZero();
             //recycleBin.clean();
             aboutWindow.exit();
             Application.Current.Shutdown();

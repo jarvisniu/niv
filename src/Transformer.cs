@@ -15,11 +15,6 @@ namespace Niv
 {
     class Transformer
     {
-        // TODO remove this
-        // In this fullwindow mode:
-        //   1. Image size will follow the window size changing.
-        //   2. When the image is scaling, the scaling state will not saved to folder walker.
-        //   3. This mode will be breaking after the user zoom or pan the image proactively.
 
         /// Constants ----------------------------------------------------------
 
@@ -93,12 +88,12 @@ namespace Niv
             }
         }
 
-        public bool isFullwindow
+        public bool isFitWindow
         {
             get
             {
                 if (walker.currentImageInfo != null)
-                    return walker.currentImageInfo.isFullwindow;
+                    return walker.currentImageInfo.fitWindow;
                 else
                     return true;
             }
@@ -174,7 +169,7 @@ namespace Niv
         // Set to initial state used when the image appears the first time
         public Transformer initOne()
         {
-            exitFullwindowMode();
+            exitFitWindowMode();
 
             screenCenter();
             scale = 1;
@@ -192,7 +187,7 @@ namespace Niv
             fullsize();
             screenCenter();
 
-            walker.currentImageInfo.isFullwindow = true;
+            walker.currentImageInfo.fitWindow = true;
 
             calcMarginDesByKeys();
 
@@ -230,7 +225,7 @@ namespace Niv
         // Zoom-by the image at pivot which is the normalized position in the image.
         public Transformer zoomBy(double dS, Point pivot)
         {
-            exitFullwindowMode();
+            exitFitWindowMode();
 
             Size gridSize = container.RenderSize;
 
@@ -293,7 +288,7 @@ namespace Niv
         // Pan the `margin-destination` by a distance, in unit "px"
         public Transformer pan(double dX, double dY)
         {
-            exitFullwindowMode();
+            exitFitWindowMode();
 
             Thickness m = marginDestination;
             marginDestination = new Thickness(m.Left + dX, m.Top + dY, m.Right - dX, m.Bottom - dY);
@@ -359,11 +354,11 @@ namespace Niv
             return this;
         }
 
-        // Exit `fullwindow` mode
-        public Transformer exitFullwindowMode()
+        // Exit `fit-window` mode
+        public Transformer exitFitWindowMode()
         {
             if (walker.currentImageInfo != null)
-                walker.currentImageInfo.isFullwindow = false;
+                walker.currentImageInfo.fitWindow = false;
 
             return this;
         }
