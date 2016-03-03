@@ -74,6 +74,8 @@ namespace com.jarvisniu
             langData.Add("zh-CN", new Dictionary<string, string>());
             langData.Add("zh-TW", new Dictionary<string, string>());
 
+            // Common
+
             langData["en-US"]["_missing"] = "[DATA MISSING]";
             langData["zh-CN"]["_missing"] = "【数据丢失】";
             langData["zh-TW"]["_missing"] = "【數據丟失】";
@@ -81,6 +83,16 @@ namespace com.jarvisniu
             langData["en-US"]["appName"] = "Niv";
             langData["zh-CN"]["appName"] = "小牛看图";
             langData["zh-TW"]["appName"] = "小牛看圖";
+
+            langData["en-US"]["menu"] = "Menu";
+            langData["zh-CN"]["menu"] = "菜单";
+            langData["zh-TW"]["menu"] = "功能表";
+
+            langData["en-US"]["close"] = "Close";
+            langData["zh-CN"]["close"] = "关闭";
+            langData["zh-TW"]["close"] = "關閉";
+
+            // Image Info
 
             langData["en-US"]["imageInfo"] = "Image Info";
             langData["zh-CN"]["imageInfo"] = "图片信息";
@@ -113,6 +125,50 @@ namespace com.jarvisniu
             langData["en-US"]["setting"] = "Switch Themes";  // Setting
             langData["zh-CN"]["setting"] = "切换主题";  // 设置
             langData["zh-TW"]["setting"] = "切換主題";  // 設置
+
+            // Tooltip
+
+            langData["en-US"]["tooltip.rotate-left"] = "Rotate Left";
+            langData["zh-CN"]["tooltip.rotate-left"] = "向左旋转";
+            langData["zh-TW"]["tooltip.rotate-left"] = "向左旋轉";
+
+            langData["en-US"]["tooltip.rotate-right"] = "Rotate Right";
+            langData["zh-CN"]["tooltip.rotate-right"] = "向右旋转";
+            langData["zh-TW"]["tooltip.rotate-right"] = "向右旋轉";
+
+            langData["en-US"]["tooltip.delete"] = "Delete";
+            langData["zh-CN"]["tooltip.delete"] = "删除";
+            langData["zh-TW"]["tooltip.delete"] = "刪除";
+
+            langData["en-US"]["tooltip.prev-image"] = "Previous";
+            langData["zh-CN"]["tooltip.prev-image"] = "上一张";
+            langData["zh-TW"]["tooltip.prev-image"] = "上一張";
+
+            langData["en-US"]["tooltip.next-image"] = "Next";
+            langData["zh-CN"]["tooltip.next-image"] = "下一张";
+            langData["zh-TW"]["tooltip.next-image"] = "下一張";
+
+            langData["en-US"]["tooltip.enable-smooth"] = "Enable Smooth";
+            langData["zh-CN"]["tooltip.enable-smooth"] = "启用平滑";
+            langData["zh-TW"]["tooltip.enable-smooth"] = "啟用平滑";
+
+            langData["en-US"]["tooltip.disable-smooth"] = "Disable Smooth";
+            langData["zh-CN"]["tooltip.disable-smooth"] = "关闭平滑";
+            langData["zh-TW"]["tooltip.disable-smooth"] = "關閉平滑";
+
+            langData["en-US"]["tooltip.fit-window"] = "Fit to Window";
+            langData["zh-CN"]["tooltip.fit-window"] = "适应窗口";
+            langData["zh-TW"]["tooltip.fit-window"] = "適應視窗";
+
+            langData["en-US"]["tooltip.one-to-one"] = "Actual Size";
+            langData["zh-CN"]["tooltip.one-to-one"] = "实际大小";
+            langData["zh-TW"]["tooltip.one-to-one"] = "實際大小";
+
+            langData["en-US"]["tooltip.exit-program"] = "Exit Program";
+            langData["zh-CN"]["tooltip.exit-program"] = "退出程序";
+            langData["zh-TW"]["tooltip.exit-program"] = "退出程式";
+
+            // About Window
 
             langData["en-US"]["version"] = "Version";
             langData["zh-CN"]["version"] = "版本";

@@ -93,6 +93,18 @@ namespace Niv
             iAbout.Content = I18n._("about");
             iSetting.Content = I18n._("setting");
             iImageInfo.Content = I18n._("imageInfo");
+
+            // tooltip
+            btnRotateLeft.ToolTip = I18n._("tooltip.rotate-left");
+            btnRotateRight.ToolTip = I18n._("tooltip.rotate-right");
+            btnDelete.ToolTip = I18n._("tooltip.delete");
+            btnPrevImage.ToolTip = I18n._("tooltip.prev-image");
+            btnNextImage.ToolTip = I18n._("tooltip.next-image");
+            // Tips of smooth button and zoom button are dynamic in refreshSmoothButton() and refreshZoomButton().
+            btnMenu.ToolTip = I18n._("menu");
+            btnCloseInfo.ToolTip = I18n._("close");
+            btnExit.ToolTip = I18n._("tooltip.exit-program");
+
             // aboutWindow
             aboutWindow.Title = I18n._("about");
             aboutWindow.iAppName.Content = I18n._("appName");
@@ -129,7 +141,7 @@ namespace Niv
 
             // add animation effects to buttons
             buttonAnimator.apply(btnZoom).apply(btnPrevImage).apply(btnNextImage).apply(btnSmooth).apply(btnMenu).apply(btnExit)
-                .apply(btnDeleteImage).apply(btnRotateLeft).apply(btnRotateRight).apply(menuAbout)
+                .apply(btnDelete).apply(btnRotateLeft).apply(btnRotateRight).apply(menuAbout)
                 .apply(menuHelp).apply(menuSetting).apply(menuImageInfo).apply(btnCloseInfo);
 
             // Hide the toolbar buttons
@@ -252,7 +264,7 @@ namespace Niv
             };
 
             // Delete-image button click
-            btnDeleteImage.MouseUp += (object sender, MouseButtonEventArgs e) =>
+            btnDelete.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
                 MessageBox.Show("TODO: 图片删除功能正在开发");
             };
@@ -394,6 +406,7 @@ namespace Niv
             // Help menu
             menuHelp.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
+                MessageBox.Show("TODO: 帮助功能正在开发");
                 hideMainMenu();
             };
 
@@ -612,14 +625,14 @@ namespace Niv
             // Normal buttons
             if (count == 0)
             {
-                btnDeleteImage.Visibility = Visibility.Hidden;
+                btnDelete.Visibility = Visibility.Hidden;
                 btnRotateLeft.Visibility = Visibility.Hidden;
                 btnRotateRight.Visibility = Visibility.Hidden;
                 btnZoom.Visibility = Visibility.Hidden;
             }
             else
             {
-                btnDeleteImage.Visibility = Visibility.Visible;
+                btnDelete.Visibility = Visibility.Visible;
                 btnRotateLeft.Visibility = Visibility.Visible;
                 btnRotateRight.Visibility = Visibility.Visible;
                 btnZoom.Visibility = Visibility.Visible;
@@ -810,16 +823,20 @@ namespace Niv
 
         private void refreshSmoothButton()
         {
-            imageSmooth.Source = loadThemeBitmap(
-                walker.currentImageInfo != null && walker.currentImageInfo.smooth
-                ? "icon-smooth-off.png" : "icon-smooth-on.png", theme);
+            if (walker.currentImageInfo != null)
+            {
+                imageSmooth.Source = loadThemeBitmap(walker.currentImageInfo.smooth ? "icon-smooth-off.png" : "icon-smooth-on.png", theme);
+                btnSmooth.ToolTip = I18n._(walker.currentImageInfo.smooth ? "tooltip.disable-smooth" : "tooltip.enable-smooth");
+            }
         }
 
         private void refreshZoomButton()
         {
-            imageZoom.Source = loadThemeBitmap(
-                walker.currentImageInfo != null && walker.currentImageInfo.fitWindow
-                ? "icon-one-to-one.png" : "icon-fit-window.png", theme);
+            if (walker.currentImageInfo != null)
+            {
+                imageZoom.Source = loadThemeBitmap(walker.currentImageInfo.fitWindow ? "icon-one-to-one.png" : "icon-fit-window.png", theme);
+                btnZoom.ToolTip = I18n._(walker.currentImageInfo.fitWindow ? "tooltip.one-to-one" : "tooltip.fit-window");
+            }
         }
 
         private bool isRotated()
@@ -1023,12 +1040,12 @@ namespace Niv
         {
             lastWindowState = this.WindowState;
 
-            this.Opacity = 0;
+            //this.Opacity = 0;
             this.WindowStyle = System.Windows.WindowStyle.None;
             if (this.WindowState != System.Windows.WindowState.Normal)
                 this.WindowState = System.Windows.WindowState.Normal;
             this.WindowState = System.Windows.WindowState.Maximized;
-            this.Opacity = 1;
+            //this.Opacity = 1;
 
             btnExit.Visibility = System.Windows.Visibility.Visible;
 

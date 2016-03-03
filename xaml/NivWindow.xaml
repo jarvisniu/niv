@@ -13,7 +13,7 @@
 
         </Grid>
         <Grid x:Name="toolbar" Margin="0" Background="#BF202020" Height="48" VerticalAlignment="Bottom">
-            <Border x:Name="btnDeleteImage" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="96,0,0,0">
+            <Border x:Name="btnDelete" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="96,0,0,0">
                 <Image x:Name="imageDelete" Margin="15" Source="/Niv;component/res/theme-dark/icon-delete.png"/>
             </Border>
             <Border x:Name="btnRotateLeft" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="0">
@@ -40,6 +40,12 @@
                 <Image x:Name="imageMenu" Margin="15" Source="/Niv;component/res/theme-dark/icon-menu.png"/>
             </Border>
         </Grid>
+        <Border x:Name="btnExit" BorderBrush="#7F404040" BorderThickness="2,0,0,2" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Width="50" Margin="0" CornerRadius="0,0,0,8">
+            <Image x:Name="imageExit" Margin="15" Source="/Niv;component/res/theme-dark/icon-close.png"/>
+        </Border>
+        <Border x:Name="page" BorderBrush="Gray" BorderThickness="2" Margin="0,0,10,218" CornerRadius="0" Background="#FF404040" HorizontalAlignment="Right" Width="50" Height="32" VerticalAlignment="Bottom" IsHitTestVisible="False">
+            <Label x:Name="iPage" Content="0/0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" Foreground="#FFDEDEDE"/>
+        </Border>
         <Border x:Name="menu" BorderBrush="#BF404040" BorderThickness="2,2,2,0" Margin="0,0,10,57" HorizontalAlignment="Right" Width="196" Height="180" VerticalAlignment="Bottom" Background="Black">
             <StackPanel x:Name="menuStack">
                 <Border x:Name="menuHelp" BorderBrush="Black" BorderThickness="0" Height="40" Margin="0,6,0,0">
@@ -71,12 +77,6 @@
         </Border>
         <Grid x:Name="separator" Height="2" Margin="0,0,0,48" VerticalAlignment="Bottom" Background="#BF404040"/>
         <Rectangle x:Name="progress" Fill="#BFFFFFFF" Margin="0,0,0,47" Height="4" VerticalAlignment="Bottom" Stroke="#7F000000" HorizontalAlignment="Left" Width="236"/>
-        <Border x:Name="btnExit" BorderBrush="#7F404040" BorderThickness="2,0,0,2" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Width="50" Margin="0" CornerRadius="0,0,0,8">
-            <Image x:Name="imageExit" Margin="15" Source="/Niv;component/res/theme-dark/icon-close.png"/>
-        </Border>
-        <Border x:Name="page" BorderBrush="Gray" BorderThickness="2" Margin="0,0,10,218" CornerRadius="0" Background="#FF404040" HorizontalAlignment="Right" Width="50" Height="32" VerticalAlignment="Bottom" IsHitTestVisible="False">
-            <Label x:Name="iPage" Content="0/0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" Foreground="#FFDEDEDE"/>
-        </Border>
         <Grid x:Name="info" HorizontalAlignment="Left" Width="200" Background="#FF404040" Margin="10,10,0,57">
             <Label x:Name="iImageInfoTitle" Content="&lt;Image Info&gt;" Foreground="#FFDEDEDE" FontSize="18" VerticalContentAlignment="Center" Margin="0,0,48,0" Height="48" VerticalAlignment="Top" Padding="14,5,5,5"/>
             <Border x:Name="btnCloseInfo" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48">
