@@ -110,6 +110,10 @@ namespace com.jarvisniu
             langData["zh-CN"]["help"] = "帮助";
             langData["zh-TW"]["help"] = "説明";
 
+            langData["en-US"]["setting"] = "Switch Themes";  // Setting
+            langData["zh-CN"]["setting"] = "切换主题";  // 设置
+            langData["zh-TW"]["setting"] = "切換主題";  // 設置
+
             langData["en-US"]["version"] = "Version";
             langData["zh-CN"]["version"] = "版本";
             langData["zh-TW"]["version"] = "版本";

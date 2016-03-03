@@ -40,7 +40,7 @@
                 <Image x:Name="imageMenu" Margin="15" Source="/Niv;component/res/theme-dark/icon-menu.png"/>
             </Border>
         </Grid>
-        <Border x:Name="menu" BorderBrush="#BF404040" BorderThickness="2,2,2,0" Margin="0,0,10,57" HorizontalAlignment="Right" Width="196" Height="140" VerticalAlignment="Bottom" Background="Black">
+        <Border x:Name="menu" BorderBrush="#BF404040" BorderThickness="2,2,2,0" Margin="0,0,10,57" HorizontalAlignment="Right" Width="196" Height="180" VerticalAlignment="Bottom" Background="Black">
             <StackPanel x:Name="menuStack">
                 <Border x:Name="menuHelp" BorderBrush="Black" BorderThickness="0" Height="40" Margin="0,6,0,0">
                     <Grid Margin="0">
@@ -52,6 +52,12 @@
                     <Grid Margin="0">
                         <Image x:Name="imageAbout" HorizontalAlignment="Left" Margin="15,11,0,11" Width="18" Source="/Niv;component/res/theme-dark/icon-info.png"/>
                         <Label x:Name="iAbout" Content="&lt;About&gt;" Margin="40,4,10,4" VerticalContentAlignment="Center" Foreground="Silver" FontSize="15"/>
+                    </Grid>
+                </Border>
+                <Border x:Name="menuSetting" BorderBrush="Black" BorderThickness="0" Height="40">
+                    <Grid Margin="0">
+                        <Image x:Name="imageSetting" HorizontalAlignment="Left" Margin="15,11,0,11" Width="18" Source="/Niv;component/res/theme-dark/icon-setting.png"/>
+                        <Label x:Name="iSetting" Content="&lt;Setting&gt;" Margin="40,4,10,4" VerticalContentAlignment="Center" Foreground="Silver" FontSize="15"/>
                     </Grid>
                 </Border>
                 <Rectangle x:Name="menuLine" Fill="White" Stroke="#FF404040" Height="1" Margin="0,6"/>

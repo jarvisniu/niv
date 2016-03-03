@@ -227,11 +227,13 @@ namespace com.jarvisniu
             if (!(target.RenderTransform is RotateTransform))
                 target.RenderTransform = new RotateTransform(0);
             double currDegree = (double)target.RenderTransform.GetValue(RotateTransform.AngleProperty);
-            if (Math.Abs(angle - currDegree) > 180)
+            Console.WriteLine(currDegree + " => " + angle);
+            while (Math.Abs(angle - currDegree) > 180)
             {
                 if (angle > currDegree) angle -= 360;
                 else angle += 360;
             }
+            Console.WriteLine(currDegree + " -> " + angle);
             rotateAnimation.To = angle;
             Storyboard.SetTarget(rotateAnimation, target);
             boardRotate.Begin();

@@ -43,7 +43,7 @@ namespace Niv
         static double PROGRESS_CAP = 2;
         static double INFO_WIDTH = 260;
         static double MENU_HEIGHT =
-            40 * 3 + // menu item
+            40 * 4 + // menu item
             2 * 1 +  // top border
             1 * 1 +  // seprate line
             6 * 4;   // gap
@@ -90,6 +90,7 @@ namespace Niv
             iDate.Content = I18n._("date");
             iHelp.Content = I18n._("help");
             iAbout.Content = I18n._("about");
+            iSetting.Content = I18n._("setting");
             iImageInfo.Content = I18n._("imageInfo");
             // aboutWindow
             aboutWindow.Title = I18n._("about");
@@ -128,14 +129,14 @@ namespace Niv
             // add animation effects to buttons
             buttonAnimator.apply(btnZoom).apply(btnPrevImage).apply(btnNextImage).apply(btnSmooth).apply(btnMenu).apply(btnExit)
                 .apply(btnDeleteImage).apply(btnRotateLeft).apply(btnRotateRight).apply(menuAbout)
-                .apply(menuHelp).apply(menuImageInfo).apply(btnCloseInfo);
+                .apply(menuHelp).apply(menuSetting).apply(menuImageInfo).apply(btnCloseInfo);
 
             // Hide the toolbar buttons
             onWalkerCountChanged();
 
             // Set render to high quality of images
             Image[] images = { imageRotateLeft, imageRotateRight, imageDelete, imagePrev, imageNext,
-                imageSmooth, imageZoom, imageMenu, imageCloseInfo, imageHelp, imageAbout, imageInfo, imageExit };
+                imageSmooth, imageZoom, imageMenu, imageCloseInfo, imageHelp, imageAbout, imageSetting, imageInfo, imageExit };
             foreach (Image image in images)
                 RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
         }
@@ -181,7 +182,8 @@ namespace Niv
                 separator.Background = progress.Stroke = menu.BorderBrush = menuLine.Stroke
                     = infoTitleLine.Stroke = infoRightLine.Stroke = grayBrush(170);
                 progress.Fill = grayBrush(255);
-                iHelp.Foreground = iAbout.Foreground = iImageInfo.Foreground = iImageInfoTitle.Foreground = iPage.Foreground = grayBrush(48);
+                iHelp.Foreground = iAbout.Foreground = iSetting.Foreground = iImageInfo.Foreground
+                    = iImageInfoTitle.Foreground = iPage.Foreground = grayBrush(48);
                 iFilename.Foreground = iSize.Foreground = iResolution.Foreground = iDate.Foreground = grayBrush(84);
                 labelInfoFilename.Foreground = labelInfoSize.Foreground = labelInfoResolution.Foreground
                     = labelInfoDate.Foreground = grayBrush(0);
@@ -199,8 +201,8 @@ namespace Niv
                 separator.Background = progress.Stroke = iFilename.Foreground = iSize.Foreground =
                     iResolution.Foreground = iDate.Foreground = grayBrush(64, 0.75);
                 progress.Fill = grayBrush(255, 0.75);
-                iHelp.Foreground = iAbout.Foreground = iImageInfo.Foreground = iImageInfoTitle.Foreground = iPage.Foreground
-                    = iFilename.Foreground = iSize.Foreground = iResolution.Foreground = iDate.Foreground = grayBrush(192);
+                iHelp.Foreground = iAbout.Foreground = iSetting.Foreground = iImageInfo.Foreground = iImageInfoTitle.Foreground
+                     = iPage.Foreground = iFilename.Foreground = iSize.Foreground = iResolution.Foreground = iDate.Foreground = grayBrush(192);
                 labelInfoFilename.Foreground = labelInfoSize.Foreground = labelInfoResolution.Foreground
                     = labelInfoDate.Foreground = grayBrush(255);
                 page.Background = grayBrush(64, 0.75);
@@ -226,6 +228,7 @@ namespace Niv
             // menu images
             imageHelp.Source = loadThemeBitmap("icon-help.png", theme);
             imageAbout.Source = loadThemeBitmap("icon-info.png", theme);
+            imageSetting.Source = loadThemeBitmap("icon-setting.png", theme);
             imageInfo.Source = loadThemeBitmap("icon-list.png", theme);
         }
 
@@ -254,7 +257,7 @@ namespace Niv
             // Delete-image button click
             btnDeleteImage.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
-
+                MessageBox.Show("TODO: 图片删除功能正在开发");
             };
 
             // Prev-image button click
@@ -393,7 +396,6 @@ namespace Niv
             // Help menu
             menuHelp.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
-                toggleTheme();
                 hideMainMenu();
             };
 
@@ -401,6 +403,13 @@ namespace Niv
             menuAbout.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
                 aboutWindow.Show();
+                hideMainMenu();
+            };
+
+            // Setting menu
+            menuSetting.MouseUp += (object sender, MouseButtonEventArgs e) =>
+            {
+                toggleTheme();
                 hideMainMenu();
             };
 
