@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Reflection;
 
 using com.jarvisniu;
+using WpfAnimatedGif;
 
 namespace Niv
 {
@@ -496,12 +497,12 @@ namespace Niv
 
             if (!isFileGif(info.filename))
             {
-                // ImageBehavior.SetAnimatedSource(image, null);
+                ImageBehavior.SetAnimatedSource(image, null);
                 image.Source = transformer.bitmap;
             }
             else
             {
-                // ImageBehavior.SetAnimatedSource(image, transformer.bitmap);
+                ImageBehavior.SetAnimatedSource(image, transformer.bitmap);
             }
 
             if (info.virgin)

@@ -89,6 +89,26 @@
     <Compile Include="src\ImageInfo.cs" />
     <Compile Include="src\Controller.cs" />
     <Compile Include="src\Transformer.cs" />
+    <Compile Include="src\WpfAnimatedGif\AnimationCache.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifApplicationExtension.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifBlock.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifBlockKind.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifColor.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifCommentExtension.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifDecoderException.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifExtension.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifFile.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifFrame.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifGraphicControlExtension.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifHeader.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifHelpers.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifImageData.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifImageDescriptor.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifLogicalScreenDescriptor.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifPlainTextExtension.cs" />
+    <Compile Include="src\WpfAnimatedGif\Docoding\GifTrailer.cs" />
+    <Compile Include="src\WpfAnimatedGif\ImageAnimationController.cs" />
+    <Compile Include="src\WpfAnimatedGif\ImageBehavior.cs" />
     <Compile Include="xaml\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -166,5 +186,6 @@
   <ItemGroup>
     <Resource Include="res\theme-light\icon-help.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
