@@ -10,7 +10,7 @@ namespace Niv
     class Recycle
     {
         // Folder of recycle
-        private static string recyclePath = Environment.CurrentDirectory + @"\Recycle\";
+        private static string recyclePath = AppDomain.CurrentDomain.BaseDirectory + @"\Recycle\";
         private DirectoryInfo di = new DirectoryInfo(recyclePath);
 
         // Id counter for every recycle files.
@@ -78,6 +78,7 @@ namespace Niv
         // Delete all the files in recycle and the recycle folder.
         public void clean()
         {
+            di.Refresh();
             if (di.Exists) di.Delete(true);
         }
 
