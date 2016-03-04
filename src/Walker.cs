@@ -151,6 +151,12 @@ namespace Niv
             if (currentIndex == imageInfos.Count) currentIndex = 0;
         }
 
+        public void insertImageInfo(int index, ImageInfo info)
+        {
+            imageInfos.Insert(index, info);
+
+        }
+
         // EOC
     }
 }

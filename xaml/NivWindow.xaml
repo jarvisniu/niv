@@ -13,20 +13,23 @@
 
         </Grid>
         <Grid x:Name="toolbar" Margin="0" Background="#BF202020" Height="48" VerticalAlignment="Bottom">
-            <Border x:Name="btnDelete" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="96,0,0,0">
-                <Image x:Name="imageDelete" Margin="15" Source="/Niv;component/res/theme-dark/icon-delete.png"/>
-            </Border>
             <Border x:Name="btnRotateLeft" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="0">
                 <Image x:Name="imageRotateLeft" Margin="15" Source="/Niv;component/res/theme-dark/icon-rotate-left.png"/>
             </Border>
             <Border x:Name="btnRotateRight" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="48,0,0,0">
                 <Image x:Name="imageRotateRight" Margin="15" Source="/Niv;component/res/theme-dark/icon-rotate-right.png"/>
             </Border>
-            <Grid Height="48" Margin="150,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="172">
-                <Border x:Name="btnPrevImage" BorderBrush="#FF484848" BorderThickness="0" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Margin="38,0,0,0">
+            <Border x:Name="btnDelete" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="96,0,0,0">
+                <Image x:Name="imageDelete" Margin="15" Source="/Niv;component/res/theme-dark/icon-delete.png"/>
+            </Border>
+            <Border x:Name="btnUndelete" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="144,0,0,0">
+                <Image x:Name="imageUndelete" Margin="15" Source="/Niv;component/res/theme-dark/icon-undelete.png"/>
+            </Border>
+            <Grid x:Name="gridSwitch" Height="48" Margin="150,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="96">
+                <Border x:Name="btnPrevImage" BorderBrush="#FF484848" BorderThickness="0" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Margin="0,0,0,0">
                     <Image x:Name="imagePrev" Margin="15" Source="/Niv;component/res/theme-dark/icon-prev.png"/>
                 </Border>
-                <Border x:Name="btnNextImage" BorderBrush="#FF484848" BorderThickness="0" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Margin="86,0,0,0">
+                <Border x:Name="btnNextImage" BorderBrush="#FF484848" BorderThickness="0" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Margin="48,0,0,0">
                     <Image x:Name="imageNext" Margin="15" Source="/Niv;component/res/theme-dark/icon-next.png"/>
                 </Border>
             </Grid>

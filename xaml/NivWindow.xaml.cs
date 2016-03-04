@@ -28,14 +28,14 @@ namespace Niv
         Transformer transformer;
         Controller inputController;
         FolderWalker walker = new FolderWalker();
-        // RecycleBin recycleBin = new RecycleBin(AppDomain.CurrentDomain.BaseDirectory);
+        Recycle recycle = new Recycle();
 
         // delayed closing timers
         Timer timerClosePage;
 
         // layout config
-        static double WINDOW_MIN_WIDTH = 680;
-        static double WINDOW_MIN_HEIGHT = 462;
+        static double WINDOW_MIN_WIDTH = 540;
+        static double WINDOW_MIN_HEIGHT = 384;
         public static int SEPARATOR_HEIGHT = 2;
         public static int TOOLBAR_HEIGHT = 48;
         public static int MARGIN_SIZE = 50;
@@ -51,7 +51,6 @@ namespace Niv
 
         private Dictionary<FrameworkElement, bool> visibleStates = new Dictionary<FrameworkElement, bool>();
         private bool isMarginBottomExist = true;
-        private bool isSmoothButtonVisible = false;
         private bool isZoomButtonInFitMode = true;
         private bool isFullscreen = false;
         private bool isAutoHideToolbar = false;
@@ -95,9 +94,10 @@ namespace Niv
             btnRotateLeft.ToolTip = I18n._("tooltip.rotate-left");
             btnRotateRight.ToolTip = I18n._("tooltip.rotate-right");
             btnDelete.ToolTip = I18n._("tooltip.delete");
+            btnUndelete.ToolTip = I18n._("tooltip.undelete");
             btnPrevImage.ToolTip = I18n._("tooltip.prev-image");
             btnNextImage.ToolTip = I18n._("tooltip.next-image");
-            // Tips of smooth button and zoom button are dynamic in refreshSmoothButton() and refreshZoomButton().
+            // Tips of undelete, smooth and zoom button are dynamic in refreshFoobarButton().
             btnMenu.ToolTip = I18n._("menu");
             btnCloseInfo.ToolTip = I18n._("close");
             btnExit.ToolTip = I18n._("tooltip.exit-program");
@@ -130,6 +130,7 @@ namespace Niv
             menu.Height = 0;
 
             visibleStates[btnExit] = false;
+            visibleStates[btnSmooth] = false;
             visibleStates[container] = false;
             visibleStates[toolbar] = true;
             visibleStates[info] = false;
@@ -138,14 +139,17 @@ namespace Niv
 
             // add animation effects to buttons
             buttonAnimator.apply(btnZoom).apply(btnPrevImage).apply(btnNextImage).apply(btnSmooth).apply(btnMenu).apply(btnExit)
-                .apply(btnDelete).apply(btnRotateLeft).apply(btnRotateRight).apply(menuAbout)
+                .apply(btnDelete).apply(btnUndelete).apply(btnRotateLeft).apply(btnRotateRight).apply(menuAbout)
                 .apply(menuHelp).apply(menuSetting).apply(menuImageInfo).apply(btnCloseInfo);
 
             // Hide the toolbar buttons
             onWalkerCountChanged();
 
+            // Hide undelete button
+            onRecycleCountChanged();
+
             // Set render to high quality of images
-            Image[] images = { imageRotateLeft, imageRotateRight, imageDelete, imagePrev, imageNext,
+            Image[] images = { imageRotateLeft, imageRotateRight, imageDelete, imageUndelete, imagePrev, imageNext,
                 imageSmooth, imageZoom, imageMenu, imageCloseInfo, imageHelp, imageAbout, imageSetting, imageInfo, imageExit };
             foreach (Image image in images)
                 RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
@@ -171,13 +175,14 @@ namespace Niv
             if (s > AA_SCALE_THRESHHOLD && walker.count > 0)
             {
                 animatorJar.fadeIn(btnSmooth);
-                isSmoothButtonVisible = true;
+                visibleStates[btnSmooth] = true;
             }
             else if (s <= AA_SCALE_THRESHHOLD)
             {
                 animatorJar.fadeOut(btnSmooth);
-                isSmoothButtonVisible = false;
+                visibleStates[btnSmooth] = false;
             }
+            refreshSmoothButton();
         }
 
         private void setTheme()
@@ -225,6 +230,7 @@ namespace Niv
             imageRotateLeft.Source = loadThemeBitmap("icon-rotate-left.png");
             imageRotateRight.Source = loadThemeBitmap("icon-rotate-right.png");
             imageDelete.Source = loadThemeBitmap("icon-delete.png");
+            imageUndelete.Source = loadThemeBitmap("icon-undelete.png");
             imagePrev.Source = loadThemeBitmap("icon-prev.png");
             imageNext.Source = loadThemeBitmap("icon-next.png");
             refreshSmoothButton();
@@ -263,7 +269,13 @@ namespace Niv
             // Delete-image button click
             btnDelete.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
-                MessageBox.Show("TODO: 图片删除功能正在开发");
+                delete();
+            };
+
+            // Delete-image button click
+            btnUndelete.MouseUp += (object sender, MouseButtonEventArgs e) =>
+            {
+                undeleteLast();
             };
 
             // Prev-image button click
@@ -281,7 +293,7 @@ namespace Niv
             // Smooth switch button click
             btnSmooth.MouseUp += (object sender, MouseButtonEventArgs e) =>
             {
-                if (isSmoothButtonVisible) setSmoothTo(!walker.currentImageInfo.smooth);
+                if (visibleStates[btnSmooth]) setSmoothTo(!walker.currentImageInfo.smooth);
                 refreshSmoothButton();
             };
 
@@ -358,6 +370,7 @@ namespace Niv
             separator.SizeChanged += (object sender, SizeChangedEventArgs e) =>
             {
                 refreshProgressI();
+                gridSwitch.Visibility = separator.ActualWidth < 480 ? Visibility.Hidden : Visibility.Visible;
             };
 
             container.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
@@ -495,7 +508,7 @@ namespace Niv
             // infos
             labelInfoFilename.Content = Path.GetFileName(info.filename);
             FileInfo fi = new FileInfo(info.filename);
-            labelInfoSize.Content = humanifyNumber(fi.Length) + "B";
+            labelInfoSize.Content = suffixifyNumber(fi.Length) + "B";
             labelInfoResolution.Content = transformer.bitmap.PixelWidth + " x " + transformer.bitmap.PixelHeight;
             labelInfoDate.Content = dateTimeToString(fi.LastWriteTime);
             this.Title = Path.GetFileName(info.filename) + " - " + I18n._("appName");
@@ -627,6 +640,9 @@ namespace Niv
                 btnRotateLeft.Visibility = Visibility.Hidden;
                 btnRotateRight.Visibility = Visibility.Hidden;
                 btnZoom.Visibility = Visibility.Hidden;
+
+                image.Source = null;
+                ImageBehavior.SetAnimatedSource(image, null);
             }
             else
             {
@@ -680,6 +696,7 @@ namespace Niv
             }
             return "";
         }
+
         private void showMessage(string message)
         {
             MessageBox.Show(message);
@@ -718,10 +735,19 @@ namespace Niv
         public void saveRotationToFile()
         {
             string filename = walker.currentImageInfo.filename;
+
             double rotationAngle = walker.currentImageInfo.rotationAngle;
             double savedAngle = walker.currentImageInfo.savedRotationAngle;
             double angle = simplifyAngle(rotationAngle - savedAngle);
-            if (angle == 0) return;
+            if (angle == 0)
+            {
+                return;
+            }
+            else if (Path.GetExtension(filename) == ".gif")
+            {
+                // showMessage("不支持保存GIF图片");
+                return;
+            }
 
             System.Drawing.Image imgSrc = System.Drawing.Image.FromFile(filename);
             if (angle == 90)
@@ -828,13 +854,14 @@ namespace Niv
             bool isImageSmall = transformer.bitmap.PixelWidth < 257 && transformer.bitmap.PixelHeight < 257;
             setSmoothTo(!isImageSmall);
         }
-
+        
         private void refreshSmoothButton()
         {
             if (walker.currentImageInfo != null)
             {
                 imageSmooth.Source = loadThemeBitmap(walker.currentImageInfo.smooth ? "icon-smooth-off.png" : "icon-smooth-on.png");
-                btnSmooth.ToolTip = I18n._(walker.currentImageInfo.smooth ? "tooltip.disable-smooth" : "tooltip.enable-smooth");
+                btnSmooth.ToolTip = visibleStates[btnSmooth] ?
+                    I18n._(walker.currentImageInfo.smooth ? "tooltip.disable-smooth" : "tooltip.enable-smooth") : null;
             }
         }
 
@@ -874,9 +901,9 @@ namespace Niv
             return angle;
         }
 
-        private string humanifyNumber(double num)
+        // Convert a number into the form that has a suffix k, M, G etc.
+        private string suffixifyNumber(double num)
         {
-            // 科学计数法
             string[] units = { "", "k", "M", "G", "T" };
             int level = 0;
 
@@ -1101,7 +1128,7 @@ namespace Niv
             animatorJar.heightTo(menu, 0);
             animatorJar.fadeOut(menu);
         }
-        
+
         #endregion
 
         private void closeMenu(object sender, MouseButtonEventArgs e)
@@ -1127,34 +1154,54 @@ namespace Niv
 
         private void delete()
         {
-            if (walker.count == 0) return;
-
-            FileInfo fi = new FileInfo(walker.currentImageInfo.filename);
-            if (fi.Exists)
-            {
-                //recycleBin.receive(filename);
-                showMessage("图片已删除至图片回收站。");
-                showPage();
-            }
-
+            recycle.recieve(walker.currentImageInfo, walker.currentIndex);
             walker.removeCurrentImageInfo();
+            // showMessage("图片已删除至图片回收站。");
 
-            if (walker.count > 0)
+            if (walker.count > 0) loadFromWalker();
+
+            onWalkerCountChanged();
+            onRecycleCountChanged();
+        }
+
+        private void undeleteLast()
+        {
+            if (recycle.count > 0)
+            {
+                RecycleImageInfo recycleInfo = recycle.undeleteLast();
+                walker.insertImageInfo(recycleInfo.originalIndex, recycleInfo.originalInfo);
+                walker.currentIndex = recycleInfo.originalIndex;
                 loadFromWalker();
+
+                onWalkerCountChanged();
+                onRecycleCountChanged();
+            }
+        }
+
+        private void onRecycleCountChanged()
+        {
+            if (recycle.count > 0)
+            {
+                animatorJar.fadeIn(btnUndelete);
+                btnUndelete.ToolTip = I18n._("tooltip.undelete");
+            }
             else
-                exit(); // TODO不能退出，因为可能只有一张而删错，应该显示一个打开文件的按钮
+            {
+                animatorJar.fadeOut(btnUndelete);
+                btnUndelete.ToolTip = null;
+            }
         }
 
         // Press key "D" to show something for debugging.
         private void debug()
         {
-            MessageBox.Show(progress.Margin.Bottom.ToString());
+            //MessageBox.Show(this.Height.ToString());
         }
 
         private void exit()
         {
             setImageRotationBackToZero();
-            //recycleBin.clean();
+            recycle.clean();
             aboutWindow.exit();
             Application.Current.Shutdown();
         }

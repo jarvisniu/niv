@@ -140,6 +140,10 @@ namespace com.jarvisniu
             langData["zh-CN"]["tooltip.delete"] = "删除";
             langData["zh-TW"]["tooltip.delete"] = "刪除";
 
+            langData["en-US"]["tooltip.undelete"] = "Undo Delete";
+            langData["zh-CN"]["tooltip.undelete"] = "撤销删除";
+            langData["zh-TW"]["tooltip.undelete"] = "撤銷刪除";
+
             langData["en-US"]["tooltip.prev-image"] = "Previous";
             langData["zh-CN"]["tooltip.prev-image"] = "上一张";
             langData["zh-TW"]["tooltip.prev-image"] = "上一張";

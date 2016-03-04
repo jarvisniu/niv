@@ -85,6 +85,8 @@
     <Compile Include="src\com.jarvisniu\ButtonAnimator.cs" />
     <Compile Include="src\com.jarvisniu\FPS.cs" />
     <Compile Include="src\com.jarvisniu\I18n.cs" />
+    <Compile Include="src\Recycle.cs" />
+    <Compile Include="src\RecycleImageInfo.cs" />
     <Compile Include="src\Walker.cs" />
     <Compile Include="src\ImageInfo.cs" />
     <Compile Include="src\Controller.cs" />
@@ -187,6 +189,11 @@
   <ItemGroup>
     <Resource Include="res\theme-light\icon-help.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="res\theme-light\icon-undelete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\theme-dark\icon-undelete.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
