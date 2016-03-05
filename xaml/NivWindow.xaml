@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Niv"
         mc:Ignorable="d"
-        Title="&lt;Niv&gt;" Height="350" Width="520" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/Niv;component/res/Niv.ico">
+        Title="&lt;Niv&gt;" Height="350" Width="520" WindowState="Maximized" Icon="/Niv;component/res/Niv.ico">
     <Grid x:Name="niv" Background="#FF404040">
 
         <Grid x:Name="container" Background="#FF202020" AllowDrop="True">

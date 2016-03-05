@@ -69,7 +69,6 @@ namespace Niv
             initLayout();
             initComponents();
             loadCommandLineFile();
-            if (Settings.Default.fullscreen) enterFullscreen();
 
             bindContainerEvents();
             bindMenuEvents();
@@ -117,6 +116,7 @@ namespace Niv
         {
             window.MinWidth = WINDOW_MIN_WIDTH;
             window.MinHeight = WINDOW_MIN_HEIGHT;
+
             btnExit.Visibility = System.Windows.Visibility.Hidden;
             container.Margin = new Thickness(-MARGIN_SIZE, -MARGIN_SIZE, -MARGIN_SIZE, 0);
             separator.Margin = new Thickness(0, 0, 0, MARGIN_SIZE - SEPARATOR_HEIGHT);
@@ -153,6 +153,17 @@ namespace Niv
                 imageSmooth, imageZoom, imageMenu, imageCloseInfo, imageHelp, imageAbout, imageSetting, imageInfo, imageExit };
             foreach (Image image in images)
                 RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
+
+            if (Settings.Default.windowState == 2)
+                enterFullscreen();
+            else if (Settings.Default.windowState == 0)
+            {
+                window.WindowState = WindowState.Normal;
+                window.Left = Settings.Default.left;
+                window.Top = Settings.Default.top;
+                window.Width = Settings.Default.width;
+                window.Height = Settings.Default.height;
+            }
         }
 
         private void initComponents()
@@ -417,7 +428,11 @@ namespace Niv
             container.MouseDown += closeMenu;
             toolbar.MouseDown += closeMenu;
             info.MouseDown += closeMenu;
-            window.StateChanged += (object sender, EventArgs e) => hideMainMenu();
+            window.StateChanged += (object sender, EventArgs e) =>
+            {
+                hideMainMenu();
+                saveWindowSate();
+            };
 
             // Keyboard shortcut
             window.KeyDown += (object sender, KeyEventArgs e) =>
@@ -824,7 +839,7 @@ namespace Niv
             bool isImageSmall = transformer.bitmap.PixelWidth < 257 && transformer.bitmap.PixelHeight < 257;
             setSmoothTo(!isImageSmall);
         }
-        
+
         private void refreshSmoothButton()
         {
             if (walker.currentImageInfo != null)
@@ -1042,9 +1057,34 @@ namespace Niv
             else
                 enterFullscreen();
 
-            Settings.Default.fullscreen = isFullscreen;
+            saveWindowSate();
+        }
+
+        // Save the window state. 0 for Normal, 1 for Maximized, 2 for Fullscreen.
+        private void saveWindowSate()
+        {
+            if (isFullscreen)
+            {
+                Settings.Default.windowState = 2;
+            }
+            else
+            {
+                if (window.WindowState == WindowState.Maximized)
+                {
+                    Settings.Default.windowState = 1;
+                }
+                else if (window.WindowState == WindowState.Normal)
+                {
+                    Settings.Default.windowState = 0;
+                    Settings.Default.left = window.Left;
+                    Settings.Default.top = window.Top;
+                    Settings.Default.width = window.Width;
+                    Settings.Default.height = window.Height;
+                }
+            }
             Settings.Default.Save();
         }
+
         private void enterFullscreen()
         {
             lastWindowState = this.WindowState;
@@ -1170,6 +1210,7 @@ namespace Niv
 
         private void exit()
         {
+            saveWindowSate();
             setImageRotationBackToZero();
             recycle.clean();
             aboutWindow.exit();
