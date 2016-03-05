@@ -310,37 +310,6 @@ namespace Niv
             };
         }
 
-        private void bindImageEvents()
-        {
-            image.MouseMove += (object sender, MouseEventArgs e) =>
-            {
-                // 处理拖动还是点击的逻辑
-            };
-
-            image.MouseLeftButtonUp += (object sender, MouseButtonEventArgs e) =>
-            {
-                //if (e.Timestamp - lastMouseUpOnImage.Timestamp < DB_CLICK_THRESH)
-                //{
-                //    inputController.onMouseDoubleClick();
-                //    refreshZoomButton();
-                //    lastMouseUpOnImage.Timestamp = e.Timestamp - DB_CLICK_THRESH - 1;
-                //}
-                //else
-                //{
-                //    if (lastMouseUpOnImage.NextUpInvalid)
-                //    {
-                //        lastMouseUpOnImage.Timestamp = e.Timestamp - DB_CLICK_THRESH - 1;
-                //        lastMouseUpOnImage.NextUpInvalid = false;
-                //    }
-                //    else
-                //    {
-                //        lastMouseUpOnImage.Timestamp = e.Timestamp;
-                //        lastMouseUpOnImage.Position = e.GetPosition(grid);
-                //    }
-                //}
-            };
-        }
-
         private void bindContainerEvents()
         {
             // Drag-enter event
@@ -457,8 +426,8 @@ namespace Niv
 
                 if (keyString == "Left") prevImage();
                 else if (keyString == "Right") nextImage();
-                else if (keyString == "Up") transformer.zoomAtStand(2).animate();
-                else if (keyString == "Down") transformer.zoomAtStand(0.5).animate();
+                else if (keyString == "Up") transformer.zoomAtWindowCenter(2).animate();
+                else if (keyString == "Down") transformer.zoomAtWindowCenter(0.5).animate();
                 else if (keyString == "A") setSmoothTo(!walker.currentImageInfo.smooth);
                 else if (keyString == "D") debug();
                 else if (keyString == "I") toggleInfo();
@@ -643,6 +612,7 @@ namespace Niv
 
                 image.Source = null;
                 ImageBehavior.SetAnimatedSource(image, null);
+                window.Title = I18n._("appName");
             }
             else
             {

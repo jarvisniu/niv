@@ -214,10 +214,10 @@ namespace Niv
             return this;
         }
 
-        // Zoom-by the image with the image center TODO or window center
-        public Transformer zoomAtStand(double deltaScale)
+        // Zoom-by the image at the pivot of window center
+        public Transformer zoomAtWindowCenter(double deltaScale)
         {
-            zoomTo(scale * deltaScale, getImageCenter());
+            zoomTo(scale * deltaScale, getWindowCenter());
 
             return this;
         }
@@ -363,13 +363,10 @@ namespace Niv
             return this;
         }
 
-        // Get the coordinates of `image`'s position in the `containter`. The unit is px.
-        private Point getImageCenter()
+        // Get the position of window center in unit px.
+        private Point getWindowCenter()
         {
-            Thickness realMargin = image.Margin;
-            double x = realMargin.Left + image.RenderSize.Width / 2;
-            double y = realMargin.Top + image.RenderSize.Height / 2;
-            return new Point(x, y);
+            return new Point(container.ActualWidth / 2, container.ActualHeight / 2);
         }
 
         // EOC
