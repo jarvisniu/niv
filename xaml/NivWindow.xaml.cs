@@ -51,7 +51,6 @@ namespace Niv
 
         private Dictionary<FrameworkElement, bool> visibleStates = new Dictionary<FrameworkElement, bool>();
         private bool isMarginBottomExist = true;
-        private bool isZoomButtonInFitMode = true;
         private bool isFullscreen = false;
         private bool isAutoHideToolbar = false;
         private WindowState lastWindowState = WindowState.Maximized;

@@ -59,7 +59,7 @@ namespace com.jarvisniu
             {
                 return langData[cultureCode][key];
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("I18N: langData[" + key + "] not exists");
                 return _("_missing");
