@@ -1,15 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{552FF8D9-245B-4A5E-8857-96AA54B27ED0}</ProjectGuid>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EB8DEEA0-F840-42F2-9C45-D17B3C2751C2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>prop</AppDesignerFolder>
     <RootNamespace>Niv</RootNamespace>
     <AssemblyName>Niv</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -28,10 +30,9 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -40,8 +41,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -57,13 +58,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -138,62 +137,75 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="prop\" />
+    <AppDesigner Include="xaml\" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\theme-dark\icon-info.png" />
+    <Resource Include="res\Niv.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="res\theme-dark\icon-close.png" />
     <Resource Include="res\theme-dark\icon-delete.png" />
+    <Resource Include="res\theme-dark\icon-fit-window.png" />
+    <Resource Include="res\theme-dark\icon-help.png" />
+    <Resource Include="res\theme-dark\icon-info.png" />
     <Resource Include="res\theme-dark\icon-list.png" />
     <Resource Include="res\theme-dark\icon-menu.png" />
     <Resource Include="res\theme-dark\icon-next.png" />
+    <Resource Include="res\theme-dark\icon-one-to-one.png" />
     <Resource Include="res\theme-dark\icon-prev.png" />
     <Resource Include="res\theme-dark\icon-rotate-left.png" />
     <Resource Include="res\theme-dark\icon-rotate-right.png" />
     <Resource Include="res\theme-dark\icon-setting.png" />
     <Resource Include="res\theme-dark\icon-smooth-off.png" />
     <Resource Include="res\theme-dark\icon-smooth-on.png" />
-    <Resource Include="res\theme-dark\icon-one-to-one.png" />
-    <Resource Include="res\theme-dark\icon-fit-window.png" />
+    <Resource Include="res\theme-dark\icon-undelete.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\Niv.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\theme-light\icon-rotate-left.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\theme-light\icon-info.png" />
     <Resource Include="res\theme-light\icon-close.png" />
     <Resource Include="res\theme-light\icon-delete.png" />
+    <Resource Include="res\theme-light\icon-fit-window.png" />
+    <Resource Include="res\theme-light\icon-help.png" />
+    <Resource Include="res\theme-light\icon-info.png" />
     <Resource Include="res\theme-light\icon-list.png" />
     <Resource Include="res\theme-light\icon-menu.png" />
     <Resource Include="res\theme-light\icon-next.png" />
+    <Resource Include="res\theme-light\icon-one-to-one.png" />
     <Resource Include="res\theme-light\icon-prev.png" />
+    <Resource Include="res\theme-light\icon-rotate-left.png" />
     <Resource Include="res\theme-light\icon-rotate-right.png" />
     <Resource Include="res\theme-light\icon-setting.png" />
     <Resource Include="res\theme-light\icon-smooth-off.png" />
     <Resource Include="res\theme-light\icon-smooth-on.png" />
-    <Resource Include="res\theme-light\icon-one-to-one.png" />
-    <Resource Include="res\theme-light\icon-fit-window.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\theme-dark\icon-help.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\theme-light\icon-help.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="res\theme-light\icon-undelete.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\theme-dark\icon-undelete.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>
