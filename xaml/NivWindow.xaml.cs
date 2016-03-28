@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.IO;
-using System.Text;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -95,7 +95,7 @@ namespace Niv
             btnUndelete.ToolTip = I18n._("tooltip.undelete");
             btnPrevImage.ToolTip = I18n._("tooltip.prev-image");
             btnNextImage.ToolTip = I18n._("tooltip.next-image");
-            // Tips of undelete, smooth and zoom button are dynamic in refreshFoobarButton().
+            // Tips of undelete, smooth and zoom button are dynamic in refreshToobarButton().
             btnMenu.ToolTip = I18n._("menu");
             btnCloseInfo.ToolTip = I18n._("close");
             btnExit.ToolTip = I18n._("tooltip.exit-program");
@@ -719,37 +719,40 @@ namespace Niv
         public void saveRotationToFile()
         {
             string filename = walker.currentImageInfo.filename;
+            string ext = Path.GetExtension(filename).ToLower();
 
             double rotationAngle = walker.currentImageInfo.rotationAngle;
             double savedAngle = walker.currentImageInfo.savedRotationAngle;
             double angle = simplifyAngle(rotationAngle - savedAngle);
-            if (angle == 0)
-            {
-                return;
-            }
-            else if (Path.GetExtension(filename) == ".gif")
-            {
-                // showMessage("不支持保存GIF图片");
-                return;
-            }
+            if (angle == 0 || ext == ".gif" || ext == ".ico") return;
 
             System.Drawing.Image imgSrc = System.Drawing.Image.FromFile(filename);
             if (angle == 90)
-            {
                 imgSrc.RotateFlip(System.Drawing.RotateFlipType.Rotate90FlipNone);
-            }
             else if (angle == 180)
-            {
                 imgSrc.RotateFlip(System.Drawing.RotateFlipType.Rotate180FlipNone);
-            }
             else if (angle == 270)
-            {
                 imgSrc.RotateFlip(System.Drawing.RotateFlipType.Rotate270FlipNone);
-            }
 
             try
             {
-                imgSrc.Save(filename);
+                switch (ext)
+                {
+                    case ".jpg":
+                    case ".jpeg":
+                        saveJpegFile(imgSrc, filename);
+                        break;
+                    case ".png":
+                        imgSrc.Save(filename, ImageFormat.Png);
+                        break;
+                    case ".bmp":
+                        imgSrc.Save(filename, ImageFormat.Bmp);
+                        break;
+                    case ".tif":
+                    case ".tiff":
+                        imgSrc.Save(filename, ImageFormat.Tiff);
+                        break;
+                }
             }
             catch (Exception ex)
             {
@@ -757,6 +760,18 @@ namespace Niv
             }
 
             walker.currentImageInfo.savedRotationAngle = walker.currentImageInfo.rotationAngle;
+        }
+
+        private void saveJpegFile(System.Drawing.Image img, string filename)
+        {
+            EncoderParameters myEncoderParameters = new EncoderParameters(1);
+            ImageCodecInfo jpgEncoder = null;
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+                if (codec.MimeType == "image/jpeg") jpgEncoder = codec;
+            EncoderParameter myEncoderParameter = new EncoderParameter(Encoder.Quality, 90L);
+            myEncoderParameters.Param[0] = myEncoderParameter;
+            img.Save(filename, jpgEncoder, myEncoderParameters);
         }
 
         private void refreshPageText()
@@ -1165,7 +1180,6 @@ namespace Niv
         {
             recycle.recieve(walker.currentImageInfo, walker.currentIndex);
             walker.removeCurrentImageInfo();
-            // showMessage("图片已删除至图片回收站。");
 
             if (walker.count > 0) loadFromWalker();
 

@@ -91,7 +91,6 @@ namespace Niv
         // Load all the image files in the specified folder.
         public void loadFolder(string droppedFileName)
         {
-            droppedFileName = droppedFileName.ToLower();
             string folderPath = Path.GetDirectoryName(droppedFileName);
             if (folderPath.Equals(currentFolderName)) return;
 
@@ -103,7 +102,7 @@ namespace Niv
                 int i = 0;
                 foreach (FileInfo fi in fis)
                 {
-                    string filename = fi.FullName.ToLower();
+                    string filename = fi.FullName;
                     if (isFormatSupported(filename))
                     {
                         imageInfos.Add(new ImageInfo(filename));
