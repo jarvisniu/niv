@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=Niv
-AppVersion=0.3.2
+AppVersion=0.4.3
 AppPublisher=Jarvis Niu
 AppSupportURL=http://jarvisniu.com/niv
 DefaultDirName={pf}\Niv
@@ -13,7 +13,7 @@ UninstallDisplayName=Niv
 Compression=lzma2
 SolidCompression=yes
 OutputDir=".\"
-OutputBaseFilename="Niv_0.3.2_en_setup"
+OutputBaseFilename="Niv_0.4.3_en_setup"
 
 [Files]
 Source: "Niv.exe"; DestDir: "{app}"
