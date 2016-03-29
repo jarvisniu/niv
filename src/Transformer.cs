@@ -198,8 +198,8 @@ namespace Niv
         public Transformer fullsize()
         {
             Size gridSize = container.RenderSize;
-            double scaleX = (gridSize.Width - NivWindow.MARGIN_SIZE * 2) / bitmap.Width;
-            double scaleY = (gridSize.Height - NivWindow.MARGIN_SIZE * 2) / bitmap.Height;
+            double scaleX = (gridSize.Width - NivWindow.MARGIN_SIZE * 2) / bitmap.PixelWidth;
+            double scaleY = (gridSize.Height - NivWindow.MARGIN_SIZE * 2) / bitmap.PixelHeight;
 
             scale = Math.Min(scaleX, scaleY);
 
@@ -268,13 +268,13 @@ namespace Niv
              * Right = gridWidth - Left - Width, Bottom ..
              */
 
-            Size imageSize = image.RenderSize;
+            // Size imageSize = image.RenderSize;
             Size gridSize = container.RenderSize;
 
-            double W = bitmap.Width * scale;
-            double H = bitmap.Height * scale;
-            //double W = bitmap.PixelWidth * scale;
-            //double H = bitmap.PixelHeight * scale;
+            //double W = bitmap.Width * scale;
+            //double H = bitmap.Height * scale;
+            double W = bitmap.PixelWidth * scale;
+            double H = bitmap.PixelHeight * scale;
             double L = gridSize.Width / 2 - W * center.X;
             double T = gridSize.Height / 2 - H * center.Y;
             double R = gridSize.Width - L - W;
@@ -340,7 +340,7 @@ namespace Niv
         {
             if (bitmap == null) return this;
 
-            scale = image.RenderSize.Width / bitmap.Width;
+            scale = image.RenderSize.Width / bitmap.PixelWidth;
 
             Size imageSize = image.RenderSize;
             Size gridSize = container.RenderSize;
