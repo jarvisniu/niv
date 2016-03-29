@@ -576,24 +576,14 @@ namespace Niv
         // Try to read and decode the image file to the BitmapImage
         public BitmapImage tryLoadBitmap(string url)
         {
-            BitmapImage img;
+            BitmapImage img = ERROR_IMAGE;
 
             // TODO 打开之后再删文件会打不开文件
             FileInfo fi = new FileInfo(url);
-            if (fi.Length == 0)
+            if (fi.Length > 0)
             {
-                img = ERROR_IMAGE;
-            }
-            else
-            {
-                try
-                {
-                    img = loadBitmap(url);
-                }
-                catch (NotSupportedException)
-                {
-                    img = ERROR_IMAGE;
-                }
+                img = loadBitmap(url);
+                walker.currentImageInfo.broken = false;
             }
             return img;
         }
@@ -681,9 +671,9 @@ namespace Niv
             return "";
         }
 
-        private void showMessage(string message)
+        private void showMessage(object message)
         {
-            MessageBox.Show(message);
+            MessageBox.Show(message.ToString());
         }
 
         private static BitmapImage loadThemeBitmap(string filename)
@@ -721,10 +711,12 @@ namespace Niv
             string filename = walker.currentImageInfo.filename;
             string ext = Path.GetExtension(filename).ToLower();
 
-            double rotationAngle = walker.currentImageInfo.rotationAngle;
-            double savedAngle = walker.currentImageInfo.savedRotationAngle;
+            ImageInfo info = walker.currentImageInfo;
+            double rotationAngle = info.rotationAngle;
+            double savedAngle = info.savedRotationAngle;
             double angle = simplifyAngle(rotationAngle - savedAngle);
-            if (angle == 0 || ext == ".gif" || ext == ".ico") return;
+
+            if (angle == 0 || info.broken || ext == ".gif" || ext == ".ico") return;
 
             System.Drawing.Image imgSrc = System.Drawing.Image.FromFile(filename);
             if (angle == 90)

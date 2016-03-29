@@ -26,6 +26,9 @@ namespace Niv
         // If this image never been paned or zoomed
         public bool virgin = true;
 
+        // If this image is broken or not supported
+        public bool broken = true;
+
         // Properties
         private Point _center = new Point(0.5, 0.5);
         private double _scale;
