@@ -1,9 +1,11 @@
 Niv
 ===
 
-A fast compact image viewer on Windows
+A fast and elegant image viewer on Windows
 
 [![](screenshot.png)](http://jarvisniu.com/niv/)
+
+## Download
 
 You can download the [setup](http://jarvisniu.com/niv/Niv_Setup_v0.4.2.exe)
 file or just download the [executable](https://raw.githubusercontent.com/jarvisniu/Niv/master/exe/Niv.exe) file.
