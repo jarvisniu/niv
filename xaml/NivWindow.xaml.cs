@@ -48,6 +48,7 @@ namespace Niv
             1 * 1 +  // seprate line
             6 * 4;   // gap
         private BitmapImage ERROR_IMAGE = loadResourceBitmap("res/Niv.ico");
+        private Dictionary<Border, string> BUTTON_TO_TIP_MAP = new Dictionary<Border, string>();
 
         private Dictionary<FrameworkElement, bool> visibleStates = new Dictionary<FrameworkElement, bool>();
         private bool isMarginBottomExist = true;
@@ -57,6 +58,7 @@ namespace Niv
 
         private double gridHeight = 0;
         private Point mousePos;
+        private bool isTooltipVisible = false;
 
         #region Initialize
 
@@ -89,16 +91,17 @@ namespace Niv
             iImageInfo.Content = I18n._("imageInfo");
 
             // tooltip
-            btnRotateLeft.ToolTip = I18n._("tooltip.rotate-left");
-            btnRotateRight.ToolTip = I18n._("tooltip.rotate-right");
-            btnDelete.ToolTip = I18n._("tooltip.delete");
-            btnUndelete.ToolTip = I18n._("tooltip.undelete");
-            btnPrevImage.ToolTip = I18n._("tooltip.prev-image");
-            btnNextImage.ToolTip = I18n._("tooltip.next-image");
-            // Tips of undelete, smooth and zoom button are dynamic in refreshToobarButton().
-            btnMenu.ToolTip = I18n._("menu");
-            btnCloseInfo.ToolTip = I18n._("close");
-            btnExit.ToolTip = I18n._("tooltip.exit-program");
+            BUTTON_TO_TIP_MAP[btnRotateLeft] = I18n._("tooltip.rotate-left");
+            BUTTON_TO_TIP_MAP[btnRotateRight] = I18n._("tooltip.rotate-right");
+            BUTTON_TO_TIP_MAP[btnDelete] = I18n._("tooltip.delete");
+            BUTTON_TO_TIP_MAP[btnUndelete] = I18n._("tooltip.undelete");  // dynamic
+            BUTTON_TO_TIP_MAP[btnPrevImage] = I18n._("tooltip.prev-image");
+            BUTTON_TO_TIP_MAP[btnNextImage] = I18n._("tooltip.next-image");
+            BUTTON_TO_TIP_MAP[btnMenu] = I18n._("menu");
+            //BUTTON_TO_TIP_MAP[btnCloseInfo] = I18n._("close");
+            //BUTTON_TO_TIP_MAP[btnExit] = I18n._("tooltip.exit-program");
+            BUTTON_TO_TIP_MAP[btnSmooth] = I18n._("tooltip.disable-smooth");  // dynamic
+            BUTTON_TO_TIP_MAP[btnZoom] = I18n._("tooltip.one-to-one");  // dynamic
 
             // aboutWindow
             aboutWindow.Title = I18n._("about");
@@ -208,12 +211,12 @@ namespace Niv
                     = infoTitleLine.Stroke = infoRightLine.Stroke = grayBrush(170);
                 progress.Fill = grayBrush(255);
                 iHelp.Foreground = iAbout.Foreground = iSetting.Foreground = iImageInfo.Foreground
-                    = iImageInfoTitle.Foreground = iPage.Foreground = grayBrush(48);
+                    = iImageInfoTitle.Foreground = iTooltip.Foreground = iPage.Foreground = grayBrush(48);
                 iFilename.Foreground = iSize.Foreground = iResolution.Foreground = iDate.Foreground = grayBrush(84);
                 labelInfoFilename.Foreground = labelInfoSize.Foreground = labelInfoResolution.Foreground
                     = labelInfoDate.Foreground = grayBrush(0);
-                page.Background = grayBrush(255, 0.75);
-                page.BorderBrush = grayBrush(128, 0.75);
+                borderTooltip.Fill = page.Background = grayBrush(255, 0.75);
+                borderTooltip.Stroke = page.BorderBrush = grayBrush(128, 0.75);
                 btnExit.BorderBrush = grayBrush(128);
             }
             else if (Settings.Default.theme == "dark")
@@ -227,11 +230,12 @@ namespace Niv
                     iResolution.Foreground = iDate.Foreground = grayBrush(64, 0.75);
                 progress.Fill = grayBrush(255, 0.75);
                 iHelp.Foreground = iAbout.Foreground = iSetting.Foreground = iImageInfo.Foreground = iImageInfoTitle.Foreground
-                     = iPage.Foreground = iFilename.Foreground = iSize.Foreground = iResolution.Foreground = iDate.Foreground = grayBrush(192);
+                     = iTooltip.Foreground = iPage.Foreground = iFilename.Foreground = iSize.Foreground
+                     = iResolution.Foreground = iDate.Foreground = grayBrush(192);
                 labelInfoFilename.Foreground = labelInfoSize.Foreground = labelInfoResolution.Foreground
                     = labelInfoDate.Foreground = grayBrush(255);
-                page.Background = grayBrush(64, 0.75);
-                page.BorderBrush = grayBrush(128, 0.75);
+                borderTooltip.Fill = page.Background = grayBrush(64, 0.75);
+                borderTooltip.Stroke = page.BorderBrush = grayBrush(128, 0.75);
                 btnExit.BorderBrush = grayBrush(0, 0);
             }
             else MessageBox.Show("Not supported theme: " + Settings.Default.theme);
@@ -305,6 +309,7 @@ namespace Niv
             {
                 if (visibleStates[btnSmooth]) setSmoothTo(!walker.currentImageInfo.smooth);
                 refreshSmoothButton();
+                iTooltip.Content = BUTTON_TO_TIP_MAP[btnSmooth];
             };
 
             // Zoom button click
@@ -318,6 +323,35 @@ namespace Niv
             {
                 toggleMainMenu();
             };
+
+            // toggle tooltip
+            Border[] buttons = { btnRotateLeft, btnRotateRight, btnDelete, btnUndelete,
+                                 btnPrevImage, btnNextImage, btnSmooth, btnZoom, btnMenu };
+            foreach (Border button in buttons)
+            {
+                button.MouseMove += onMouseMoveToolButton;
+                button.MouseLeave += onMouseLeaveToolButton;
+            }
+        }
+
+        private void onMouseMoveToolButton(object sender, MouseEventArgs e)
+        {
+            Border button = (Border)sender;
+            if (isTooltipVisible || button.Opacity < 0.1) return;
+
+            animatorJar.fadeIn(tooltip);
+            isTooltipVisible = true;
+
+            iTooltip.Content = BUTTON_TO_TIP_MAP[button];
+            moveTooltipTo((FrameworkElement)sender);
+        }
+
+        private void onMouseLeaveToolButton(object sender, MouseEventArgs e)
+        {
+            if (!isTooltipVisible) return;
+
+            animatorJar.fadeOut(tooltip);
+            isTooltipVisible = false;
         }
 
         private void bindContainerEvents()
@@ -354,6 +388,7 @@ namespace Niv
 
             container.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
             {
+                toolbar.IsHitTestVisible = false;
                 inputController.onMouseLeftDown(e.Timestamp);
             };
 
@@ -378,6 +413,7 @@ namespace Niv
 
             container.MouseLeftButtonUp += (object sender, MouseButtonEventArgs e) =>
             {
+                toolbar.IsHitTestVisible = true;
                 inputController.onMouseLeftUp(e.Timestamp);
             };
 
@@ -851,7 +887,7 @@ namespace Niv
             if (walker.currentImageInfo != null)
             {
                 imageSmooth.Source = loadThemeBitmap(walker.currentImageInfo.smooth ? "icon-smooth-off.png" : "icon-smooth-on.png");
-                btnSmooth.ToolTip = visibleStates[btnSmooth] ?
+                BUTTON_TO_TIP_MAP[btnSmooth] = visibleStates[btnSmooth] ?
                     I18n._(walker.currentImageInfo.smooth ? "tooltip.disable-smooth" : "tooltip.enable-smooth") : null;
             }
         }
@@ -861,7 +897,7 @@ namespace Niv
             if (walker.currentImageInfo != null)
             {
                 imageZoom.Source = loadThemeBitmap(walker.currentImageInfo.fitWindow ? "icon-one-to-one.png" : "icon-fit-window.png");
-                btnZoom.ToolTip = I18n._(walker.currentImageInfo.fitWindow ? "tooltip.one-to-one" : "tooltip.fit-window");
+                BUTTON_TO_TIP_MAP[btnZoom] = I18n._(walker.currentImageInfo.fitWindow ? "tooltip.one-to-one" : "tooltip.fit-window");
             }
         }
 
@@ -1023,6 +1059,35 @@ namespace Niv
                 else if (mousePos.Y < gridHeight - MARGIN_SIZE * 3 && visibleStates[toolbar] && !visibleStates[menu])
                     hideToolbar();
             }
+        }
+
+        // tooltip
+
+        private void moveTooltipTo(FrameworkElement el)
+        {
+            Point p = el.TranslatePoint(new Point(0, 0), niv);
+            double x = p.X + el.ActualWidth / 2 - tooltip.ActualWidth / 2;
+
+            double maxX = niv.ActualWidth - tooltip.ActualWidth - 4;
+            double minX = 4;
+
+            double dx = 0;
+            if (x > maxX)
+                dx = x - maxX;
+            else if (x < minX)
+                dx = x - minX;
+            moveTooltipTip(dx);
+
+            x -= dx;
+            tooltip.Margin = new Thickness(x, 0, 0, 48);
+        }
+
+        private void moveTooltipTip(double deltaX)
+        {
+            PointCollection ps = borderTooltip.Points;
+            borderTooltip.Points[3] = new Point(83 + deltaX, ps[3].Y);
+            borderTooltip.Points[4] = new Point(75 + deltaX, ps[4].Y);
+            borderTooltip.Points[5] = new Point(67 + deltaX, ps[5].Y);
         }
 
         // margion bottom
@@ -1203,6 +1268,7 @@ namespace Niv
             else
             {
                 animatorJar.fadeOut(btnUndelete);
+                animatorJar.fadeOut(tooltip);
                 btnUndelete.ToolTip = null;
             }
         }
