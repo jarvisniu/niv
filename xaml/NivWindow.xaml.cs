@@ -1164,6 +1164,7 @@ namespace Niv
             if (this.WindowState != System.Windows.WindowState.Normal)
                 this.WindowState = System.Windows.WindowState.Normal;
             this.WindowState = System.Windows.WindowState.Maximized;
+            this.ResizeMode = System.Windows.ResizeMode.NoResize;
 
             btnExit.Visibility = System.Windows.Visibility.Visible;
 
@@ -1174,6 +1175,7 @@ namespace Niv
             if (mousePos.Y < gridHeight - MARGIN_SIZE && visibleStates[toolbar])
                 hideToolbar();
         }
+
         private void exitFullscreen()
         {
             isFullscreen = false;
@@ -1181,6 +1183,7 @@ namespace Niv
 
             this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
             this.WindowState = lastWindowState;
+            this.ResizeMode = System.Windows.ResizeMode.CanResizeWithGrip;
 
             btnExit.Visibility = System.Windows.Visibility.Hidden;
 

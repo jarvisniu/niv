@@ -1,9 +1,11 @@
 ; Niv_en.iss
 ; Configuration file for Inno Setup which is an installer generator.
 
-#define appName "Niv"
+#define appName "Niv"  
 #define authorName "Jarvis Niu"
-#define version "0.4.6"
+#define officialWebsite "http://jarvisniu.com/niv"
+
+#define version "0.4.7" 
 
 #define regAppName "Niv"
 #define exeFileName "Niv.exe"
@@ -12,10 +14,10 @@
 AppName={#version}
 AppVersion={#appName}
 AppPublisher={#authorName}
-AppSupportURL=http://jarvisniu.com/niv
+AppSupportURL={#officialWebsite}
 DefaultDirName={pf}\{#appName}
 DefaultGroupName={#appName}
-UninstallDisplayIcon={app}\Niv.exe
+UninstallDisplayIcon={app}\{#exeFileName}
 UninstallDisplayName={#appName}
 Compression=lzma2
 SolidCompression=yes
@@ -27,7 +29,8 @@ ChangesAssociations = yes
 Source: "Niv.exe"; DestDir: "{app}"
 
 [Icons]
-Name: "{group}\Niv"; Filename: "{app}\Niv.exe"
+Name: "{group}\Niv"; Filename: "{app}\{#exeFileName}"
+Name: "{userdesktop}\{#appName}"; Filename: "{app}\{#exeFileName}";
 
 [Registry]
 Root: HKCR; Subkey: ".jpg";                             ValueData: "{#regAppName}";         Flags: uninsdeletevalue;  ValueType: string;  ValueName: ""
