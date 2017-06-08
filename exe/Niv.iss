@@ -1,11 +1,11 @@
 ; Niv_en.iss
 ; Configuration file for Inno Setup which is an installer generator.
 
-#define appName "Niv"  
+#define appName "Niv"
 #define authorName "Jarvis Niu"
 #define officialWebsite "http://jarvisniu.com/niv"
 
-#define version "0.4.7" 
+#define version "0.4.7"
 
 #define regAppName "Niv"
 #define exeFileName "Niv.exe"
@@ -22,7 +22,7 @@ UninstallDisplayName={#appName}
 Compression=lzma2
 SolidCompression=yes
 OutputDir=".\"
-OutputBaseFilename="{#appName}_{#version}_setup"
+OutputBaseFilename="{#appName}_v{#version}_setup"
 ChangesAssociations = yes
 
 [Files]

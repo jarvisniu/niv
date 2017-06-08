@@ -9,6 +9,14 @@
     <Grid x:Name="niv" Background="#FF404040">
         <Grid x:Name="container" Background="#FF202020" AllowDrop="True">
             <Image x:Name="image" Margin="168,34,214.6,93.4" Stretch="Fill" RenderTransformOrigin="0.5,0.5" />
+            <Grid Height="48" HorizontalAlignment="Center" Margin="0,0,0,0" Name="gridOpen" VerticalAlignment="Center" Width="120" Background="Black" >
+                <Border x:Name="btnOpen" BorderBrush="Gray" BorderThickness="2" Height="48" Margin="0,0,0,0">
+                    <Grid Margin="0">
+                        <Image x:Name="imageOpen" HorizontalAlignment="Left" Margin="15,9,0,9" Width="28" Source="/Niv;component/res/theme-dark/icon-open.png"/>
+                        <Label x:Name="iOpen" Content="&lt;Open&gt;" Margin="50,4,10,4" VerticalContentAlignment="Center" Foreground="Silver" FontSize="15" HorizontalContentAlignment="Center" />
+                    </Grid>
+                </Border>
+            </Grid>
         </Grid>
         <Grid x:Name="toolbar" Margin="0" Background="#BF202020" Height="48" VerticalAlignment="Bottom">
             <Border x:Name="btnRotateLeft" BorderBrush="#FF484848" BorderThickness="0" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="0">

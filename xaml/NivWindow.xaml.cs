@@ -33,6 +33,8 @@ namespace Niv
         // delayed closing timers
         Timer timerClosePage;
 
+        private string IMAGE_FILE_FILTER = "All files (*.*)|*.*";
+
         // layout config
         static double WINDOW_MIN_WIDTH = 540;
         static double WINDOW_MIN_HEIGHT = 384;
@@ -90,6 +92,9 @@ namespace Niv
             iSetting.Content = I18n._("setting");
             iImageInfo.Content = I18n._("imageInfo");
 
+            // button
+            iOpen.Content = I18n._("open");
+
             // tooltip
             BUTTON_TO_TIP_MAP[btnRotateLeft] = I18n._("tooltip.rotate-left");
             BUTTON_TO_TIP_MAP[btnRotateRight] = I18n._("tooltip.rotate-right");
@@ -112,6 +117,12 @@ namespace Niv
             aboutWindow.iVersion.Content = I18n._("version") + ": " + versionString;
             aboutWindow.iAuthor.Content = I18n._("author") + ": " + I18n._("jarvisNiu");
             aboutWindow.iOfficialWebsite.Text = I18n._("officialWebsite") + ": ";
+
+            // filter
+            string[] exts = FolderWalker.SUPPORTED_IMAGE_EXT.Split(' ');
+            exts = exts.Select(ext => "*" + ext).ToArray();
+            var concatedExts = String.Join(", ", exts);
+            IMAGE_FILE_FILTER = I18n._("imageFile") + " (" + String.Join(", ", exts) + ") | " + String.Join("; ", exts) + "";
         }
 
         private void initLayout()
@@ -140,7 +151,7 @@ namespace Niv
             visibleStates[menu] = false;
 
             // add animation effects to buttons
-            buttonAnimator.apply(btnZoom).apply(btnPrevImage).apply(btnNextImage).apply(btnSmooth).apply(btnMenu).apply(btnExit)
+            buttonAnimator.apply(btnZoom).apply(btnPrevImage).apply(btnNextImage).apply(btnSmooth).apply(btnMenu).apply(btnExit).apply(btnOpen)
                 .apply(btnDelete).apply(btnUndelete).apply(btnRotateLeft).apply(btnRotateRight).apply(menuAbout)
                 .apply(menuHelp).apply(menuSetting).apply(menuImageInfo).apply(btnCloseInfo);
 
@@ -152,7 +163,7 @@ namespace Niv
 
             // Set render to high quality of images
             Image[] images = { imageRotateLeft, imageRotateRight, imageDelete, imageUndelete, imagePrev, imageNext,
-                imageSmooth, imageZoom, imageMenu, imageCloseInfo, imageHelp, imageAbout, imageSetting, imageInfo, imageExit };
+                imageSmooth, imageZoom, imageMenu, imageCloseInfo, imageHelp, imageAbout, imageSetting, imageInfo, imageExit, imageOpen };
             foreach (Image image in images)
                 RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
 
@@ -204,38 +215,46 @@ namespace Niv
 
             if (Settings.Default.theme == "light")
             {
+                // background
                 container.Background = grayBrush(250);
-                toolbar.Background = menu.Background = iImageInfoTitle.Background = grayBrush(220);
+                toolbar.Background = menu.Background = iImageInfoTitle.Background = gridOpen.Background = grayBrush(220);
                 info.Background = grayBrush(235);
-                separator.Background = progress.Stroke = menu.BorderBrush = menuLine.Stroke
-                    = infoTitleLine.Stroke = infoRightLine.Stroke = grayBrush(170);
+                // foreground / fill
                 progress.Fill = grayBrush(255);
                 iHelp.Foreground = iAbout.Foreground = iSetting.Foreground = iImageInfo.Foreground
                     = iImageInfoTitle.Foreground = iTooltip.Foreground = iPage.Foreground = grayBrush(48);
+                iOpen.Foreground = grayBrush(48);
                 iFilename.Foreground = iSize.Foreground = iResolution.Foreground = iDate.Foreground = grayBrush(84);
                 labelInfoFilename.Foreground = labelInfoSize.Foreground = labelInfoResolution.Foreground
                     = labelInfoDate.Foreground = grayBrush(0);
                 borderTooltip.Fill = page.Background = grayBrush(255, 0.75);
+                // border / stroke
+                separator.Background = progress.Stroke = menu.BorderBrush = menuLine.Stroke
+                    = infoTitleLine.Stroke = infoRightLine.Stroke = grayBrush(170);
                 borderTooltip.Stroke = page.BorderBrush = grayBrush(128, 0.75);
-                btnExit.BorderBrush = grayBrush(128);
+                btnOpen.BorderBrush = btnExit.BorderBrush = grayBrush(128);
             }
             else if (Settings.Default.theme == "dark")
             {
+                // background
                 container.Background = grayBrush(32);
                 toolbar.Background = grayBrush(32, 0.75);
-                menu.Background = grayBrush(40);
-                menu.BorderBrush = menuLine.Stroke = infoTitleLine.Stroke = infoRightLine.Stroke = grayBrush(80, 0.75);
+                menu.Background = gridOpen.Background = grayBrush(40);
                 info.Background = iImageInfoTitle.Background = grayBrush(64);
                 separator.Background = progress.Stroke = iFilename.Foreground = iSize.Foreground =
                     iResolution.Foreground = iDate.Foreground = grayBrush(64, 0.75);
+                // foreground / fill
                 progress.Fill = grayBrush(255, 0.75);
                 iHelp.Foreground = iAbout.Foreground = iSetting.Foreground = iImageInfo.Foreground = iImageInfoTitle.Foreground
                      = iTooltip.Foreground = iPage.Foreground = iFilename.Foreground = iSize.Foreground
                      = iResolution.Foreground = iDate.Foreground = grayBrush(192);
+                iOpen.Foreground = grayBrush(192);
                 labelInfoFilename.Foreground = labelInfoSize.Foreground = labelInfoResolution.Foreground
                     = labelInfoDate.Foreground = grayBrush(255);
                 borderTooltip.Fill = page.Background = grayBrush(64, 0.75);
-                borderTooltip.Stroke = page.BorderBrush = grayBrush(128, 0.75);
+                // border / stroke
+                menu.BorderBrush = menuLine.Stroke = infoTitleLine.Stroke = infoRightLine.Stroke = grayBrush(80, 0.75);
+                btnOpen.BorderBrush = borderTooltip.Stroke = page.BorderBrush = grayBrush(128, 0.75);
                 btnExit.BorderBrush = grayBrush(0, 0);
             }
             else MessageBox.Show("Not supported theme: " + Settings.Default.theme);
@@ -251,6 +270,7 @@ namespace Niv
             refreshZoomButton();
             imageMenu.Source = loadThemeBitmap("icon-menu.png");
             imageCloseInfo.Source = imageExit.Source = loadThemeBitmap("icon-close.png");
+            imageOpen.Source = loadThemeBitmap("icon-open.png");
             // menu images
             imageHelp.Source = loadThemeBitmap("icon-help.png");
             imageAbout.Source = loadThemeBitmap("icon-info.png");
@@ -505,6 +525,12 @@ namespace Niv
             {
                 exit();
             };
+
+            // Open button
+            btnOpen.MouseUp += (object sender, MouseButtonEventArgs e) =>
+            {
+                openFile();
+            };
         }
 
         #endregion
@@ -531,6 +557,8 @@ namespace Niv
             labelInfoResolution.Content = transformer.bitmap.PixelWidth + " x " + transformer.bitmap.PixelHeight;
             labelInfoDate.Content = dateTimeToString(fi.LastWriteTime);
             this.Title = Path.GetFileName(info.filename) + " - " + I18n._("appName");
+            gridOpen.Visibility = System.Windows.Visibility.Collapsed;
+
             refreshProgress();
             refreshPageText();
             showPage();
@@ -1183,7 +1211,7 @@ namespace Niv
 
             this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
             this.WindowState = lastWindowState;
-            this.ResizeMode = System.Windows.ResizeMode.CanResizeWithGrip;
+            this.ResizeMode = System.Windows.ResizeMode.CanResize;
 
             btnExit.Visibility = System.Windows.Visibility.Hidden;
 
@@ -1214,6 +1242,22 @@ namespace Niv
         }
 
         #endregion
+
+        private void openFile()
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".jpg";
+            dlg.Filter = IMAGE_FILE_FILTER;
+
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                onReceiveImageFile(filename);
+            }
+        }
 
         private void closeMenu(object sender, MouseButtonEventArgs e)
         {

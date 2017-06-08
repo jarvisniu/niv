@@ -174,6 +174,7 @@
     <Resource Include="res\theme-dark\icon-menu.png" />
     <Resource Include="res\theme-dark\icon-next.png" />
     <Resource Include="res\theme-dark\icon-one-to-one.png" />
+    <Resource Include="res\theme-dark\icon-open.png" />
     <Resource Include="res\theme-dark\icon-prev.png" />
     <Resource Include="res\theme-dark\icon-rotate-left.png" />
     <Resource Include="res\theme-dark\icon-rotate-right.png" />
@@ -192,6 +193,7 @@
     <Resource Include="res\theme-light\icon-menu.png" />
     <Resource Include="res\theme-light\icon-next.png" />
     <Resource Include="res\theme-light\icon-one-to-one.png" />
+    <Resource Include="res\theme-light\icon-open.png" />
     <Resource Include="res\theme-light\icon-prev.png" />
     <Resource Include="res\theme-light\icon-rotate-left.png" />
     <Resource Include="res\theme-light\icon-rotate-right.png" />
@@ -201,7 +203,7 @@
     <Resource Include="res\theme-light\icon-undelete.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

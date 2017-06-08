@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Niv"
         mc:Ignorable="d"
-        Title="&lt;about&gt;" Height="218" Width="386" ShowInTaskbar="False" Topmost="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="window_Loaded" Closing="window_Closing" Icon="/Niv;component/res/Niv.ico">
+        Title="&lt;about&gt;" Height="218" Width="480" ShowInTaskbar="False" Topmost="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="window_Loaded" Closing="window_Closing" Icon="/Niv;component/res/Niv.ico">
     <Grid Background="#FFA8A8A8">
         <Grid Background="#FFF0F0F0" Height="140" VerticalAlignment="Top">
-            <Label x:Name="iAppName" Content="&lt;appName&gt;" Margin="100,10,10,0" VerticalAlignment="Top" Foreground="#FF1F1F1F" FontSize="32" Height="50" VerticalContentAlignment="Center"/>
-            <Image Height="80" Margin="10,10,0,-10" VerticalAlignment="Top" Source="/Niv;component/res/Niv.ico" HorizontalAlignment="Left" Width="80"/>
-            <Label x:Name="iDescription" Content="&lt;description&gt;" Margin="100,60,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.3,4.28" Foreground="#FF292929" FontSize="15" Height="30" VerticalContentAlignment="Center"/>
-            <Label x:Name="iVersion" Content="&lt;version&gt;" RenderTransformOrigin="0.3,4.28" Foreground="#FF292929" FontSize="15" VerticalContentAlignment="Center" Height="30" VerticalAlignment="Top" Margin="10,96,0,0" HorizontalAlignment="Left" Width="160"/>
-            <Label x:Name="iAuthor" Content="&lt;author&gt;" RenderTransformOrigin="0.3,4.28" Foreground="#FF292929" FontSize="15" VerticalContentAlignment="Center" Height="30" VerticalAlignment="Top" Margin="0,96,10,0" HorizontalAlignment="Right" Width="200"/>
+            <Label x:Name="iAppName" Content="&lt;appName&gt;" Margin="144,10,10,0" VerticalAlignment="Top" Foreground="#FF1F1F1F" FontSize="32" Height="50" VerticalContentAlignment="Center"/>
+            <Image Height="110" Margin="15,15,0,0" VerticalAlignment="Top" Source="/Niv;component/res/Niv.ico" HorizontalAlignment="Left" Width="110"/>
+            <Label x:Name="iDescription" Content="&lt;description&gt;" Margin="144,60,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.3,4.28" Foreground="#FF292929" FontSize="15" Height="30" VerticalContentAlignment="Center"/>
+            <Label x:Name="iVersion" Content="&lt;version&gt;" RenderTransformOrigin="0.3,4.28" Foreground="#FF292929" FontSize="15" VerticalContentAlignment="Center" Height="30" VerticalAlignment="Top" Margin="144,95,0,0" HorizontalAlignment="Left" Width="114"/>
+            <Label x:Name="iAuthor" Content="&lt;author&gt;" RenderTransformOrigin="0.3,4.28" Foreground="#FF292929" FontSize="15" VerticalContentAlignment="Center" Height="30" VerticalAlignment="Top" Margin="0,95,10,0" HorizontalAlignment="Right" Width="184" />
         </Grid>
         <Grid Background="#FFC8C8C8" Height="48" VerticalAlignment="Bottom">
             <StackPanel Height="48" VerticalAlignment="Top" Orientation="Horizontal">

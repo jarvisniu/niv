@@ -92,6 +92,14 @@ namespace com.jarvisniu
             langData["zh-CN"]["close"] = "关闭";
             langData["zh-TW"]["close"] = "關閉";
 
+            langData["en-US"]["open"] = "Open";
+            langData["zh-CN"]["open"] = "打开";
+            langData["zh-TW"]["open"] = "打開";
+
+            langData["en-US"]["imageFile"] = "Image Files";
+            langData["zh-CN"]["imageFile"] = "图像文件";
+            langData["zh-TW"]["imageFile"] = "圖像文件";
+
             // Image Info
 
             langData["en-US"]["imageInfo"] = "Image Info";
