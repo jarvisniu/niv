@@ -1096,8 +1096,8 @@ namespace Niv
             Point p = el.TranslatePoint(new Point(0, 0), niv);
             double x = p.X + el.ActualWidth / 2 - tooltip.ActualWidth / 2;
 
-            double maxX = niv.ActualWidth - tooltip.ActualWidth - 4;
-            double minX = 4;
+            double maxX = niv.ActualWidth - tooltip.ActualWidth - 6;
+            double minX = 6;
 
             double dx = 0;
             if (x > maxX)
@@ -1191,8 +1191,8 @@ namespace Niv
             this.WindowStyle = System.Windows.WindowStyle.None;
             if (this.WindowState != System.Windows.WindowState.Normal)
                 this.WindowState = System.Windows.WindowState.Normal;
-            this.WindowState = System.Windows.WindowState.Maximized;
             this.ResizeMode = System.Windows.ResizeMode.NoResize;
+            this.WindowState = System.Windows.WindowState.Maximized;
 
             btnExit.Visibility = System.Windows.Visibility.Visible;
 
@@ -1210,8 +1210,8 @@ namespace Niv
             isAutoHideToolbar = false;
 
             this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
-            this.WindowState = lastWindowState;
             this.ResizeMode = System.Windows.ResizeMode.CanResize;
+            this.WindowState = lastWindowState;
 
             btnExit.Visibility = System.Windows.Visibility.Hidden;
 
