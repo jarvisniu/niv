@@ -17,7 +17,7 @@ namespace Niv
         /// Variables ----------------------------------------------------------
 
         // Supported image format, used to recognize the image files.
-        public static string SUPPORTED_IMAGE_EXT = ".jpg .jpeg .png .bmp .ico .tif .tiff .gif .dds";
+        public static string SUPPORTED_IMAGE_EXT = ".jpg .jpeg .jfif .png .bmp .ico .tif .tiff .gif .dds .webp";
 
         // The fullname of current loaded folder
         private string currentFolderName;

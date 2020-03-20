@@ -780,7 +780,7 @@ namespace Niv
             double savedAngle = info.savedRotationAngle;
             double angle = simplifyAngle(rotationAngle - savedAngle);
 
-            if (angle == 0 || info.broken || ext == ".gif" || ext == ".ico") return;
+            if (angle == 0 || info.broken || ext == ".gif" || ext == ".ico" || ext == ".webp") return;
 
             System.Drawing.Image imgSrc = System.Drawing.Image.FromFile(filename);
             if (angle == 90)
@@ -796,6 +796,7 @@ namespace Niv
                 {
                     case ".jpg":
                     case ".jpeg":
+                    case ".jfif":
                         saveJpegFile(imgSrc, filename);
                         break;
                     case ".png":
